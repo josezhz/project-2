@@ -3,7 +3,7 @@ import axios from "axios";
 
 export default class Teams extends React.Component {
     state = {
-        teams: [],
+        teams: []
     };
 
     allCharacters = [];
@@ -40,61 +40,19 @@ export default class Teams extends React.Component {
                     this.state.teams.map(t => {
                         return (
                             <React.Fragment>
-                                <div>{t.team_name}</div>
+                                <h5>{t.team_name}</h5>
                                 <ul>
-                                    {
-                                        t.team_composition.map(m => {
-                                            return (
-                                                <li>
-                                                    {this.allCharacters.filter(c => c._id.$oid === m.character.$oid)[0].display}
-                                                </li>
-                                            )
-                                        })
-                                    }
+                                    {t.team_composition.map(m => {
+                                        return (
+                                            <li>
+                                                <img src={require(`../../images/characters/icons/${this.allCharacters.filter(c => c._id === m.character.$oid)[0].value}_icon.webp`)} alt="" style={{backgroundColor: "gold"}}/>
+                                                <div>
+                                                    {this.allCharacters.filter(c => c._id === m.character.$oid)[0].display}
+                                                </div>
+                                            </li>
+                                        )
+                                    })}
                                 </ul>
-                            </React.Fragment>
-                        )
-                    })
-                }
-                <hr />
-                {
-                    this.allCharacters.map(c => {
-                        return (
-                            <React.Fragment>
-                                <img src={require(`../../images/characters/icons/${c.value}_icon.webp`)} alt="" style={{backgroundColor: "gold"}}/>
-                                <div>{c.display}</div>
-                            </React.Fragment>
-                        )
-                    })
-                }
-                <hr />
-                {
-                    this.allArtifacts.map(a => {
-                        return (
-                            <React.Fragment>
-                                <img src={require(`../../images/artifacts/${a.value}.webp`)} alt="" style={{backgroundColor: "purple"}}/>
-                                <div>{a.display}</div>
-                            </React.Fragment>
-                        )
-                    })
-                }
-                <hr />
-                {
-                    this.allBosses.map(b => {
-                        return (
-                            <React.Fragment>
-                                <img src={require(`../../images/bosses/${b.value}.webp`)} alt="" style={{backgroundColor: "gold"}}/>
-                                <div>{b.display}</div>
-                            </React.Fragment>
-                        )
-                    })
-                }
-                <hr />
-                {
-                    this.allWeapons.map(w => {
-                        return (
-                            <React.Fragment>
-                                <div>{w.value}</div>
                             </React.Fragment>
                         )
                     })
