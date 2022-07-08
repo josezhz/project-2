@@ -38,7 +38,22 @@ export default class Teams extends React.Component {
             <React.Fragment>
                 {
                     this.state.teams.map(t => {
-                        return (<div>{t.team_name}</div>)
+                        return (
+                            <React.Fragment>
+                                <div>{t.team_name}</div>
+                                <ul>
+                                    {
+                                        t.team_composition.map(m => {
+                                            return (
+                                                <li>
+                                                    {this.allCharacters.filter(c => c._id.$oid === m.character.$oid)[0].display}
+                                                </li>
+                                            )
+                                        })
+                                    }
+                                </ul>
+                            </React.Fragment>
+                        )
                     })
                 }
                 <hr />
