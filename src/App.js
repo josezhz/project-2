@@ -1,6 +1,7 @@
-import React from "react";
+import React, { Fragment } from "react";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap.bundle.min"
 import "./App.css";
 import Teams from "./pages/Teams/Teams";
 import AddTeam from "./pages/AddTeam/AddTeam";
@@ -8,7 +9,8 @@ import AddTeam from "./pages/AddTeam/AddTeam";
 class App extends React.Component {
   state = {
     teams: [],
-    active: null
+    active: "explore",
+    navbarCollapsed: false
   }
 
   allCharacters = [];
@@ -52,26 +54,66 @@ class App extends React.Component {
 
 
         <header>
-          <nav className="navbar navbar-expand-lg navbar-light bg-light">
+          <nav className="navbar navbar-expand-sm navbar-light bg-light p-0">
             <div className="container-fluid">
-              <a className="navbar-brand" href="">
-                <img src={require("./images/logos/logo.png")} alt="" height="48px" />
-              </a>
-              <button className="d-lg-none border-0 bg-light">
-                <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
-                  <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z" />
+              <button className="navbar-brand border-0 bg-none" onClick={() => { this.setState({ active: "explore" }) }}>
+                <img src={require("./images/logos/logo.png")} alt="" className="" height="48px" />
+              </button>
+              <button className="d-sm-none border-0 bg-none" onClick={() => { this.setState({ navbarCollapsed: !this.state.navbarCollapsed }) }} type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" className="bi bi-list" viewBox="0 0 16 16">
+                  {
+                    this.state.navbarCollapsed ?
+                      <path fill-rule="evenodd" d="M7.646 4.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 5.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z" />
+                      :
+                      <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z" />
+                  }
                 </svg>
               </button>
-              <div className="collapse navbar-collapse">
-                <ul className="navbar-nav mx-auto">
-                  <li className="nav-item">
-                    <a className="nav-link fs-5" href="">Explore</a>
+              <div className="collapse navbar-collapse container-fluid" id="navbarSupportedContent">
+                <ul className="navbar-nav container-fluid d-flex justify-content-center">
+                  <li className="nav-item mx-auto mx-md-3 mx-lg-5 mb-2 mb-sm-0">
+                    <button
+                      className={"nav-link border-0 bg-none pb-sm-0" + (this.state.active === "explore" ? " active" : "")}
+                      onClick={() => { this.setState({ active: "explore" }) }}
+                    >
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" className="bi bi-compass me-1" viewBox="0 0 16 16">
+                        {
+                          this.state.active === "explore" ?
+                            <path d="M15.5 8.516a7.5 7.5 0 1 1-9.462-7.24A1 1 0 0 1 7 0h2a1 1 0 0 1 .962 1.276 7.503 7.503 0 0 1 5.538 7.24zm-3.61-3.905L6.94 7.439 4.11 12.39l4.95-2.828 2.828-4.95z" />
+                            :
+                            <React.Fragment>
+                              <path d="M8 16.016a7.5 7.5 0 0 0 1.962-14.74A1 1 0 0 0 9 0H7a1 1 0 0 0-.962 1.276A7.5 7.5 0 0 0 8 16.016zm6.5-7.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z" />
+                              <path d="m6.94 7.44 4.95-2.83-2.83 4.95-4.949 2.83 2.828-4.95z" />
+                            </React.Fragment>
+                        }
+                      </svg>
+                      Explore
+                    </button>
                   </li>
-                  <li className="nav-item">
-                    <a className="nav-link fs-5" href="">Create</a>
+                  <li className="nav-item mx-auto mx-md-3 mx-lg-5 mb-2 mb-sm-0">
+                    <button
+                      className={"nav-link border-0 bg-none pb-sm-0" + (this.state.active === "create" ? " active" : "")}
+                      onClick={() => { this.setState({ active: "create" }) }}
+                    >
+                      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" className="bi bi-plus-circle-fill me-1" viewBox="0 0 16 16">
+                        {
+                          this.state.active === "create" ?
+                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
+                            :
+                            <React.Fragment>
+                              <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                              <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+                            </React.Fragment>
+                        }
+                      </svg>
+                      Create
+                    </button>
                   </li>
-                  <li className="nav-item">
-                    <a className="nav-link fs-5" href="">Edit</a>
+                  <li className="nav-item mx-auto mx-md-3 mx-lg-5 mb-2 mb-sm-0">
+                    <button
+                      className={"nav-link border-0 bg-none pb-sm-0" + (this.state.active === "edit" ? " active" : "")}
+                      onClick={() => { this.setState({ active: "edit" }) }}
+                    >Edit</button>
                   </li>
                 </ul>
               </div>
