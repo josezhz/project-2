@@ -8,7 +8,6 @@ export default class AddTeam extends React.Component {
     render() {
         return (
             <React.Fragment>
-                <h1>Add New Team</h1>
             </React.Fragment>
         )
     }

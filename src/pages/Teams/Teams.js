@@ -1,11 +1,11 @@
 import React from "react";
-import Team from "./components/Team";
+import DisplayTeams from "./components/DisplayTeams";
 
 export default class Teams extends React.Component {
     render() {
         return (
             <React.Fragment>
-                <Team
+                <DisplayTeams
                     teams={this.props.teams}
                     allCharacters={this.props.allCharacters}
                     allWeapons={this.props.allWeapons}
