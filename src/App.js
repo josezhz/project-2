@@ -125,9 +125,8 @@ class App extends React.Component {
 
         <main className="d-flex">
 
-          <div className={"filter" + (this.state.filterHidden ? " hide" : "")}>
+          <div className={"container-fluid filter" + (this.state.filterHidden ? " hide" : "")}>
             <h1>Filter</h1>
-
           </div>
 
           <div className="container-fluid bg-warning">
