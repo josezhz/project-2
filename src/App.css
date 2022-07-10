@@ -3,6 +3,8 @@
 }
 
 nav {
+    /* z-index: 1; */
+    height: 64px;
     border-bottom: 4px solid var(--bs-dark)
 }
 .nav-link {
@@ -11,4 +13,22 @@ nav {
 }
 .nav-link.active {
     color: var(--bs-dark) !important;
+}
+@media (max-width: 576px) {
+    nav {
+        border: none;
+        height: 60px;
+    }
+    .navbar-content {
+        z-index: -1;
+        height: 128px;
+        display: flex;
+        position: absolute;
+        top: 60px;
+        transition: .35s ease;
+        border-bottom: 4px solid var(--bs-dark)
+    }
+    .navbar-content.hide {
+        transform: translateY(-124px);
+    }
 }

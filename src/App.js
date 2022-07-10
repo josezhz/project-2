@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React from "react";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min"
@@ -10,7 +10,7 @@ class App extends React.Component {
   state = {
     teams: [],
     active: "explore",
-    navbarCollapsed: false
+    navbarCollapsed: true
   }
 
   allCharacters = [];
@@ -55,21 +55,21 @@ class App extends React.Component {
 
         <header>
           <nav className="navbar navbar-expand-sm navbar-light bg-light p-0">
-            <div className="container-fluid">
-              <button className="navbar-brand border-0 bg-none" onClick={() => { this.setState({ active: "explore" }) }}>
+            <div className="container-fluid p-0">
+              <button className="navbar-brand border-0 bg-none ms-md-3" onClick={() => { this.setState({ active: "explore" }) }}>
                 <img src={require("./images/logos/logo.png")} alt="" className="" height="48px" />
               </button>
-              <button className="d-sm-none border-0 bg-none" onClick={() => { this.setState({ navbarCollapsed: !this.state.navbarCollapsed }) }} type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <button className="d-sm-none border-0 bg-none" onClick={() => { this.setState({ navbarCollapsed: !this.state.navbarCollapsed }) }}>
                 <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" className="bi bi-list" viewBox="0 0 16 16">
                   {
                     this.state.navbarCollapsed ?
-                      <path fill-rule="evenodd" d="M7.646 4.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 5.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z" />
-                      :
                       <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z" />
+                      :
+                      <path fill-rule="evenodd" d="M7.646 4.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 5.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z" />
                   }
                 </svg>
               </button>
-              <div className="collapse navbar-collapse container-fluid" id="navbarSupportedContent">
+              <div className={"navbar-content container-fluid bg-light" + (this.state.navbarCollapsed ? " hide" : "")}>
                 <ul className="navbar-nav container-fluid d-flex justify-content-center">
                   <li className="nav-item mx-auto mx-md-3 mx-lg-5 mb-2 mb-sm-0">
                     <button
@@ -109,16 +109,20 @@ class App extends React.Component {
                       Create
                     </button>
                   </li>
-                  <li className="nav-item mx-auto mx-md-3 mx-lg-5 mb-2 mb-sm-0">
+                  {/* <li className="nav-item mx-auto mx-md-3 mx-lg-5 mb-2 mb-sm-0">
                     <button
                       className={"nav-link border-0 bg-none pb-sm-0" + (this.state.active === "edit" ? " active" : "")}
                       onClick={() => { this.setState({ active: "edit" }) }}
                     >Edit</button>
-                  </li>
+                  </li> */}
+
                 </ul>
               </div>
             </div>
           </nav>
+          <main>
+            <h1>Hello World!</h1>
+          </main>
         </header>
 
 
