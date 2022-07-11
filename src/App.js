@@ -56,7 +56,7 @@ class App extends React.Component {
 
         <header>
           <nav className="navbar navbar-expand-sm navbar-light bg-light p-0">
-            <div className="container-fluid p-0">
+            <div className="container-fluid bg-light p-0">
               <button className="navbar-brand border-0 bg-none ms-md-3" onClick={() => { this.setState({ active: "explore" }) }}>
                 <img src={require("./images/logos/logo.png")} alt="" className="" height="48px" />
               </button>
@@ -123,14 +123,26 @@ class App extends React.Component {
           </nav>
         </header>
 
-        <main className="d-flex">
+        <main>
 
           <div className={"container-fluid filter" + (this.state.filterHidden ? " hide" : "")}>
-            <h1>Filter</h1>
+            {/* <h1>Filter</h1> */}
           </div>
 
-          <div className="container-fluid bg-warning">
-            <h1>Hello World!</h1>
+          <div className="container-fluid content bg-light overflow-auto">
+            <div className="container">
+
+              <div className="card mt-5">
+                <div className="card-header">Raiden National Team</div>
+                <div className="card-body d-flex justify-content-between">
+                  <img src={require("./images/characters/icons/albedo_icon.webp")} alt="" />
+                  <img src={require("./images/characters/icons/albedo_icon.webp")} alt="" />
+                  <img src={require("./images/characters/icons/albedo_icon.webp")} alt="" />
+                  <img src={require("./images/characters/icons/albedo_icon.webp")} alt="" />
+                </div>
+              </div>
+
+            </div>
           </div>
 
           <button className="filter-btn d-lg-none" onClick={() => { this.setState({ filterHidden: !this.state.filterHidden }) }}>
