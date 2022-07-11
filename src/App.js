@@ -134,11 +134,148 @@ class App extends React.Component {
 
               <div className="card mt-5">
                 <div className="card-header">Raiden National Team</div>
-                <div className="card-body d-flex justify-content-between">
-                  <img src={require("./images/characters/icons/albedo_icon.webp")} alt="" />
-                  <img src={require("./images/characters/icons/albedo_icon.webp")} alt="" />
-                  <img src={require("./images/characters/icons/albedo_icon.webp")} alt="" />
-                  <img src={require("./images/characters/icons/albedo_icon.webp")} alt="" />
+                <div className="card-body p-0 d-flex justify-content-evenly">
+                  <img src={require("./images/characters/icons/xingqiu_icon.webp")} alt="" />
+                  <img src={require("./images/characters/icons/xingqiu_icon.webp")} alt="" />
+                  <img src={require("./images/characters/icons/xingqiu_icon.webp")} alt="" />
+                  <img src={require("./images/characters/icons/xingqiu_icon.webp")} alt="" />
+                </div>
+                <div className="card-footer p-0 d-flex justify-content-start">
+                  <img src={require("./images/bosses/andrius.webp")} alt="" />
+                  <img src={require("./images/bosses/dvalin.webp")} alt="" />
+                  <img src={require("./images/bosses/childe.webp")} alt="" />
+                  <img src={require("./images/bosses/azhdaha.webp")} alt="" />
+                  <img src={require("./images/bosses/la_signora.webp")} alt="" />
+                  <img src={require("./images/bosses/magatsu_mitake_narukami_no_mikoto.webp")} alt="" />
+                </div>
+              </div>
+
+              <div className="card mt-5">
+                <div className="card-header">Raiden National Team</div>
+                <div className="card-body p-0 d-flex justify-content-evenly jose">
+
+                  <div className="container-fluid p-0 d-flex flex-column">
+                    <div className="container-fluid p-0">
+                      <img src={require("./images/characters/icons/xingqiu_icon.webp")} alt="" />
+                    </div>
+                    <div className="d-flex justify-content-between">
+                      <div>
+                        <img src={require("./images/weapons/akuoumaru.webp")} alt="" className="weapon-icon"/>
+                      </div>
+                      <div className="d-flex">
+                        <img src={require("./images/artifacts/archaic_petra.webp")} alt="" className="artifact-icon"/>
+                        <img src={require("./images/artifacts/archaic_petra.webp")} alt="" className="artifact-icon"/>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="container-fluid p-0 d-flex flex-column">
+                    <div className="container-fluid p-0">
+                      <img src={require("./images/characters/icons/xingqiu_icon.webp")} alt="" />
+                    </div>
+                    <div className="d-flex justify-content-between">
+                      <div>
+                        <img src={require("./images/weapons/akuoumaru.webp")} alt="" className="weapon-icon"/>
+                      </div>
+                      <div className="d-flex">
+                        <img src={require("./images/artifacts/archaic_petra.webp")} alt="" className="artifact-icon"/>
+                        <img src={require("./images/artifacts/archaic_petra.webp")} alt="" className="artifact-icon"/>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="container-fluid p-0 d-flex flex-column">
+                    <div className="container-fluid p-0">
+                      <img src={require("./images/characters/icons/xingqiu_icon.webp")} alt="" />
+                    </div>
+                    <div className="d-flex justify-content-between">
+                      <div>
+                        <img src={require("./images/weapons/akuoumaru.webp")} alt="" className="weapon-icon"/>
+                      </div>
+                      <div className="d-flex">
+                        <img src={require("./images/artifacts/archaic_petra.webp")} alt="" className="artifact-icon"/>
+                        <img src={require("./images/artifacts/archaic_petra.webp")} alt="" className="artifact-icon"/>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="container-fluid p-0 d-flex flex-column">
+                    <div className="container-fluid p-0">
+                      <img src={require("./images/characters/icons/xingqiu_icon.webp")} alt="" />
+                    </div>
+                    <div className="d-flex justify-content-between">
+                      <div>
+                        <img src={require("./images/weapons/akuoumaru.webp")} alt="" className="weapon-icon"/>
+                      </div>
+                      <div className="d-flex">
+                        <img src={require("./images/artifacts/archaic_petra.webp")} alt="" className="artifact-icon"/>
+                        <img src={require("./images/artifacts/archaic_petra.webp")} alt="" className="artifact-icon"/>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+                <div className="card-footer p-0 d-flex justify-content-start">
+                  <img src={require("./images/bosses/andrius.webp")} alt="" />
+                  <img src={require("./images/bosses/dvalin.webp")} alt="" />
+                  <img src={require("./images/bosses/childe.webp")} alt="" />
+                  <img src={require("./images/bosses/azhdaha.webp")} alt="" />
+                  <img src={require("./images/bosses/la_signora.webp")} alt="" />
+                  <img src={require("./images/bosses/magatsu_mitake_narukami_no_mikoto.webp")} alt="" />
+                </div>
+              </div>
+
+              <div className="card mt-5">
+                <div className="card-header">Raiden National Team</div>
+                <div className="card-body p-0 d-flex justify-content-evenly">
+                  <img src={require("./images/characters/icons/xingqiu_icon.webp")} alt="" />
+                  <img src={require("./images/characters/icons/xingqiu_icon.webp")} alt="" />
+                  <img src={require("./images/characters/icons/xingqiu_icon.webp")} alt="" />
+                  <img src={require("./images/characters/icons/xingqiu_icon.webp")} alt="" />
+                </div>
+                <div className="card-footer p-0 d-flex justify-content-start">
+                  <img src={require("./images/bosses/andrius.webp")} alt="" />
+                  <img src={require("./images/bosses/dvalin.webp")} alt="" />
+                  <img src={require("./images/bosses/childe.webp")} alt="" />
+                  <img src={require("./images/bosses/azhdaha.webp")} alt="" />
+                  <img src={require("./images/bosses/la_signora.webp")} alt="" />
+                  <img src={require("./images/bosses/magatsu_mitake_narukami_no_mikoto.webp")} alt="" />
+                </div>
+              </div>
+
+              <div className="card mt-5">
+                <div className="card-header">Raiden National Team</div>
+                <div className="card-body p-0 d-flex justify-content-evenly">
+                  <img src={require("./images/characters/icons/xingqiu_icon.webp")} alt="" />
+                  <img src={require("./images/characters/icons/xingqiu_icon.webp")} alt="" />
+                  <img src={require("./images/characters/icons/xingqiu_icon.webp")} alt="" />
+                  <img src={require("./images/characters/icons/xingqiu_icon.webp")} alt="" />
+                </div>
+                <div className="card-footer p-0 d-flex justify-content-start">
+                  <img src={require("./images/bosses/andrius.webp")} alt="" />
+                  <img src={require("./images/bosses/dvalin.webp")} alt="" />
+                  <img src={require("./images/bosses/childe.webp")} alt="" />
+                  <img src={require("./images/bosses/azhdaha.webp")} alt="" />
+                  <img src={require("./images/bosses/la_signora.webp")} alt="" />
+                  <img src={require("./images/bosses/magatsu_mitake_narukami_no_mikoto.webp")} alt="" />
+                </div>
+              </div>
+
+              <div className="card mt-5">
+                <div className="card-header">Raiden National Team</div>
+                <div className="card-body p-0 d-flex justify-content-evenly">
+                  <img src={require("./images/characters/icons/xingqiu_icon.webp")} alt="" />
+                  <img src={require("./images/characters/icons/xingqiu_icon.webp")} alt="" />
+                  <img src={require("./images/characters/icons/xingqiu_icon.webp")} alt="" />
+                  <img src={require("./images/characters/icons/xingqiu_icon.webp")} alt="" />
+                </div>
+                <div className="card-footer p-0 d-flex justify-content-start">
+                  <img src={require("./images/bosses/andrius.webp")} alt="" />
+                  <img src={require("./images/bosses/dvalin.webp")} alt="" />
+                  <img src={require("./images/bosses/childe.webp")} alt="" />
+                  <img src={require("./images/bosses/azhdaha.webp")} alt="" />
+                  <img src={require("./images/bosses/la_signora.webp")} alt="" />
+                  <img src={require("./images/bosses/magatsu_mitake_narukami_no_mikoto.webp")} alt="" />
                 </div>
               </div>
 
