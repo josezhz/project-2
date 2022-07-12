@@ -41,6 +41,13 @@ class App extends React.Component {
     });
   }
 
+  getCharacterById(_id) {
+    return this.allCharacters.filter(c => c._id === _id)[0];
+  }
+  getBossById(_id) {
+    return this.allBosses.filter(b => b._id === _id)[0];
+  }
+
   render() {
     return (
       <React.Fragment>
@@ -110,12 +117,6 @@ class App extends React.Component {
                       Create
                     </button>
                   </li>
-                  {/* <li className="nav-item mx-auto mx-md-3 mx-lg-5 mb-2 mb-sm-0">
-                    <button
-                      className={"nav-link border-0 bg-none pb-sm-0" + (this.state.active === "edit" ? " active" : "")}
-                      onClick={() => { this.setState({ active: "edit" }) }}
-                    >Edit</button>
-                  </li> */}
 
                 </ul>
               </div>
@@ -129,18 +130,19 @@ class App extends React.Component {
             {/* <h1>Filter</h1> */}
           </div>
 
-          <div className="container-fluid content bg-light overflow-auto">
-            <div className="container">
+          <div className="container-fluid p-0 pb-5 content bg-light overflow-auto">
+            <div className="container" style={{ maxWidth: "576px" }}>
 
               <div className="card mt-5">
-                <div className="card-header">Raiden National Team</div>
+                <div className="card-header">Example Team</div>
                 <div className="card-body p-0 d-flex justify-content-evenly">
                   <img src={require("./images/characters/icons/xingqiu_icon.webp")} alt="" />
                   <img src={require("./images/characters/icons/xingqiu_icon.webp")} alt="" />
                   <img src={require("./images/characters/icons/xingqiu_icon.webp")} alt="" />
                   <img src={require("./images/characters/icons/xingqiu_icon.webp")} alt="" />
                 </div>
-                <div className="card-footer p-0 d-flex justify-content-start">
+                <div className="card-footer p-0 d-flex justify-content-start align-items-center">
+                  <span className="me-auto">Good for:</span>
                   <img src={require("./images/bosses/andrius.webp")} alt="" />
                   <img src={require("./images/bosses/dvalin.webp")} alt="" />
                   <img src={require("./images/bosses/childe.webp")} alt="" />
@@ -150,134 +152,41 @@ class App extends React.Component {
                 </div>
               </div>
 
-              <div className="card mt-5">
-                <div className="card-header">Raiden National Team</div>
-                <div className="card-body p-0 d-flex justify-content-evenly jose">
-
-                  <div className="container-fluid p-0 d-flex flex-column">
-                    <div className="container-fluid p-0">
-                      <img src={require("./images/characters/icons/xingqiu_icon.webp")} alt="" />
+              {this.state.teams.map(t => (
+                <React.Fragment key={t._id}>
+                  <div className="card mt-5">
+                    <div className="card-header fs-5">{t.team_name}</div>
+                    <div className="card-body p-0 d-flex justify-content-evenly">
+                      {t.team_composition.map(m =>
+                        <React.Fragment key={m.character.$oid}>
+                          <img
+                            src={require(`./images/characters/icons/${this.getCharacterById(m.character.$oid).value}_icon.webp`)}
+                            alt=""
+                            style={{
+                              backgroundColor: this.getCharacterById(m.character.$oid).rarity === 5 ? "#ffc107" : "#6f42c1",
+                              width: "23%",
+                              border: "2px solid #6c757d",
+                              borderRadius: "1.5vw",
+                              margin: "2% 0"
+                            }}
+                          />
+                        </React.Fragment>
+                      )}
                     </div>
-                    <div className="d-flex justify-content-between">
-                      <div>
-                        <img src={require("./images/weapons/akuoumaru.webp")} alt="" className="weapon-icon"/>
-                      </div>
-                      <div className="d-flex">
-                        <img src={require("./images/artifacts/archaic_petra.webp")} alt="" className="artifact-icon"/>
-                        <img src={require("./images/artifacts/archaic_petra.webp")} alt="" className="artifact-icon"/>
-                      </div>
+                    <div className="card-footer p-0 d-flex justify-content-start align-items-center">
+                      <span className="me-auto">Good for:</span>
+                      {t.bosses.map(b =>
+                        <React.Fragment key={b.$oid}>
+                          <img
+                            src={require(`./images/bosses/${this.getBossById(b.$oid).value}.webp`)}
+                            alt=""
+                          />
+                        </React.Fragment>
+                      )}
                     </div>
                   </div>
-
-                  <div className="container-fluid p-0 d-flex flex-column">
-                    <div className="container-fluid p-0">
-                      <img src={require("./images/characters/icons/xingqiu_icon.webp")} alt="" />
-                    </div>
-                    <div className="d-flex justify-content-between">
-                      <div>
-                        <img src={require("./images/weapons/akuoumaru.webp")} alt="" className="weapon-icon"/>
-                      </div>
-                      <div className="d-flex">
-                        <img src={require("./images/artifacts/archaic_petra.webp")} alt="" className="artifact-icon"/>
-                        <img src={require("./images/artifacts/archaic_petra.webp")} alt="" className="artifact-icon"/>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="container-fluid p-0 d-flex flex-column">
-                    <div className="container-fluid p-0">
-                      <img src={require("./images/characters/icons/xingqiu_icon.webp")} alt="" />
-                    </div>
-                    <div className="d-flex justify-content-between">
-                      <div>
-                        <img src={require("./images/weapons/akuoumaru.webp")} alt="" className="weapon-icon"/>
-                      </div>
-                      <div className="d-flex">
-                        <img src={require("./images/artifacts/archaic_petra.webp")} alt="" className="artifact-icon"/>
-                        <img src={require("./images/artifacts/archaic_petra.webp")} alt="" className="artifact-icon"/>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="container-fluid p-0 d-flex flex-column">
-                    <div className="container-fluid p-0">
-                      <img src={require("./images/characters/icons/xingqiu_icon.webp")} alt="" />
-                    </div>
-                    <div className="d-flex justify-content-between">
-                      <div>
-                        <img src={require("./images/weapons/akuoumaru.webp")} alt="" className="weapon-icon"/>
-                      </div>
-                      <div className="d-flex">
-                        <img src={require("./images/artifacts/archaic_petra.webp")} alt="" className="artifact-icon"/>
-                        <img src={require("./images/artifacts/archaic_petra.webp")} alt="" className="artifact-icon"/>
-                      </div>
-                    </div>
-                  </div>
-
-                </div>
-                <div className="card-footer p-0 d-flex justify-content-start">
-                  <img src={require("./images/bosses/andrius.webp")} alt="" />
-                  <img src={require("./images/bosses/dvalin.webp")} alt="" />
-                  <img src={require("./images/bosses/childe.webp")} alt="" />
-                  <img src={require("./images/bosses/azhdaha.webp")} alt="" />
-                  <img src={require("./images/bosses/la_signora.webp")} alt="" />
-                  <img src={require("./images/bosses/magatsu_mitake_narukami_no_mikoto.webp")} alt="" />
-                </div>
-              </div>
-
-              <div className="card mt-5">
-                <div className="card-header">Raiden National Team</div>
-                <div className="card-body p-0 d-flex justify-content-evenly">
-                  <img src={require("./images/characters/icons/xingqiu_icon.webp")} alt="" />
-                  <img src={require("./images/characters/icons/xingqiu_icon.webp")} alt="" />
-                  <img src={require("./images/characters/icons/xingqiu_icon.webp")} alt="" />
-                  <img src={require("./images/characters/icons/xingqiu_icon.webp")} alt="" />
-                </div>
-                <div className="card-footer p-0 d-flex justify-content-start">
-                  <img src={require("./images/bosses/andrius.webp")} alt="" />
-                  <img src={require("./images/bosses/dvalin.webp")} alt="" />
-                  <img src={require("./images/bosses/childe.webp")} alt="" />
-                  <img src={require("./images/bosses/azhdaha.webp")} alt="" />
-                  <img src={require("./images/bosses/la_signora.webp")} alt="" />
-                  <img src={require("./images/bosses/magatsu_mitake_narukami_no_mikoto.webp")} alt="" />
-                </div>
-              </div>
-
-              <div className="card mt-5">
-                <div className="card-header">Raiden National Team</div>
-                <div className="card-body p-0 d-flex justify-content-evenly">
-                  <img src={require("./images/characters/icons/xingqiu_icon.webp")} alt="" />
-                  <img src={require("./images/characters/icons/xingqiu_icon.webp")} alt="" />
-                  <img src={require("./images/characters/icons/xingqiu_icon.webp")} alt="" />
-                  <img src={require("./images/characters/icons/xingqiu_icon.webp")} alt="" />
-                </div>
-                <div className="card-footer p-0 d-flex justify-content-start">
-                  <img src={require("./images/bosses/andrius.webp")} alt="" />
-                  <img src={require("./images/bosses/dvalin.webp")} alt="" />
-                  <img src={require("./images/bosses/childe.webp")} alt="" />
-                  <img src={require("./images/bosses/azhdaha.webp")} alt="" />
-                  <img src={require("./images/bosses/la_signora.webp")} alt="" />
-                  <img src={require("./images/bosses/magatsu_mitake_narukami_no_mikoto.webp")} alt="" />
-                </div>
-              </div>
-
-              <div className="card mt-5">
-                <div className="card-header">Raiden National Team</div>
-                <div className="card-body p-0 d-flex justify-content-evenly">
-                  <img src={require("./images/characters/icons/xingqiu_icon.webp")} alt="" />
-                  <img src={require("./images/characters/icons/xingqiu_icon.webp")} alt="" />
-                  <img src={require("./images/characters/icons/xingqiu_icon.webp")} alt="" />
-                  <img src={require("./images/characters/icons/xingqiu_icon.webp")} alt="" />
-                </div>
-                <div className="card-footer p-0 d-flex justify-content-start">
-                  <img src={require("./images/bosses/andrius.webp")} alt="" />
-                  <img src={require("./images/bosses/dvalin.webp")} alt="" />
-                  <img src={require("./images/bosses/childe.webp")} alt="" />
-                  <img src={require("./images/bosses/azhdaha.webp")} alt="" />
-                  <img src={require("./images/bosses/la_signora.webp")} alt="" />
-                  <img src={require("./images/bosses/magatsu_mitake_narukami_no_mikoto.webp")} alt="" />
-                </div>
-              </div>
+                </React.Fragment>
+              ))}
 
             </div>
           </div>
