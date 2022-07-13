@@ -99,12 +99,3 @@ main {
 .card-footer {
     padding-left: 2% !important;
 }
-
-.card-footer>img {
-    width: 9%;
-    background-color: var(--bs-yellow);
-    border: 1px solid var(--bs-gray);
-    border-radius: 0.8vw;
-    margin: 1% 0;
-    margin-right: 4px;
-}

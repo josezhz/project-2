@@ -131,9 +131,9 @@ class App extends React.Component {
           </div>
 
           <div className="container-fluid p-0 pb-5 content bg-light overflow-auto">
-            <div className="container" style={{ maxWidth: "576px" }}>
+            <div className="container" style={{ maxWidth: "768px" }}>
 
-              <div className="card mt-5">
+              {/* <div className="card mt-5">
                 <div className="card-header">Example Team</div>
                 <div className="card-body p-0 d-flex justify-content-evenly">
                   <img src={require("./images/characters/icons/xingqiu_icon.webp")} alt="" />
@@ -150,22 +150,22 @@ class App extends React.Component {
                   <img src={require("./images/bosses/la_signora.webp")} alt="" />
                   <img src={require("./images/bosses/magatsu_mitake_narukami_no_mikoto.webp")} alt="" />
                 </div>
-              </div>
+              </div> */}
 
               {this.state.teams.map(t => (
                 <React.Fragment key={t._id}>
                   <div className="card mt-5">
                     <div className="card-header fs-5">{t.team_name}</div>
-                    <div className="card-body p-0 d-flex justify-content-evenly">
+                    <div className="card-body p-0 px-1 px-md-3 d-flex justify-content-between">
                       {t.team_composition.map(m =>
                         <React.Fragment key={m.character.$oid}>
                           <img
                             src={require(`./images/characters/icons/${this.getCharacterById(m.character.$oid).value}_icon.webp`)}
                             alt=""
+                            className="border border-2 border-secondary"
                             style={{
                               backgroundColor: this.getCharacterById(m.character.$oid).rarity === 5 ? "#ffc107" : "#6f42c1",
-                              width: "23%",
-                              border: "2px solid #6c757d",
+                              width: "23.5%",
                               borderRadius: "1.5vw",
                               margin: "2% 0"
                             }}
@@ -173,13 +173,17 @@ class App extends React.Component {
                         </React.Fragment>
                       )}
                     </div>
-                    <div className="card-footer p-0 d-flex justify-content-start align-items-center">
+                    <div className="card-footer py-1 py-md-2 pe-1 pe-md-3 d-flex justify-content-start align-items-center">
                       <span className="me-auto">Good for:</span>
                       {t.bosses.map(b =>
                         <React.Fragment key={b.$oid}>
                           <img
                             src={require(`./images/bosses/${this.getBossById(b.$oid).value}.webp`)}
                             alt=""
+                            className="ms-1 ms-md-2 bg-warning border border-1 border-secondary rounded"
+                            style={{
+                              width: "9%"
+                            }}
                           />
                         </React.Fragment>
                       )}
