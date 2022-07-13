@@ -166,21 +166,21 @@ class App extends React.Component {
                             style={{
                               backgroundColor: this.getCharacterById(m.character.$oid).rarity === 5 ? "#ffc107" : "#6f42c1",
                               width: "23.5%",
-                              borderRadius: "1.5vw",
+                              borderRadius: "8%",
                               margin: "2% 0"
                             }}
                           />
                         </React.Fragment>
                       )}
                     </div>
-                    <div className="card-footer py-1 py-md-2 pe-1 pe-md-3 d-flex justify-content-start align-items-center">
+                    <div className="card-footer py-1 px-0 px-md-2 d-flex justify-content-start align-items-center">
                       <span className="me-auto">Good for:</span>
                       {t.bosses.map(b =>
                         <React.Fragment key={b.$oid}>
                           <img
                             src={require(`./images/bosses/${this.getBossById(b.$oid).value}.webp`)}
                             alt=""
-                            className="ms-1 ms-md-2 bg-warning border border-1 border-secondary rounded"
+                            className="me-1 bg-danger border border-1 border-secondary rounded-pill"
                             style={{
                               width: "9%"
                             }}
