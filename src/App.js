@@ -120,7 +120,7 @@ class App extends React.Component {
             {/* <h1>Filter</h1> */}
           </div>
 
-          <div className="container-fluid p-0 pb-5 content bg-light overflow-auto">
+          <div className="container-fluid p-0 pt-3 content bg-light overflow-auto">
             <div className="container" style={{ maxWidth: "768px" }}>
 
               {this.state.teams.map(t => (

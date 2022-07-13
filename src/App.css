@@ -87,11 +87,3 @@ main {
     overflow: hidden;
     text-overflow: ellipsis;
 }
-
-/* .card-body>img {
-    width: 23%;
-    background-color: var(--bs-purple);
-    border: 2px solid var(--bs-gray);
-    border-radius: 1.5vw;
-    margin: 2% 0;
-} */

@@ -9,8 +9,8 @@ export default class DisplayTeam extends React.Component {
     render() {
         return (
             <React.Fragment>
-                <div className="card mt-5">
-                    <div className="card-header ps-2 ps-md-3 fs-5">{this.props.t.team_name}</div>
+                <div className="card mb-5" style={{ backgroundColor: "rgba(255, 255, 255, .8)" }}>
+                    <div className="card-header border-bottom ps-2 ps-md-3 fs-5" style={{ backgroundColor: "#dee2e6" }}>{this.props.t.team_name}</div>
                     <div className="card-body p-0 px-1 px-md-3 d-flex justify-content-between">
                         {this.props.t.team_composition.map(m =>
                             <React.Fragment key={m.character.$oid}>
@@ -28,7 +28,8 @@ export default class DisplayTeam extends React.Component {
                             </React.Fragment>
                         )}
                     </div>
-                    <div className="card-footer ps-2 ps-md-3 pe-1 pe-md-2 py-1 d-flex justify-content-start align-items-center">
+                    <div
+                        className="card-body border-top bg-none ps-2 ps-md-3 pe-1 pe-md-2 py-1 d-flex justify-content-start align-items-center">
                         <span className="me-auto">Good for:</span>
                         {this.props.t.bosses.map(b =>
                             <React.Fragment key={b.$oid}>
@@ -45,10 +46,11 @@ export default class DisplayTeam extends React.Component {
                     </div>
                     <div className="card-body p-0">
                         <div className="accordion accordion-flush border-top">
-                            <div className="accordion-item">
+                            <div className="accordion-item bg-none">
                                 <div className="accordion-header">
                                     <button
                                         className={"accordion-button px-2 px-md-3 py-1" + (this.state.rotationGuideCollapsed ? " collapsed" : "")}
+                                        style={{ backgroundColor: "#dee2e6", borderRadius: "0" }}
                                         type="button"
                                         onClick={() => { this.setState({ rotationGuideCollapsed: !this.state.rotationGuideCollapsed }) }}
                                     >
@@ -58,9 +60,9 @@ export default class DisplayTeam extends React.Component {
                                 <div className={"accordion-collapse collapse" + (this.state.rotationGuideCollapsed ? "" : " show")}>
                                     <div className="accordion-body">
                                         <h5>Steps:</h5>
-                                        <ul class="list-group list-group-flush">
+                                        <ul className="list-group list-group-flush">
                                             {this.props.t.rotation_guide.map((s, index) =>
-                                                <li class="list-group-item border-0 d-flex align-items-center" key={index}>
+                                                <li className="list-group-item border-0 d-flex align-items-center bg-none" key={index}>
                                                     <span style={{ width: "24px" }}>{index + 1}.</span>
                                                     <img
                                                         src={require(`../images/characters/icons/${this.props.getCharacterById(s.character.$oid).value}_icon.webp`)}
@@ -84,11 +86,12 @@ export default class DisplayTeam extends React.Component {
                                 </div>
                             </div>
                         </div>
-                        <div className="accordion accordion-flush border-top">
-                            <div className="accordion-item rounded-bottom">
+                        <div className="accordion accordion-flush border-top border-light">
+                            <div className="accordion-item bg-none">
                                 <div className="accordion-header">
                                     <button
                                         className={"accordion-button px-2 px-md-3 py-1" + (this.state.notesCollapsed ? " collapsed" : "")}
+                                        style={{ backgroundColor: "#dee2e6" }}
                                         type="button"
                                         onClick={() => { this.setState({ notesCollapsed: !this.state.notesCollapsed }) }}
                                     >
@@ -99,8 +102,8 @@ export default class DisplayTeam extends React.Component {
                                     <div className="accordion-body">
                                         <ul className="list-group list-group-flush">
                                             {this.props.t.notes.map((n, index) =>
-                                                <li key={index} className="list-group-item border-0 d-flex">
-                                                    <div style={{minWidth: "16px"}}>
+                                                <li key={index} className="list-group-item border-0 d-flex bg-none">
+                                                    <div style={{ minWidth: "16px" }}>
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
                                                             <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z" />
                                                         </svg>
@@ -115,7 +118,7 @@ export default class DisplayTeam extends React.Component {
                         </div>
                     </div>
                 </div>
-            </React.Fragment>
+            </React.Fragment >
         )
     }
 }
