@@ -63,7 +63,7 @@ main {
     }
 
     .filter-btn {
-        z-index: 1;
+        z-index: 3;
         position: absolute;
         bottom: 48px;
         right: 32px;
@@ -88,14 +88,10 @@ main {
     text-overflow: ellipsis;
 }
 
-.card-body>img {
+/* .card-body>img {
     width: 23%;
     background-color: var(--bs-purple);
     border: 2px solid var(--bs-gray);
     border-radius: 1.5vw;
     margin: 2% 0;
-}
-
-.card-footer {
-    padding-left: 2% !important;
-}
+} */

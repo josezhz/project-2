@@ -3,8 +3,7 @@ import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 // import "bootstrap/dist/js/bootstrap.bundle.min";
 import "./App.css";
-import Teams from "./pages/Teams/Teams";
-import AddTeam from "./pages/AddTeam/AddTeam";
+import DisplayTeam from "./components/DisplayTeam";
 
 class App extends React.Component {
   state = {
@@ -41,25 +40,16 @@ class App extends React.Component {
     });
   }
 
-  getCharacterById(_id) {
+  getCharacterById = (_id) => {
     return this.allCharacters.filter(c => c._id === _id)[0];
   }
-  getBossById(_id) {
+  getBossById = (_id) => {
     return this.allBosses.filter(b => b._id === _id)[0];
   }
 
   render() {
     return (
       <React.Fragment>
-        <Teams
-          teams={this.state.teams}
-          allCharacters={this.allCharacters}
-          allWeapons={this.allWeapons}
-          allArtifacts={this.allArtifacts}
-          allBosses={this.allBosses}
-        />
-        <AddTeam />
-
 
         <header>
           <nav className="navbar navbar-expand-sm navbar-light bg-light p-0">
@@ -133,62 +123,15 @@ class App extends React.Component {
           <div className="container-fluid p-0 pb-5 content bg-light overflow-auto">
             <div className="container" style={{ maxWidth: "768px" }}>
 
-              {/* <div className="card mt-5">
-                <div className="card-header">Example Team</div>
-                <div className="card-body p-0 d-flex justify-content-evenly">
-                  <img src={require("./images/characters/icons/xingqiu_icon.webp")} alt="" />
-                  <img src={require("./images/characters/icons/xingqiu_icon.webp")} alt="" />
-                  <img src={require("./images/characters/icons/xingqiu_icon.webp")} alt="" />
-                  <img src={require("./images/characters/icons/xingqiu_icon.webp")} alt="" />
-                </div>
-                <div className="card-footer p-0 d-flex justify-content-start align-items-center">
-                  <span className="me-auto">Good for:</span>
-                  <img src={require("./images/bosses/andrius.webp")} alt="" />
-                  <img src={require("./images/bosses/dvalin.webp")} alt="" />
-                  <img src={require("./images/bosses/childe.webp")} alt="" />
-                  <img src={require("./images/bosses/azhdaha.webp")} alt="" />
-                  <img src={require("./images/bosses/la_signora.webp")} alt="" />
-                  <img src={require("./images/bosses/magatsu_mitake_narukami_no_mikoto.webp")} alt="" />
-                </div>
-              </div> */}
-
               {this.state.teams.map(t => (
                 <React.Fragment key={t._id}>
-                  <div className="card mt-5">
-                    <div className="card-header fs-5">{t.team_name}</div>
-                    <div className="card-body p-0 px-1 px-md-3 d-flex justify-content-between">
-                      {t.team_composition.map(m =>
-                        <React.Fragment key={m.character.$oid}>
-                          <img
-                            src={require(`./images/characters/icons/${this.getCharacterById(m.character.$oid).value}_icon.webp`)}
-                            alt=""
-                            className="border border-2 border-secondary"
-                            style={{
-                              backgroundColor: this.getCharacterById(m.character.$oid).rarity === 5 ? "#ffc107" : "#6f42c1",
-                              width: "23.5%",
-                              borderRadius: "8%",
-                              margin: "2% 0"
-                            }}
-                          />
-                        </React.Fragment>
-                      )}
-                    </div>
-                    <div className="card-footer py-1 px-0 px-md-2 d-flex justify-content-start align-items-center">
-                      <span className="me-auto">Good for:</span>
-                      {t.bosses.map(b =>
-                        <React.Fragment key={b.$oid}>
-                          <img
-                            src={require(`./images/bosses/${this.getBossById(b.$oid).value}.webp`)}
-                            alt=""
-                            className="me-1 bg-danger border border-1 border-secondary rounded-pill"
-                            style={{
-                              width: "9%"
-                            }}
-                          />
-                        </React.Fragment>
-                      )}
-                    </div>
-                  </div>
+
+                  <DisplayTeam
+                    t={t}
+                    getCharacterById={this.getCharacterById}
+                    getBossById={this.getBossById}
+                  />
+                  
                 </React.Fragment>
               ))}
 
