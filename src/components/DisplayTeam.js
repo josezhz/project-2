@@ -10,44 +10,94 @@ export default class DisplayTeam extends React.Component {
 
     displayTeamComposition = t => (
         <React.Fragment>
-            <div className="card-body p-0 px-1 px-md-3 d-flex justify-content-between">
+            <div className={"card-body p-0 px-1 px-md-3 d-flex justify-content-between" + (this.state.characterExpanded ? "" : " pb-1 pb-md-3")}>
                 {t.team_composition.map(m =>
                     <React.Fragment key={m.character.$oid}>
                         <img
                             src={require(`../images/characters/icons/${this.props.getCharacterById(m.character.$oid).value}_icon.webp`)}
                             alt=""
-                            className="border border-2 border-secondary"
+                            className={"border" + (this.state.characterExpanded === m ? " border-5" : " border-2 border-secondary")}
                             style={{
                                 backgroundColor: this.props.getCharacterById(m.character.$oid).rarity === 5 ? "#ffc107" : "#6f42c1",
                                 width: "23.5%",
                                 borderRadius: "8%",
-                                marginTop: "2%"
+                                marginTop: "2%",
+                                cursor: "pointer"
                             }}
-                            onClick={this.setState({characterExpanded: m})}
+                            onClick={() => { this.setState({ characterExpanded: m }) }}
                         />
                     </React.Fragment>
                 )}
             </div>
             {this.displayCharacterDetails()}
-            <div
-                className="text-center"
-                style={{ cursor: "pointer" }}
-                onClick={() => { this.setState({ teamCompositionExpanded: true }) }}
-            >
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                    <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" />
-                </svg>
-            </div>
         </React.Fragment>
     )
 
-    displayTeamCompositionDetails = t => (
-        <React.Fragment key={t._id.$oid}>
-            <div className="card-body p-0 px-1 px-md-3 pt-1">
-                {t.team_composition.map((m, index) =>
-                    <React.Fragment key={index}>
-                        {index ? <hr className="m-0 mb-1" /> : null}
-                        <div className="mb-1 d-flex align-items-center">
+    // displayTeamCompositionDetails = t => (
+    //     <React.Fragment key={t._id.$oid}>
+    //         <div className="card-body p-0 px-1 px-md-3 pt-1">
+    //             {t.team_composition.map((m, index) =>
+    //                 <React.Fragment key={index}>
+    //                     {index ? <hr className="m-0 mb-1" /> : null}
+    //                     <div className="mb-1 d-flex align-items-center">
+    //                         <img
+    //                             src={require(`../images/weapon_types/${this.props.getCharacterById(m.character.$oid).weapon_type}.webp`)}
+    //                             alt=""
+    //                             style={{
+    //                                 height: "32px"
+    //                             }}
+    //                         />
+    //                         <span className="fs-6 ms-1 me-auto">{this.props.getCharacterById(m.character.$oid).display}</span>
+    //                         {m.roles.map(r =>
+    //                             <span
+    //                                 className="badge rounded-pill ms-1 d-flex align-items-center"
+    //                                 style={{
+    //                                     backgroundColor: (() => {
+    //                                         if (r === "Main DPS") { return "#dc3545" }
+    //                                         else if (r === "Sub DPS") { return "#fd7e14" }
+    //                                         else if (r === "Support") { return "#0d6efd" }
+    //                                         else if (r === "Heal") { return "#198754" }
+    //                                     })()
+    //                                 }}
+    //                             >{r}</span>
+    //                         )}
+    //                     </div>
+    //                     <div className="d-flex mb-1 border">
+    //                         <div className="" style={{ width: "30%" }}>
+    //                             <img
+    //                                 src={require(`../images/characters/icons/${this.props.getCharacterById(m.character.$oid).value}_icon.webp`)}
+    //                                 alt=""
+    //                                 className="border border-2 border-secondary"
+    //                                 style={{
+    //                                     backgroundColor: this.props.getCharacterById(m.character.$oid).rarity === 5 ? "#ffc107" : "#6f42c1",
+    //                                     width: "100%",
+    //                                     borderRadius: "5%"
+    //                                 }}
+    //                             />
+    //                         </div>
+    //                     </div>
+    //                 </React.Fragment>
+    //             )}
+    //         </div>
+    //         <div
+    //             className="text-center"
+    //             style={{ cursor: "pointer" }}
+    //             onClick={() => { this.setState({ teamCompositionExpanded: false }) }}
+    //         >
+    //             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+    //                 <path fill-rule="evenodd" d="M7.646 4.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 5.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z" />
+    //             </svg>
+    //         </div>
+    //     </React.Fragment>
+    // )
+
+    displayCharacterDetails = () => {
+        if (this.state.characterExpanded) {
+            let m = this.state.characterExpanded;
+            return (
+                <React.Fragment>
+                    <div className="p-0 px-1 px-md-3">
+                        <div className="mt-1 d-flex align-items-center">
                             <img
                                 src={require(`../images/weapon_types/${this.props.getCharacterById(m.character.$oid).weapon_type}.webp`)}
                                 alt=""
@@ -70,47 +120,90 @@ export default class DisplayTeam extends React.Component {
                                 >{r}</span>
                             )}
                         </div>
-                        <div className="d-flex mb-1 border">
-                            <div className="" style={{ width: "30%" }}>
+                        <div>
+                            <div className="mt-2">
                                 <img
-                                    src={require(`../images/characters/icons/${this.props.getCharacterById(m.character.$oid).value}_icon.webp`)}
+                                    src={require(`../images/icons/weapon.webp`)}
                                     alt=""
-                                    className="border border-2 border-secondary"
+                                    className="border border-3 bg-secondary rounded"
                                     style={{
-                                        backgroundColor: this.props.getCharacterById(m.character.$oid).rarity === 5 ? "#ffc107" : "#6f42c1",
-                                        width: "100%",
-                                        borderRadius: "5%"
+                                        height: "48px"
                                     }}
                                 />
+                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" className="mx-3" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z" />
+                                </svg>
+                                <img
+                                    src={require(`../images/weapons/${this.props.getWeaponById(m.weapon.$oid).value}.webp`)}
+                                    alt=""
+                                    className="border border-3 rounded"
+                                    style={{
+                                        height: "48px",
+                                        backgroundColor: (() => {
+                                            if (this.props.getWeaponById(m.weapon.$oid).rarity === 5) { return "#ffc107" }
+                                            else if (this.props.getWeaponById(m.weapon.$oid).rarity === 4) { return "#6f42c1" }
+                                            else if (this.props.getWeaponById(m.weapon.$oid).rarity === 3) { return "#0d6efd" }
+                                        })()
+                                    }}
+                                />
+
+                            </div>
+                            <div className="mt-2">
+                                <img
+                                    src={require(`../images/icons/artifact.webp`)}
+                                    alt=""
+                                    className="border border-3 bg-secondary rounded"
+                                    style={{
+                                        height: "48px"
+                                    }}
+                                />
+                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" className="mx-3" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z" />
+                                </svg>
+                                {m.artifacts.map((a, index) => (
+                                    <React.Fragment key={index}>
+                                        {index ?
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" viewBox="0 0 16 16">
+                                                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                                            </svg>
+                                            :
+                                            null
+                                        }
+                                        <img
+                                            src={require(`../images/artifacts/${this.props.getArtifactById(a.$oid).value}.webp`)}
+                                            alt=""
+                                            className="border border-3 rounded"
+                                            style={{
+                                                height: "48px",
+                                                backgroundColor: this.props.getArtifactById(a.$oid).rarity === 5 ? "#ffc107" : "#6f42c1"
+                                            }}
+                                        />
+                                    </React.Fragment>
+
+                                ))}
                             </div>
                         </div>
-                    </React.Fragment>
-                )}
-            </div>
-            <div
-                className="text-center"
-                style={{ cursor: "pointer" }}
-                onClick={() => { this.setState({ teamCompositionExpanded: false }) }}
-            >
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                    <path fill-rule="evenodd" d="M7.646 4.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 5.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z" />
-                </svg>
-            </div>
-        </React.Fragment>
-    )
-
-    displayCharacterDetails = () => (
-        <React.Fragment>
-            <h1>{this.state.characterExpanded.character._id}</h1>
-        </React.Fragment>
-    )
+                    </div>
+                    <div
+                        className="text-center"
+                        style={{ cursor: "pointer" }}
+                        onClick={() => { this.setState({ characterExpanded: null }) }}
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M7.646 4.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 5.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z" />
+                        </svg>
+                    </div>
+                </React.Fragment>
+            )
+        }
+    }
 
     render() {
         return (
             <React.Fragment>
                 <div className="card mb-5" style={{ backgroundColor: "rgba(255, 255, 255, .8)" }}>
                     <div className="card-header border-bottom ps-2 ps-md-3 fs-5" style={{ backgroundColor: "#dee2e6" }}>{this.props.t.team_name}</div>
-                    {this.state.teamCompositionExpanded ? this.displayTeamCompositionDetails(this.props.t) : this.displayTeamComposition(this.props.t)}
+                    {this.displayTeamComposition(this.props.t)}
                     <div
                         className="card-body border-top bg-none ps-2 ps-md-3 pe-1 pe-md-2 py-1 d-flex justify-content-start align-items-center">
                         <span className="me-auto">Good for:</span>
