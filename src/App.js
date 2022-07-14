@@ -40,12 +40,10 @@ class App extends React.Component {
     });
   }
 
-  getCharacterById = (_id) => {
-    return this.allCharacters.filter(c => c._id === _id)[0];
-  }
-  getBossById = (_id) => {
-    return this.allBosses.filter(b => b._id === _id)[0];
-  }
+  getCharacterById = _id => this.allCharacters.filter(c => c._id === _id)[0];
+  getWeaponById = _id => this.allWeapons.filter(w => w._id === _id)[0];
+  getArtifactById = _id => this.allArtifacts.filter(a => a._id === _id)[0];
+  getBossById = _id => this.allBosses.filter(b => b._id === _id)[0];
 
   render() {
     return (
@@ -129,9 +127,11 @@ class App extends React.Component {
                   <DisplayTeam
                     t={t}
                     getCharacterById={this.getCharacterById}
+                    getWeaponById={this.getWeaponById}
+                    getArtifactById={this.getArtifactById}
                     getBossById={this.getBossById}
                   />
-                  
+
                 </React.Fragment>
               ))}
 
