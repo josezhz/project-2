@@ -2,6 +2,8 @@ import React from "react";
 
 export default class DisplayTeam extends React.Component {
     state = {
+        teamCompositionExpanded: false,
+        characterExpanded: null,
         rotationGuideCollapsed: true,
         notesCollapsed: true
     }
@@ -19,27 +21,31 @@ export default class DisplayTeam extends React.Component {
                                 backgroundColor: this.props.getCharacterById(m.character.$oid).rarity === 5 ? "#ffc107" : "#6f42c1",
                                 width: "23.5%",
                                 borderRadius: "8%",
-                                margin: "2% 0"
+                                marginTop: "2%"
                             }}
+                            onClick={this.setState({characterExpanded: m})}
                         />
                     </React.Fragment>
                 )}
             </div>
-            <div className="text-center">
+            {this.displayCharacterDetails()}
+            <div
+                className="text-center"
+                style={{ cursor: "pointer" }}
+                onClick={() => { this.setState({ teamCompositionExpanded: true }) }}
+            >
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                    <path fill-rule="evenodd" d="M1.646 6.646a.5.5 0 0 1 .708 0L8 12.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" />
-                    <path fill-rule="evenodd" d="M1.646 2.646a.5.5 0 0 1 .708 0L8 8.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" />
+                    <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" />
                 </svg>
             </div>
         </React.Fragment>
-
     )
 
     displayTeamCompositionDetails = t => (
-        <React.Fragment>
+        <React.Fragment key={t._id.$oid}>
             <div className="card-body p-0 px-1 px-md-3 pt-1">
                 {t.team_composition.map((m, index) =>
-                    <React.Fragment key={m.character.$oid}>
+                    <React.Fragment key={index}>
                         {index ? <hr className="m-0 mb-1" /> : null}
                         <div className="mb-1 d-flex align-items-center">
                             <img
@@ -64,12 +70,12 @@ export default class DisplayTeam extends React.Component {
                                 >{r}</span>
                             )}
                         </div>
-                        <div className="d-flex">
-                            <div style={{ width: "30%" }}>
+                        <div className="d-flex mb-1 border">
+                            <div className="" style={{ width: "30%" }}>
                                 <img
                                     src={require(`../images/characters/icons/${this.props.getCharacterById(m.character.$oid).value}_icon.webp`)}
                                     alt=""
-                                    className="border border-2 border-secondary mb-1 mb-md-3"
+                                    className="border border-2 border-secondary"
                                     style={{
                                         backgroundColor: this.props.getCharacterById(m.character.$oid).rarity === 5 ? "#ffc107" : "#6f42c1",
                                         width: "100%",
@@ -77,35 +83,25 @@ export default class DisplayTeam extends React.Component {
                                     }}
                                 />
                             </div>
-                            <div className="mb-1 mb-md-3 d-flex flex-column justify-content-end text-center" style={{ width: "20%" }}>
-                                <div>
-                                    <img
-                                        src={require(`../images/icons/weapon.webp`)}
-                                        alt=""
-                                        className="bg-secondary rounded-pill border border-2 border-dark"
-                                        style={{ width: "50%" }}
-                                    />
-                                </div>
-                                <img
-                                    src={require(`../images/weapons/${this.props.getWeaponById(m.weapon.$oid).value}.webp`)}
-                                    alt=""
-                                    className="border border-2 border-secondary"
-                                    style={{
-                                        backgroundColor: (() => {
-                                            if (this.props.getWeaponById(m.weapon.$oid).rarity === 5) { return "#ffc107" }
-                                            else if (this.props.getWeaponById(m.weapon.$oid).rarity === 4) { return "#6f42c1" }
-                                            else if (this.props.getWeaponById(m.weapon.$oid).rarity === 3) { return "#0d6efd" }
-                                        })(),
-                                        width: "100%",
-                                        borderRadius: "5%"
-                                    }}
-                                />
-                            </div>
-                            <div style={{ width: "40%" }}></div>
                         </div>
                     </React.Fragment>
                 )}
             </div>
+            <div
+                className="text-center"
+                style={{ cursor: "pointer" }}
+                onClick={() => { this.setState({ teamCompositionExpanded: false }) }}
+            >
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M7.646 4.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 5.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z" />
+                </svg>
+            </div>
+        </React.Fragment>
+    )
+
+    displayCharacterDetails = () => (
+        <React.Fragment>
+            <h1>{this.state.characterExpanded.character._id}</h1>
         </React.Fragment>
     )
 
@@ -114,8 +110,7 @@ export default class DisplayTeam extends React.Component {
             <React.Fragment>
                 <div className="card mb-5" style={{ backgroundColor: "rgba(255, 255, 255, .8)" }}>
                     <div className="card-header border-bottom ps-2 ps-md-3 fs-5" style={{ backgroundColor: "#dee2e6" }}>{this.props.t.team_name}</div>
-                    {/* {this.displayTeamComposition(this.props.t)} */}
-                    {this.displayTeamCompositionDetails(this.props.t)}
+                    {this.state.teamCompositionExpanded ? this.displayTeamCompositionDetails(this.props.t) : this.displayTeamComposition(this.props.t)}
                     <div
                         className="card-body border-top bg-none ps-2 ps-md-3 pe-1 pe-md-2 py-1 d-flex justify-content-start align-items-center">
                         <span className="me-auto">Good for:</span>
