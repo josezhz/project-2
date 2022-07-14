@@ -52,7 +52,7 @@ class App extends React.Component {
         <header>
           <nav className="navbar navbar-expand-sm navbar-light bg-light p-0">
             <div className="container-fluid bg-light p-0">
-              <button className="navbar-brand border-0 bg-none ms-md-3" onClick={() => { this.setState({ active: "explore" }) }}>
+              <button className="navbar-brand border-0 bg-none ms-md-3" onClick={() => { this.setState({ active: "explore", navbarHidden: true, filterHidden: true }) }}>
                 <img src={require("./images/logos/logo.png")} alt="" className="" height="48px" />
               </button>
               <button className="d-sm-none border-0 bg-none" onClick={() => { this.setState({ navbarHidden: !this.state.navbarHidden }) }}>
