@@ -41,16 +41,25 @@ export default class DisplayTeam extends React.Component {
                     <div className="p-0 px-1 px-md-3">
                         <div className="mt-1 d-flex align-items-center">
                             <img
-                                src={require(`../images/weapon_types/${this.props.getCharacterById(m.character.$oid).weapon_type}.webp`)}
+                                src={require(`../images/elements/${this.props.getCharacterById(m.character.$oid).element.toLowerCase()}.svg`)}
                                 alt=""
+                                className="bg-light border me-1 rounded"
                                 style={{
-                                    height: "32px"
+                                    height: "48px"
                                 }}
                             />
-                            <span className="fs-6 ms-1 me-auto">{this.props.getCharacterById(m.character.$oid).display}</span>
+                            <img
+                                src={require(`../images/weapon_types/${this.props.getCharacterById(m.character.$oid).weapon_type}1.webp`)}
+                                alt=""
+                                className="me-auto bg-light border rounded"
+                                style={{
+                                    height: "48px"
+                                }}
+                            />
+                            {/* <span className="fs-6 ms-1 me-auto">{this.props.getCharacterById(m.character.$oid).display}</span> */}
                             {m.roles.map(r =>
                                 <span
-                                    className="badge rounded-pill ms-1 d-flex align-items-center"
+                                    className="badge rounded-pill ms-1 d-flex align-items-center fs-6"
                                     style={{
                                         backgroundColor: (() => {
                                             if (r === "Main DPS") { return "#dc3545" }
@@ -62,6 +71,7 @@ export default class DisplayTeam extends React.Component {
                                 >{r}</span>
                             )}
                         </div>
+                        <h5>{this.props.getCharacterById(m.character.$oid).display}</h5>
                         <div>
                             <div className="mt-2">
                                 <img
