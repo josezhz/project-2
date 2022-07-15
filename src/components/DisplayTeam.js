@@ -33,64 +33,6 @@ export default class DisplayTeam extends React.Component {
         </React.Fragment>
     )
 
-    // displayTeamCompositionDetails = t => (
-    //     <React.Fragment key={t._id.$oid}>
-    //         <div className="card-body p-0 px-1 px-md-3 pt-1">
-    //             {t.team_composition.map((m, index) =>
-    //                 <React.Fragment key={index}>
-    //                     {index ? <hr className="m-0 mb-1" /> : null}
-    //                     <div className="mb-1 d-flex align-items-center">
-    //                         <img
-    //                             src={require(`../images/weapon_types/${this.props.getCharacterById(m.character.$oid).weapon_type}.webp`)}
-    //                             alt=""
-    //                             style={{
-    //                                 height: "32px"
-    //                             }}
-    //                         />
-    //                         <span className="fs-6 ms-1 me-auto">{this.props.getCharacterById(m.character.$oid).display}</span>
-    //                         {m.roles.map(r =>
-    //                             <span
-    //                                 className="badge rounded-pill ms-1 d-flex align-items-center"
-    //                                 style={{
-    //                                     backgroundColor: (() => {
-    //                                         if (r === "Main DPS") { return "#dc3545" }
-    //                                         else if (r === "Sub DPS") { return "#fd7e14" }
-    //                                         else if (r === "Support") { return "#0d6efd" }
-    //                                         else if (r === "Heal") { return "#198754" }
-    //                                     })()
-    //                                 }}
-    //                             >{r}</span>
-    //                         )}
-    //                     </div>
-    //                     <div className="d-flex mb-1 border">
-    //                         <div className="" style={{ width: "30%" }}>
-    //                             <img
-    //                                 src={require(`../images/characters/icons/${this.props.getCharacterById(m.character.$oid).value}_icon.webp`)}
-    //                                 alt=""
-    //                                 className="border border-2 border-secondary"
-    //                                 style={{
-    //                                     backgroundColor: this.props.getCharacterById(m.character.$oid).rarity === 5 ? "#ffc107" : "#6f42c1",
-    //                                     width: "100%",
-    //                                     borderRadius: "5%"
-    //                                 }}
-    //                             />
-    //                         </div>
-    //                     </div>
-    //                 </React.Fragment>
-    //             )}
-    //         </div>
-    //         <div
-    //             className="text-center"
-    //             style={{ cursor: "pointer" }}
-    //             onClick={() => { this.setState({ teamCompositionExpanded: false }) }}
-    //         >
-    //             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-    //                 <path fill-rule="evenodd" d="M7.646 4.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 5.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z" />
-    //             </svg>
-    //         </div>
-    //     </React.Fragment>
-    // )
-
     displayCharacterDetails = () => {
         if (this.state.characterExpanded) {
             let m = this.state.characterExpanded;
@@ -131,7 +73,7 @@ export default class DisplayTeam extends React.Component {
                                     }}
                                 />
                                 <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" className="mx-3" viewBox="0 0 16 16">
-                                    <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z" />
+                                <path d="M9.502 5.513a.144.144 0 0 0-.202.134V6.65a.5.5 0 0 1-.5.5H2.5v2.9h6.3a.5.5 0 0 1 .5.5v1.003c0 .108.11.176.202.134l3.984-2.933a.51.51 0 0 1 .042-.028.147.147 0 0 0 0-.252.51.51 0 0 1-.042-.028L9.502 5.513zM8.3 5.647a1.144 1.144 0 0 1 1.767-.96l3.994 2.94a1.147 1.147 0 0 1 0 1.946l-3.994 2.94a1.144 1.144 0 0 1-1.767-.96v-.503H2a.5.5 0 0 1-.5-.5v-3.9a.5.5 0 0 1 .5-.5h6.3v-.503z"/>
                                 </svg>
                                 <img
                                     src={require(`../images/weapons/${this.props.getWeaponById(m.weapon.$oid).value}.webp`)}
@@ -158,7 +100,7 @@ export default class DisplayTeam extends React.Component {
                                     }}
                                 />
                                 <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" className="mx-3" viewBox="0 0 16 16">
-                                    <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z" />
+                                <path d="M9.502 5.513a.144.144 0 0 0-.202.134V6.65a.5.5 0 0 1-.5.5H2.5v2.9h6.3a.5.5 0 0 1 .5.5v1.003c0 .108.11.176.202.134l3.984-2.933a.51.51 0 0 1 .042-.028.147.147 0 0 0 0-.252.51.51 0 0 1-.042-.028L9.502 5.513zM8.3 5.647a1.144 1.144 0 0 1 1.767-.96l3.994 2.94a1.147 1.147 0 0 1 0 1.946l-3.994 2.94a1.144 1.144 0 0 1-1.767-.96v-.503H2a.5.5 0 0 1-.5-.5v-3.9a.5.5 0 0 1 .5-.5h6.3v-.503z"/>
                                 </svg>
                                 {m.artifacts.map((a, index) => (
                                     <React.Fragment key={index}>
