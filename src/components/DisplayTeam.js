@@ -41,104 +41,127 @@ export default class DisplayTeam extends React.Component {
                     <div className="p-0 px-1 px-md-3">
                         <div className="mt-1 d-flex align-items-center">
                             <img
-                                src={require(`../images/elements/${this.props.getCharacterById(m.character.$oid).element.toLowerCase()}.svg`)}
-                                alt=""
-                                className="bg-light border me-1 rounded"
-                                style={{
-                                    height: "48px"
-                                }}
-                            />
-                            <img
                                 src={require(`../images/weapon_types/${this.props.getCharacterById(m.character.$oid).weapon_type}1.webp`)}
                                 alt=""
-                                className="me-auto bg-light border rounded"
+                                className="rounded-pill me-auto"
                                 style={{
-                                    height: "48px"
+                                    height: "36px",
+                                    backgroundColor: "#dee2e6"
                                 }}
                             />
                             {/* <span className="fs-6 ms-1 me-auto">{this.props.getCharacterById(m.character.$oid).display}</span> */}
                             {m.roles.map(r =>
                                 <span
-                                    className="badge rounded-pill ms-1 d-flex align-items-center fs-6"
+                                    className="badge rounded-pill ms-1 d-flex align-items-center"
                                     style={{
                                         backgroundColor: (() => {
                                             if (r === "Main DPS") { return "#dc3545" }
                                             else if (r === "Sub DPS") { return "#fd7e14" }
                                             else if (r === "Support") { return "#0d6efd" }
                                             else if (r === "Heal") { return "#198754" }
-                                        })()
+                                        })(),
+                                        fontSize: "12px"
                                     }}
                                 >{r}</span>
                             )}
                         </div>
-                        <h5>{this.props.getCharacterById(m.character.$oid).display}</h5>
-                        <div>
-                            <div className="mt-2">
-                                <img
-                                    src={require(`../images/icons/weapon.webp`)}
-                                    alt=""
-                                    className="border border-3 bg-secondary rounded"
+                        <div className="h-100 d-flex justify-content-center align-items-center">
+                            <img
+                                src={require(`../images/elements/${this.props.getCharacterById(m.character.$oid).element.toLowerCase()}.svg`)}
+                                alt=""
+                                style={{
+                                    height: "24px"
+                                }}
+                            />
+                            <span className="text-center mx-1" style={{fontSize: "24px"}}>{this.props.getCharacterById(m.character.$oid).display}</span>
+                            <img
+                                src={require(`../images/elements/${this.props.getCharacterById(m.character.$oid).element.toLowerCase()}.svg`)}
+                                alt=""
+                                style={{
+                                    height: "24px"
+                                }}
+                            />
+                        </div>
+                        <div className="row m-0">
+                            <div className="col-12 col-sm-6 mt-3">
+                                <div
+                                    className="text-center border border-3 rounded-pill"
                                     style={{
-                                        height: "48px"
+                                        backgroundImage: `url(${require("../images/icons/weapon.webp")})`,
+                                        backgroundSize: "contain",
+                                        backgroundRepeat: "no-repeat",
+                                        backgroundPosition: "left",
+                                        backgroundColor: "#dee2e6"
                                     }}
-                                />
-                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" className="mx-3" viewBox="0 0 16 16">
-                                <path d="M9.502 5.513a.144.144 0 0 0-.202.134V6.65a.5.5 0 0 1-.5.5H2.5v2.9h6.3a.5.5 0 0 1 .5.5v1.003c0 .108.11.176.202.134l3.984-2.933a.51.51 0 0 1 .042-.028.147.147 0 0 0 0-.252.51.51 0 0 1-.042-.028L9.502 5.513zM8.3 5.647a1.144 1.144 0 0 1 1.767-.96l3.994 2.94a1.147 1.147 0 0 1 0 1.946l-3.994 2.94a1.144 1.144 0 0 1-1.767-.96v-.503H2a.5.5 0 0 1-.5-.5v-3.9a.5.5 0 0 1 .5-.5h6.3v-.503z"/>
-                                </svg>
-                                <img
-                                    src={require(`../images/weapons/${this.props.getWeaponById(m.weapon.$oid).value}.webp`)}
-                                    alt=""
-                                    className="border border-3 rounded"
-                                    style={{
-                                        height: "48px",
-                                        backgroundColor: (() => {
-                                            if (this.props.getWeaponById(m.weapon.$oid).rarity === 5) { return "#ffc107" }
-                                            else if (this.props.getWeaponById(m.weapon.$oid).rarity === 4) { return "#6f42c1" }
-                                            else if (this.props.getWeaponById(m.weapon.$oid).rarity === 3) { return "#0d6efd" }
-                                        })()
-                                    }}
-                                />
-
+                                >
+                                    Weapon
+                                </div>
+                                <div className="text-center mt-2">
+                                    <img
+                                        src={require(`../images/weapons/${this.props.getWeaponById(m.weapon.$oid).value}.webp`)}
+                                        alt=""
+                                        className="border border-3 rounded"
+                                        style={{
+                                            height: "64px",
+                                            backgroundColor: (() => {
+                                                if (this.props.getWeaponById(m.weapon.$oid).rarity === 5) { return "#ffc107" }
+                                                else if (this.props.getWeaponById(m.weapon.$oid).rarity === 4) { return "#6f42c1" }
+                                                else if (this.props.getWeaponById(m.weapon.$oid).rarity === 3) { return "#0d6efd" }
+                                            })()
+                                        }}
+                                    />
+                                </div>
+                                <div className="text-center mt-2">{this.props.getWeaponById(m.weapon.$oid).display}</div>
                             </div>
-                            <div className="mt-2">
-                                <img
-                                    src={require(`../images/icons/artifact.webp`)}
-                                    alt=""
-                                    className="border border-3 bg-secondary rounded"
+                            <div className="col-12 col-sm-6 mt-3">
+                                <div
+                                    className="text-center border border-3 rounded-pill"
                                     style={{
-                                        height: "48px"
+                                        backgroundImage: `url(${require("../images/icons/artifact.webp")})`,
+                                        backgroundSize: "contain",
+                                        backgroundRepeat: "no-repeat",
+                                        backgroundPosition: "left",
+                                        backgroundColor: "#dee2e6"
                                     }}
-                                />
-                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" className="mx-3" viewBox="0 0 16 16">
-                                <path d="M9.502 5.513a.144.144 0 0 0-.202.134V6.65a.5.5 0 0 1-.5.5H2.5v2.9h6.3a.5.5 0 0 1 .5.5v1.003c0 .108.11.176.202.134l3.984-2.933a.51.51 0 0 1 .042-.028.147.147 0 0 0 0-.252.51.51 0 0 1-.042-.028L9.502 5.513zM8.3 5.647a1.144 1.144 0 0 1 1.767-.96l3.994 2.94a1.147 1.147 0 0 1 0 1.946l-3.994 2.94a1.144 1.144 0 0 1-1.767-.96v-.503H2a.5.5 0 0 1-.5-.5v-3.9a.5.5 0 0 1 .5-.5h6.3v-.503z"/>
-                                </svg>
-                                {m.artifacts.map((a, index) => (
-                                    <React.Fragment key={index}>
-                                        {index ?
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" viewBox="0 0 16 16">
-                                                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
-                                            </svg>
-                                            :
-                                            null
-                                        }
-                                        <img
-                                            src={require(`../images/artifacts/${this.props.getArtifactById(a.$oid).value}.webp`)}
-                                            alt=""
-                                            className="border border-3 rounded"
-                                            style={{
-                                                height: "48px",
-                                                backgroundColor: this.props.getArtifactById(a.$oid).rarity === 5 ? "#ffc107" : "#6f42c1"
-                                            }}
-                                        />
-                                    </React.Fragment>
-
-                                ))}
+                                >
+                                    Artifacts
+                                </div>
+                                <div className="text-center mt-2">
+                                    {m.artifacts.map((a, index) => (
+                                        <React.Fragment key={index}>
+                                            {index ?
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" viewBox="0 0 16 16">
+                                                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+                                                </svg>
+                                                :
+                                                null
+                                            }
+                                            <img
+                                                src={require(`../images/artifacts/${this.props.getArtifactById(a.$oid).value}.webp`)}
+                                                alt=""
+                                                className="border border-3 rounded"
+                                                style={{
+                                                    height: "64px",
+                                                    backgroundColor: this.props.getArtifactById(a.$oid).rarity === 5 ? "#ffc107" : "#6f42c1"
+                                                }}
+                                            />
+                                        </React.Fragment>
+                                    ))}
+                                </div>
+                                <div className="mt-2">
+                                    <ul>
+                                        {m.artifacts.map((a, index) => <li key={index}>{this.props.getArtifactById(a.$oid).display}</li>)}
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <div
                         className="text-center"
-                        style={{ cursor: "pointer" }}
+                        style={{
+                            cursor: "pointer",
+                            // backgroundColor: "#dee2e6"
+                        }}
                         onClick={() => { this.setState({ characterExpanded: null }) }}
                     >
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16">

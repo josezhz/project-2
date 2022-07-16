@@ -3,14 +3,14 @@ import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 // import "bootstrap/dist/js/bootstrap.bundle.min";
 import "./App.css";
-import DisplayTeam from "./components/DisplayTeam";
+import Explore from "./pages/Explore";
+import Create from "./pages/Create";
 
 class App extends React.Component {
   state = {
     teams: [],
     active: "explore",
-    navbarHidden: true,
-    filterHidden: true
+    navbarHidden: true
   }
 
   allCharacters = [];
@@ -45,6 +45,30 @@ class App extends React.Component {
   getArtifactById = _id => this.allArtifacts.filter(a => a._id === _id)[0];
   getBossById = _id => this.allBosses.filter(b => b._id === _id)[0];
 
+  renderPage() {
+    if (this.state.active === "explore") {
+      return (
+        <Explore
+          teams={this.state.teams}
+          getCharacterById={this.getCharacterById}
+          getWeaponById={this.getWeaponById}
+          getArtifactById={this.getArtifactById}
+          getBossById={this.getBossById}
+        />
+      )
+    } else if (this.state.active === "create") {
+      return (
+        <Create
+          teams={this.state.teams}
+          getCharacterById={this.getCharacterById}
+          getWeaponById={this.getWeaponById}
+          getArtifactById={this.getArtifactById}
+          getBossById={this.getBossById}
+        />
+      )
+    }
+  }
+
   render() {
     return (
       <React.Fragment>
@@ -70,7 +94,12 @@ class App extends React.Component {
                   <li className="nav-item mx-auto mx-md-0 mb-2 mb-sm-0">
                     <button
                       className={"nav-link border-0 bg-none pb-sm-0" + (this.state.active === "explore" ? " active" : "")}
-                      onClick={() => { this.setState({ active: "explore" }) }}
+                      onClick={() => {
+                        this.setState({
+                          active: "explore",
+                          navbarHidden: true
+                        })
+                      }}
                     >
                       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" className="me-1" viewBox="0 0 16 16">
                         {
@@ -89,7 +118,12 @@ class App extends React.Component {
                   <li className="nav-item mx-auto mx-md-3 mx-lg-5 mb-2 mb-sm-0">
                     <button
                       className={"nav-link border-0 bg-none pb-sm-0" + (this.state.active === "create" ? " active" : "")}
-                      onClick={() => { this.setState({ active: "create" }) }}
+                      onClick={() => {
+                        this.setState({
+                          active: "create",
+                          navbarHidden: true
+                        })
+                      }}
                     >
                       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" className="me-1" viewBox="0 0 16 16">
                         {
@@ -113,9 +147,9 @@ class App extends React.Component {
         </header>
 
         <main>
+          {this.renderPage()}
 
-          <div className={"container-fluid filter" + (this.state.filterHidden ? " hide" : "")}>
-            {/* <h1>Filter</h1> */}
+          {/* <div className={"container-fluid filter" + (this.state.filterHidden ? " hide" : "")}>
           </div>
 
           <div className="container-fluid p-0 pt-3 content bg-light overflow-auto">
@@ -147,7 +181,7 @@ class App extends React.Component {
                   <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z" />
               }
             </svg>
-          </button>
+          </button> */}
 
         </main>
 
