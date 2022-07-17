@@ -16,7 +16,7 @@ export default class DisplayTeam extends React.Component {
                         <img
                             src={require(`../images/characters/icons/${this.props.getCharacterById(m.character.$oid).value}_icon.webp`)}
                             alt=""
-                            className={"border" + (this.state.characterExpanded === m ? " border-5" : " border-2 border-secondary")}
+                            className={"border" + (this.state.characterExpanded === m ? " border-secondary" : " border-5")}
                             style={{
                                 backgroundColor: this.props.getCharacterById(m.character.$oid).rarity === 5 ? "#ffc107" : "#6f42c1",
                                 width: "23.5%",
@@ -38,7 +38,7 @@ export default class DisplayTeam extends React.Component {
             let m = this.state.characterExpanded;
             return (
                 <React.Fragment>
-                    <div className="p-0 px-1 px-md-3">
+                    <div className="px-1 px-md-3 py-0">
                         <div className="mt-1 d-flex align-items-center">
                             <img
                                 src={require(`../images/weapon_types/${this.props.getCharacterById(m.character.$oid).weapon_type}1.webp`)}

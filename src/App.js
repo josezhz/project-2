@@ -9,7 +9,7 @@ import Create from "./pages/Create";
 class App extends React.Component {
   state = {
     teams: [],
-    active: "explore",
+    active: "create",
     navbarHidden: true
   }
 
@@ -60,6 +60,10 @@ class App extends React.Component {
       return (
         <Create
           teams={this.state.teams}
+          allCharacters={this.allCharacters}
+          allWeapons={this.allWeapons}
+          allArtifacts={this.allArtifacts}
+          allBosses={this.allBosses}
           getCharacterById={this.getCharacterById}
           getWeaponById={this.getWeaponById}
           getArtifactById={this.getArtifactById}
