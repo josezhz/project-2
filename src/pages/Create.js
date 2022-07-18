@@ -6,13 +6,21 @@ export default class Create extends React.Component {
         teamName: "",
         teamNameUsed: false,
         teamMembersBeingAdded: [],
+
         selectingCharacter: false,
         selectingWeapon: false,
         selectingArtifacts: false,
+        selectingBosses: false,
+
         characterBeingAdded: null,
         weaponBeingAdded: null,
         artifactsBeingAdded: [],
-        rolesBeingAdded: []
+        rolesBeingAdded: [],
+
+        bossesBeingAdded: [],
+        rotationGuideStepsBeingAdded: [],
+        characterBeingAddedForRotationGuide: null,
+        actionBeingAddedForRotationGuide: null
     }
 
     updateTeamName = e => {
@@ -49,7 +57,7 @@ export default class Create extends React.Component {
                         backgroundColor: "rgba(200, 200, 200, .5)"
                     }}
                 >
-                    {this.props.allCharacters.map(c =>
+                    {this.props.allCharacters.filter(c => !this.state.teamMembersBeingAdded.map(m => m.character.$oid).includes(c._id)).map(c =>
                         <React.Fragment key={c._id}>
                             <div className="col-4 col-sm-3 col-md-2 p-1">
                                 <img
@@ -173,7 +181,6 @@ export default class Create extends React.Component {
                                         } else if (this.state.artifactsBeingAdded.includes(a._id)) {
                                             let clone = this.state.artifactsBeingAdded
                                             let index = clone.findIndex(i => i === a._id)
-                                            console.log(index)
                                             this.setState({
                                                 artifactsBeingAdded: [
                                                     ...clone.slice(0, index),
@@ -215,17 +222,189 @@ export default class Create extends React.Component {
         )
     }
 
+    selectBosses() {
+        return (
+            <div
+                className="container-fluid bg-light p-0 d-flex justify-content-center"
+                style={{
+                    position: "absolute",
+                    height: "calc(100vh - 64px)",
+                    backgroundImage: `url(${require("../images/bgs/bg2.png")})`,
+                    backgroundSize: "384px",
+                    backgroundRepeat: "repeat",
+                    backgroundPosition: "center",
+                }}
+            >
+                <div
+                    className="container row m-0 overflow-auto align-items-start"
+                    style={{
+                        maxWidth: "992px",
+                        backgroundColor: "rgba(200, 200, 200, .5)"
+                    }}
+                >
+                    {this.props.allBosses.map(b =>
+                        <React.Fragment key={b._id}>
+                            <div className="col-4 col-sm-3 col-md-2 p-1">
+                                <img
+                                    src={require(`../images/bosses/${b.value}.webp`)}
+                                    alt=""
+                                    className={this.state.bossesBeingAdded.includes(b._id) ? "border border-5 border-danger" : ""}
+                                    style={{
+                                        backgroundColor: "#ffc107",
+                                        width: "100%",
+                                        borderRadius: "8%",
+                                        marginTop: "2%",
+                                        cursor: "pointer"
+                                    }}
+                                    onClick={() => {
+                                        if (!this.state.bossesBeingAdded.includes(b._id)) {
+                                            let clone = this.state.bossesBeingAdded
+                                            clone.push(b._id)
+                                            this.setState({ bossesBeingAdded: clone })
+                                        } else {
+                                            let clone = this.state.bossesBeingAdded
+                                            let index = clone.findIndex(i => i === b._id)
+                                            this.setState({
+                                                bossesBeingAdded: [
+                                                    ...clone.slice(0, index),
+                                                    ...clone.slice(index + 1)
+                                                ]
+                                            })
+                                        }
+                                    }}
+                                />
+                                <div className="text-center">{b.display}</div>
+                            </div>
+                        </React.Fragment>
+                    )}
+                </div>
+                {this.state.bossesBeingAdded.length ?
+                    <button
+                        className=""
+                        style={{
+                            zIndex: "3",
+                            position: "absolute",
+                            bottom: "48px",
+                            right: "32px",
+                            border: "none",
+                            borderRadius: "50%",
+                            padding: "8px",
+                            backgroundColor: "rgba(200, 200, 200, .7)",
+                            color: "rgba(0, 0, 0, .5)",
+                        }}
+                        onClick={() => { this.setState({ selectingBosses: false }) }}
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z" />
+                        </svg>
+                    </button>
+                    : null
+                }
+            </div>
+        )
+    }
+
+    displayTeamMembersBeingAdded() {
+        return (
+            <React.Fragment>
+                {this.state.teamMembersBeingAdded.map((m, index) =>
+                    <li>
+                        <div className="position-relative mt-2" style={{ width: "fit-content" }}>
+                            <div className="d-flex align-items-center">
+                                <div>
+                                    <img
+                                        src={require(`../images/characters/icons/${this.props.getCharacterById(m.character.$oid).value}_icon.webp`)}
+                                        alt=""
+                                        className="border border-2 rounded"
+                                        style={{
+                                            height: "80px",
+                                            backgroundColor: this.props.getCharacterById(m.character.$oid).rarity === 5 ? "#ffc107" : "#6f42c1"
+                                        }}
+                                    />
+                                </div>
+                                <div className="align-self-end ms-2 ms-sm-3">
+                                    <img
+                                        src={require(`../images/weapons/${this.props.getWeaponById(m.weapon.$oid).value}.webp`)}
+                                        alt=""
+                                        className="border border-2 rounded"
+                                        style={{
+                                            height: "64px",
+                                            backgroundColor: (() => {
+                                                if (this.props.getWeaponById(m.weapon.$oid).rarity === 5) { return "#ffc107" }
+                                                else if (this.props.getWeaponById(m.weapon.$oid).rarity === 4) { return "#6f42c1" }
+                                                else if (this.props.getWeaponById(m.weapon.$oid).rarity === 3) { return "#0d6efd" }
+                                            })()
+                                        }}
+                                    />
+                                </div>
+                                <div className="align-self-end ms-2 ms-sm-3">
+                                    {m.artifacts.map(a =>
+                                        <React.Fragment key={a.$oid}>
+                                            <img
+                                                src={require(`../images/artifacts/${this.props.getArtifactById(a.$oid).value}.webp`)}
+                                                alt=""
+                                                className="border border-2 rounded"
+                                                style={{
+                                                    height: "48px",
+                                                    backgroundColor: this.props.getArtifactById(a.$oid).rarity === 5 ? "#ffc107" : "#6f42c1"
+                                                }}
+                                            />
+                                        </React.Fragment>
+                                    )}
+                                </div>
+                            </div>
+                            <div className="mt-1">
+                                {m.roles.map((r, index) =>
+                                    <React.Fragment key={index}>
+                                        {(() => {
+                                            let color;
+                                            if (r === "Main DPS") { color = "#dc3545" }
+                                            else if (r === "Sub DPS") { color = "#fd7e14" }
+                                            else if (r === "Support") { color = "#0d6efd" }
+                                            else if (r === "Heal") (color = "#198754")
+                                            return (
+                                                <label
+                                                    className="badge rounded-pill ms-1 text-light"
+                                                    style={{
+                                                        fontSize: "10px",
+                                                        border: ("1px solid " + color),
+                                                        backgroundColor: color
+                                                    }}
+                                                >{r}</label>
+                                            )
+                                        })()}
+                                    </React.Fragment>
+                                )}
+                            </div>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16"
+                                className="position-absolute top-0 start-100 translate-middle bg-danger text-light rounded-circle"
+                                style={{ cursor: "pointer" }}
+                                onClick={() => {
+                                    let clone = this.state.teamMembersBeingAdded;
+                                    this.setState({
+                                        teamMembersBeingAdded: [
+                                            ...clone.slice(0, index),
+                                            ...clone.slice(index + 1)
+                                        ],
+                                        rotationGuideStepsBeingAdded: []
+                                    })
+                                }}
+                            >
+                                <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                            </svg>
+                        </div>
+                    </li>
+                )}
+            </React.Fragment>
+        )
+    }
+
     addTeamMember() {
         return (
             <React.Fragment>
                 <div>
-                    <div className="mt-3 d-flex align-items-center border">
+                    <div className="mt-3 d-flex align-items-center">
                         {!this.state.characterBeingAdded ?
-                            // <button className="bg-none border-0 p-0" onClick={() => { this.setState({ selectingCharacter: true }) }}>
-                            //     <svg className="border border-3 border-dark rounded" xmlns="http://www.w3.org/2000/svg" width="80" height="80" fill="currentColor" viewBox="0 0 16 16">
-                            //         <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z" />
-                            //     </svg>
-                            // </button>
                             <div className="position-relative">
                                 <img
                                     src={require("../images/icons/character.webp")}
@@ -238,7 +417,7 @@ export default class Create extends React.Component {
                                     onClick={() => { this.setState({ selectingCharacter: true }) }}
                                 />
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16"
-                                    className="position-absolute top-0 start-100 translate-middle bg-danger text-light rounded-circle"
+                                    className="position-absolute top-0 start-100 translate-middle bg-secondary text-light rounded-circle"
                                     style={{ padding: "2px", cursor: "pointer" }}
                                     onClick={() => { this.setState({ selectingCharacter: true }) }}
                                 >
@@ -260,7 +439,7 @@ export default class Create extends React.Component {
                                         onClick={() => { this.setState({ selectingCharacter: true }) }}
                                     />
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16"
-                                        className="position-absolute top-0 start-100 translate-middle bg-danger text-light rounded-circle"
+                                        className="position-absolute top-0 start-100 translate-middle bg-secondary text-light rounded-circle"
                                         style={{ padding: "2px", cursor: "pointer" }}
                                         onClick={() => { this.setState({ selectingCharacter: true }) }}
                                     >
@@ -269,7 +448,7 @@ export default class Create extends React.Component {
                                     </svg>
                                 </div>
                                 {!this.state.weaponBeingAdded ?
-                                    <div className="position-relative align-self-end ms-3">
+                                    <div className="position-relative align-self-end ms-2 ms-sm-3">
                                         <img
                                             src={require("../images/icons/weapon.webp")}
                                             alt=""
@@ -281,7 +460,7 @@ export default class Create extends React.Component {
                                             onClick={() => { this.setState({ selectingWeapon: true }) }}
                                         />
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16"
-                                            className="position-absolute top-0 start-100 translate-middle bg-danger text-light rounded-circle"
+                                            className="position-absolute top-0 start-100 translate-middle bg-secondary text-light rounded-circle"
                                             style={{ padding: "2px", cursor: "pointer" }}
                                             onClick={() => { this.setState({ selectingWeapon: true }) }}
                                         >
@@ -289,7 +468,7 @@ export default class Create extends React.Component {
                                         </svg>
                                     </div>
                                     :
-                                    <div className="position-relative align-self-end ms-3">
+                                    <div className="position-relative align-self-end ms-2 ms-sm-3">
                                         <img
                                             src={require(`../images/weapons/${this.props.getWeaponById(this.state.weaponBeingAdded).value}.webp`)}
                                             alt=""
@@ -306,7 +485,7 @@ export default class Create extends React.Component {
                                             onClick={() => { this.setState({ selectingWeapon: true }) }}
                                         />
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16"
-                                            className="position-absolute top-0 start-100 translate-middle bg-danger text-light rounded-circle"
+                                            className="position-absolute top-0 start-100 translate-middle bg-secondary text-light rounded-circle"
                                             style={{ padding: "2px", cursor: "pointer" }}
                                             onClick={() => { this.setState({ selectingWeapon: true }) }}
                                         >
@@ -316,19 +495,19 @@ export default class Create extends React.Component {
                                     </div>
                                 }
                                 {!this.state.artifactsBeingAdded.length ?
-                                    <div className="position-relative align-self-end ms-3">
+                                    <div className="position-relative align-self-end ms-2 ms-sm-3">
                                         <img
                                             src={require("../images/icons/artifact.webp")}
                                             alt=""
                                             className="border border-2 border-dark rounded"
                                             style={{
-                                                height: "64px",
+                                                height: "48px",
                                                 cursor: "pointer"
                                             }}
                                             onClick={() => { this.setState({ selectingArtifacts: true }) }}
                                         />
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16"
-                                            className="position-absolute top-0 start-100 translate-middle bg-danger text-light rounded-circle"
+                                            className="position-absolute top-0 start-100 translate-middle bg-secondary text-light rounded-circle"
                                             style={{ padding: "2px", cursor: "pointer" }}
                                             onClick={() => { this.setState({ selectingArtifacts: true }) }}
                                         >
@@ -336,7 +515,7 @@ export default class Create extends React.Component {
                                         </svg>
                                     </div>
                                     :
-                                    <div className="position-relative align-self-end ms-3">
+                                    <div className="position-relative align-self-end ms-2 ms-sm-3">
                                         {this.state.artifactsBeingAdded.map(a =>
                                             <React.Fragment>
                                                 <img
@@ -344,14 +523,14 @@ export default class Create extends React.Component {
                                                     alt=""
                                                     className="border border-2 rounded"
                                                     style={{
-                                                        height: "64px",
+                                                        height: "48px",
                                                         backgroundColor: this.props.getArtifactById(a).rarity === 5 ? "#ffc107" : "#6f42c1",
                                                         cursor: "pointer"
                                                     }}
                                                     onClick={() => { this.setState({ selectingArtifacts: true }) }}
                                                 />
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16"
-                                                    className="position-absolute top-0 start-100 translate-middle bg-danger text-light rounded-circle"
+                                                    className="position-absolute top-0 start-100 translate-middle bg-secondary text-light rounded-circle"
                                                     style={{ padding: "2px", cursor: "pointer" }}
                                                     onClick={() => { this.setState({ selectingArtifacts: true }) }}
                                                 >
@@ -367,9 +546,9 @@ export default class Create extends React.Component {
                     </div>
                     <div className="mt-1 d-flex align-items-center">
                         <span>Roles:</span>
-                        <input type="checkbox" class="btn-check" checked={this.state.rolesBeingAdded.includes("Main DPS")} />
+                        <input type="checkbox" className="btn-check" checked={this.state.rolesBeingAdded.includes("Main DPS")} readOnly />
                         <label
-                            class="badge rounded-pill ms-1"
+                            className="badge rounded-pill ms-1"
                             style={{
                                 fontSize: "10px",
                                 cursor: "pointer",
@@ -379,9 +558,9 @@ export default class Create extends React.Component {
                             }}
                             onClick={() => { this.updateRolesBeingAdded("Main DPS") }}
                         >Main DPS</label>
-                        <input type="checkbox" class="btn-check" checked={this.state.rolesBeingAdded.includes("Sub DPS")} />
+                        <input type="checkbox" className="btn-check" checked={this.state.rolesBeingAdded.includes("Sub DPS")} readOnly />
                         <label
-                            class="badge rounded-pill ms-1"
+                            className="badge rounded-pill ms-1"
                             style={{
                                 fontSize: "10px",
                                 cursor: "pointer",
@@ -391,9 +570,9 @@ export default class Create extends React.Component {
                             }}
                             onClick={() => { this.updateRolesBeingAdded("Sub DPS") }}
                         >Sub DPS</label>
-                        <input type="checkbox" class="btn-check" checked={this.state.rolesBeingAdded.includes("Support")} />
+                        <input type="checkbox" className="btn-check" checked={this.state.rolesBeingAdded.includes("Support")} readOnly />
                         <label
-                            class="badge rounded-pill ms-1"
+                            className="badge rounded-pill ms-1"
                             style={{
                                 fontSize: "10px",
                                 cursor: "pointer",
@@ -403,9 +582,9 @@ export default class Create extends React.Component {
                             }}
                             onClick={() => { this.updateRolesBeingAdded("Support") }}
                         >Support</label>
-                        <input type="checkbox" class="btn-check" checked={this.state.rolesBeingAdded.includes("Heal")} />
+                        <input type="checkbox" className="btn-check" checked={this.state.rolesBeingAdded.includes("Heal")} readOnly />
                         <label
-                            class="badge rounded-pill ms-1"
+                            className="badge rounded-pill ms-1"
                             style={{
                                 fontSize: "10px",
                                 cursor: "pointer",
@@ -418,15 +597,21 @@ export default class Create extends React.Component {
                     </div>
                     <div className="mt-1">
                         <button
-                            className="w-100 btn-outline-success bg-none rounded-pill"
-                            onClick={()=>{
+                            className="w-100 btn btn-outline-success bg-none rounded-pill py-0"
+                            onClick={() => {
                                 let teamMember = {
-                                    character: {$oid: this.state.characterBeingAdded},
-                                    weapon: {$oid: this.state.weaponBeingAdded},
-                                    artifacts: [this.state.artifactsBeingAdded.map(a => {return {$oid: a}})],
+                                    character: { $oid: this.state.characterBeingAdded },
+                                    weapon: { $oid: this.state.weaponBeingAdded },
+                                    artifacts: this.state.artifactsBeingAdded.map(a => { return { $oid: a } }),
                                     roles: this.state.rolesBeingAdded
                                 }
-                                console.log(teamMember)
+                                this.setState({
+                                    teamMembersBeingAdded: [...this.state.teamMembersBeingAdded, teamMember],
+                                    characterBeingAdded: null,
+                                    weaponBeingAdded: null,
+                                    artifactsBeingAdded: [],
+                                    rolesBeingAdded: []
+                                })
                             }}
                         >Add Team Member</button>
                     </div>
@@ -455,11 +640,11 @@ export default class Create extends React.Component {
     render() {
         return (
             <React.Fragment>
-                <div className="content container-fluid p-0 pt-5 bg-dark overflow-auto">
+                <div className="content container-fluid p-0 py-5 bg-dark overflow-auto">
                     <div className="container" style={{ maxWidth: "992px" }}>
                         <div className="container-fluid pt-3" style={{ backgroundColor: "rgba(255, 255, 255, .8)", borderRadius: "1rem" }}>
-                            <div className="mb-3">
-                                <label className="fs-5">Team Name</label>
+                            <div>
+                                <label className="fs-5">Team Name:</label>
                                 <input
                                     type="text"
                                     className={"form-control rounded-pill" + (this.checkIfTeamNameUsed() ? " is-invalid" : "")}
@@ -469,15 +654,138 @@ export default class Create extends React.Component {
                                 />
                                 {this.checkIfTeamNameUsed() ? <span className="text-danger fs-6">This team name is used</span> : null}
                             </div>
-                            <div className="mb-3">
-                                <label className="fs-5">Team Composition</label>
+                            <hr />
+                            <div>
+                                <label className="fs-5">Team Composition:</label>
                                 <div>
-
-
-                                    {this.addTeamMember()}
-
-
+                                    <ul>
+                                        {this.displayTeamMembersBeingAdded()}
+                                    </ul>
+                                    {this.state.teamMembersBeingAdded.length ? <hr /> : null}
+                                    {this.state.teamMembersBeingAdded.length < 4 ? this.addTeamMember() : null}
                                 </div>
+                            </div>
+                            <hr />
+                            <div>
+                                <label className="fs-5">Recommended Bosses:</label>
+                                <div>
+                                    {this.state.bossesBeingAdded.length ?
+                                        this.state.bossesBeingAdded.map(b =>
+                                            <img alt="" className="bg-danger border border-secondary rounded-circle me-1"
+                                                src={require(`../images/bosses/${this.props.getBossById(b).value}.webp`)}
+                                                style={{
+                                                    height: "48px",
+                                                    cursor: "pointer"
+                                                }}
+                                                onClick={() => { this.setState({ selectingBosses: true }) }}
+                                            />
+                                        )
+                                        :
+                                        null
+                                    }
+                                    {this.state.bossesBeingAdded.length < 6 ?
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" viewBox="0 0 16 16"
+                                            className="border border-dark rounded-circle"
+                                            style={{ cursor: "pointer" }}
+                                            onClick={() => { this.setState({ selectingBosses: true }) }}
+                                        >
+                                            <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z" />
+                                        </svg> : null}
+                                </div>
+                            </div>
+                            <hr />
+                            <div>
+                                <label className="fs-5">Rotation Guide:</label>
+                                {this.state.teamMembersBeingAdded.length ?
+                                    <React.Fragment>
+                                        <ul className="list-group list-group-flush">
+                                            {this.state.rotationGuideStepsBeingAdded.map((s, index) =>
+                                                <React.Fragment key={index}>
+                                                    <li className="list-group-item border-0 d-flex align-items-center bg-none">
+                                                        <span style={{ width: "24px" }}>{index + 1}.</span>
+                                                        <img
+                                                            src={require(`../images/characters/icons/${this.props.getCharacterById(s.character.$oid).value}_icon.webp`)}
+                                                            className="border border-secondary rounded me-1"
+                                                            style={{
+                                                                backgroundColor: this.props.getCharacterById(s.character.$oid).rarity === 5 ? "#ffc107" : "#6f42c1",
+                                                                width: "40px"
+                                                            }}
+                                                        />
+                                                        <span>
+                                                            {this.props.getCharacterById(s.character.$oid).display}
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-arrow-right mx-1" viewBox="0 0 16 16">
+                                                                <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z" />
+                                                            </svg>
+                                                            <span className="badge bg-primary" style={{ width: "32px" }}>{s.action}</span>
+                                                        </span>
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16"
+                                                            className="ms-auto text-danger"
+                                                            style={{ cursor: "pointer" }}
+                                                            onClick={() => {
+                                                                let clone = this.state.rotationGuideStepsBeingAdded;
+                                                                this.setState({
+                                                                    rotationGuideStepsBeingAdded: [
+                                                                        ...clone.slice(0, index),
+                                                                        ...clone.slice(index + 1)
+                                                                    ]
+                                                                })
+                                                            }}
+                                                        >
+                                                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM4.5 7.5a.5.5 0 0 0 0 1h7a.5.5 0 0 0 0-1h-7z" />
+                                                        </svg>
+                                                    </li>
+                                                </React.Fragment>
+                                            )}
+                                        </ul>
+                                        <div className="row m-0">
+                                            <div className="col-12 col-sm-6 p-0">
+                                                <div className="input-group input-group-sm">
+                                                    <label className="input-group-text">Character:</label>
+                                                    <select className="form-select" value={this.state.characterBeingAddedForRotationGuide} onChange={e => { this.setState({ characterBeingAddedForRotationGuide: e.target.value }) }}>
+                                                        <option value="">--select--</option>
+                                                        {this.state.teamMembersBeingAdded.map(m => this.props.getCharacterById(m.character.$oid)).map(c =>
+                                                            <option value={c._id}>{c.display}</option>
+                                                        )}
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div className="col-12 col-sm-6 p-0">
+                                                <div className="input-group input-group-sm">
+                                                    <label className="input-group-text">Action:</label>
+                                                    <select className="form-select" value={this.state.actionBeingAddedForRotationGuide} onChange={e => { this.setState({ actionBeingAddedForRotationGuide: e.target.value }) }}>
+                                                        <option value="">--select--</option>
+                                                        <option value="E">Skill</option>
+                                                        <option value="Q">Burst</option>
+                                                    </select>
+                                                    <button
+                                                        className="btn btn-success"
+                                                        style={{ zIndex: "0" }}
+                                                        onClick={() => {
+                                                            let newRotationGuideStep = {
+                                                                character: { $oid: this.state.characterBeingAddedForRotationGuide },
+                                                                action: this.state.actionBeingAddedForRotationGuide
+                                                            };
+                                                            let clone = this.state.rotationGuideStepsBeingAdded;
+                                                            if (this.state.characterBeingAddedForRotationGuide && this.state.actionBeingAddedForRotationGuide)
+                                                                this.setState({
+                                                                    rotationGuideStepsBeingAdded: [...clone, newRotationGuideStep],
+                                                                    characterBeingAddedForRotationGuide: "",
+                                                                    actionBeingAddedForRotationGuide: ""
+                                                                })
+                                                        }}
+                                                    >Add</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </React.Fragment>
+                                    :
+                                    <div className="text-danger">Please add a team member first</div>
+                                }
+                            </div>
+                            <hr />
+                            <div>
+                                <label className="fs-5">Notes:</label>
+                                <div></div>
                             </div>
                         </div>
                     </div>
@@ -486,6 +794,7 @@ export default class Create extends React.Component {
                 {this.state.selectingCharacter ? this.selectCharacter() : null}
                 {this.state.selectingWeapon ? this.selectWeapon() : null}
                 {this.state.selectingArtifacts ? this.selectArtifacts() : null}
+                {this.state.selectingBosses ? this.selectBosses() : null}
             </React.Fragment>
         )
     }
