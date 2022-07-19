@@ -10,7 +10,9 @@ class App extends React.Component {
   state = {
     teams: [],
     active: "explore",
-    navbarHidden: true
+    navbarHidden: true,
+    filterHidden: true,
+    loading: false
   }
 
   BASE_URI = "https://giteams.herokuapp.com/";
@@ -21,6 +23,10 @@ class App extends React.Component {
   allBosses = [];
 
   async componentDidMount() {
+    this.setState({
+      loading: true
+    })
+
     const BASE_URI = this.BASE_URI;
 
     let reqCharacters = axios.get(BASE_URI + "characters");
@@ -38,7 +44,8 @@ class App extends React.Component {
 
     let resTeams = await axios.get(BASE_URI + "teams");
     this.setState({
-      teams: resTeams.data.teams
+      teams: resTeams.data.teams,
+      loading: false
     });
   }
 
@@ -56,6 +63,8 @@ class App extends React.Component {
           getWeaponById={this.getWeaponById}
           getArtifactById={this.getArtifactById}
           getBossById={this.getBossById}
+          filterHidden={this.state.filterHidden}
+          toggleFilter={this.toggleFilter}
         />
       )
     } else if (this.state.active === "create") {
@@ -85,29 +94,42 @@ class App extends React.Component {
   }
 
   refreshTeams = async () => {
+    this.setState({
+      loading: true
+    })
     let r = await axios.get(this.BASE_URI + "teams");
     this.setState({
-      teams: r.data.teams
+      teams: r.data.teams,
+      loading: false
     });
+  }
+
+  toggleFilter = () => {
+    this.setState({
+      filterHidden: !this.state.filterHidden
+    })
   }
 
   render() {
     return (
       <React.Fragment>
-
         <header>
           <nav className="navbar navbar-expand-sm navbar-light bg-light p-0">
             <div className="container-fluid bg-light p-0">
-              <button className="navbar-brand border-0 bg-none ms-md-3" onClick={() => { this.setState({ active: "explore", navbarHidden: true, filterHidden: true }) }}>
+              <button className="navbar-brand border-0 bg-none ms-md-3"
+                onClick={() => {
+                  this.refreshTeams();
+                  this.setState({ active: "explore", navbarHidden: true, filterHidden: true });
+                }}
+              >
                 <img src={require("./images/logos/logo.png")} alt="" className="" height="48px" />
               </button>
               <button className="d-sm-none border-0 bg-none" onClick={() => { this.setState({ navbarHidden: !this.state.navbarHidden }) }}>
                 <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" viewBox="0 0 16 16">
-                  {
-                    this.state.navbarHidden ?
-                      <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z" />
-                      :
-                      <path fill-rule="evenodd" d="M7.646 4.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 5.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z" />
+                  {this.state.navbarHidden ?
+                    <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z" />
+                    :
+                    <path fill-rule="evenodd" d="M7.646 4.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 5.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z" />
                   }
                 </svg>
               </button>
@@ -117,21 +139,18 @@ class App extends React.Component {
                     <button
                       className={"nav-link border-0 bg-none pb-sm-0" + (this.state.active === "explore" ? " active" : "")}
                       onClick={() => {
-                        this.setState({
-                          active: "explore",
-                          navbarHidden: true
-                        })
+                        this.refreshTeams();
+                        this.setState({ active: "explore", navbarHidden: true, filterHidden: true });
                       }}
                     >
                       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" className="me-1" viewBox="0 0 16 16">
-                        {
-                          this.state.active === "explore" ?
-                            <path d="M15.5 8.516a7.5 7.5 0 1 1-9.462-7.24A1 1 0 0 1 7 0h2a1 1 0 0 1 .962 1.276 7.503 7.503 0 0 1 5.538 7.24zm-3.61-3.905L6.94 7.439 4.11 12.39l4.95-2.828 2.828-4.95z" />
-                            :
-                            <React.Fragment>
-                              <path d="M8 16.016a7.5 7.5 0 0 0 1.962-14.74A1 1 0 0 0 9 0H7a1 1 0 0 0-.962 1.276A7.5 7.5 0 0 0 8 16.016zm6.5-7.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z" />
-                              <path d="m6.94 7.44 4.95-2.83-2.83 4.95-4.949 2.83 2.828-4.95z" />
-                            </React.Fragment>
+                        {this.state.active === "explore" ?
+                          <path d="M15.5 8.516a7.5 7.5 0 1 1-9.462-7.24A1 1 0 0 1 7 0h2a1 1 0 0 1 .962 1.276 7.503 7.503 0 0 1 5.538 7.24zm-3.61-3.905L6.94 7.439 4.11 12.39l4.95-2.828 2.828-4.95z" />
+                          :
+                          <React.Fragment>
+                            <path d="M8 16.016a7.5 7.5 0 0 0 1.962-14.74A1 1 0 0 0 9 0H7a1 1 0 0 0-.962 1.276A7.5 7.5 0 0 0 8 16.016zm6.5-7.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z" />
+                            <path d="m6.94 7.44 4.95-2.83-2.83 4.95-4.949 2.83 2.828-4.95z" />
+                          </React.Fragment>
                         }
                       </svg>
                       Explore
@@ -141,21 +160,17 @@ class App extends React.Component {
                     <button
                       className={"nav-link border-0 bg-none pb-sm-0" + (this.state.active === "create" ? " active" : "")}
                       onClick={() => {
-                        this.setState({
-                          active: "create",
-                          navbarHidden: true
-                        })
+                        this.setState({ active: "create", navbarHidden: true, filterHidden: true })
                       }}
                     >
                       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" className="me-1" viewBox="0 0 16 16">
-                        {
-                          this.state.active === "create" ?
-                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
-                            :
-                            <React.Fragment>
-                              <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-                              <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
-                            </React.Fragment>
+                        {this.state.active === "create" ?
+                          <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4.5a.5.5 0 0 0-1 0v3h-3a.5.5 0 0 0 0 1h3v3a.5.5 0 0 0 1 0v-3h3a.5.5 0 0 0 0-1h-3v-3z" />
+                          :
+                          <React.Fragment>
+                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                            <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+                          </React.Fragment>
                         }
                       </svg>
                       Create
@@ -170,44 +185,20 @@ class App extends React.Component {
 
         <main>
           {this.renderPage()}
-
-          {/* <div className={"container-fluid filter" + (this.state.filterHidden ? " hide" : "")}>
-          </div>
-
-          <div className="container-fluid p-0 pt-3 content bg-light overflow-auto">
-            <div className="container" style={{ maxWidth: "768px" }}>
-
-              {this.state.teams.map(t => (
-                <React.Fragment key={t._id}>
-
-                  <DisplayTeam
-                    t={t}
-                    getCharacterById={this.getCharacterById}
-                    getWeaponById={this.getWeaponById}
-                    getArtifactById={this.getArtifactById}
-                    getBossById={this.getBossById}
-                  />
-
-                </React.Fragment>
-              ))}
-
-            </div>
-          </div>
-
-          <button className="filter-btn d-lg-none" onClick={() => { this.setState({ filterHidden: !this.state.filterHidden }) }}>
-            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" viewBox="0 0 16 16">
-              {
-                this.state.filterHidden ?
-                  <path d="M6 10.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z" />
-                  :
-                  <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z" />
-              }
-            </svg>
-          </button> */}
-
+          {this.state.loading ?
+            <div className="loading-page">
+              <div className="loading-text">
+                <span>L</span>
+                <span>O</span>
+                <span>A</span>
+                <span>D</span>
+                <span>I</span>
+                <span>N</span>
+                <span>G</span>
+              </div>
+            </div> : null
+          }
         </main>
-
-
       </React.Fragment>
     );
   }

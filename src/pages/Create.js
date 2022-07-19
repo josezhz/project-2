@@ -648,6 +648,16 @@ export default class Create extends React.Component {
         }
     }
 
+    countNumberOfFiveStar() {
+        let x = 0;
+        for (let m of this.state.teamMembersBeingAdded) {
+            if (this.props.getCharacterById(m.character.$oid).rarity === 5) {
+                x++;
+            }
+        }
+        return x;
+    }
+
     render() {
         return (
             <React.Fragment>
@@ -658,7 +668,7 @@ export default class Create extends React.Component {
                                 <label className="fs-5">Team Name:</label>
                                 <input
                                     type="text"
-                                    className={"form-control" + (this.checkIfTeamNameUsed() ? " is-invalid" : "")}
+                                    className={"form-control form-control-sm" + (this.checkIfTeamNameUsed() ? " is-invalid" : "")}
                                     name="teamName"
                                     value={this.state.teamName}
                                     onInput={this.updateTeamName}
@@ -690,9 +700,7 @@ export default class Create extends React.Component {
                                                 }}
                                                 onClick={() => { this.setState({ selectingBosses: true }) }}
                                             />
-                                        )
-                                        :
-                                        null
+                                        ) : null
                                     }
                                     {this.state.bossesBeingAdded.length < 6 ?
                                         <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" viewBox="0 0 16 16"
@@ -701,7 +709,8 @@ export default class Create extends React.Component {
                                             onClick={() => { this.setState({ selectingBosses: true }) }}
                                         >
                                             <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z" />
-                                        </svg> : null}
+                                        </svg> : null
+                                    }
                                 </div>
                             </div>
                             <hr />
@@ -765,6 +774,7 @@ export default class Create extends React.Component {
                                                     <label className="input-group-text">Action:</label>
                                                     <select className="form-select" value={this.state.actionBeingAddedForRotationGuide} onChange={e => { this.setState({ actionBeingAddedForRotationGuide: e.target.value }) }}>
                                                         <option value="">--select--</option>
+                                                        <option value="A">Attack</option>
                                                         <option value="E">Skill</option>
                                                         <option value="Q">Burst</option>
                                                     </select>
@@ -824,7 +834,8 @@ export default class Create extends React.Component {
                                     </div> : null
                                 }
                                 <div className="input-group input-group-sm">
-                                    <input type="text" className="form-control" value={this.state.noteBeingAdded} onInput={e => { this.setState({ noteBeingAdded: e.target.value }) }} />
+                                    <textarea className="form-control" value={this.state.noteBeingAdded} onInput={e => { this.setState({ noteBeingAdded: e.target.value }) }}
+                                    ></textarea>
                                     <button
                                         className="btn btn-success d-flex align-items-center"
                                         style={{ zIndex: "0" }}
@@ -850,7 +861,7 @@ export default class Create extends React.Component {
                                         let newTeam = {
                                             team_name: this.state.teamName,
                                             team_composition: this.state.teamMembersBeingAdded,
-                                            number_of_five_star: 4,
+                                            number_of_five_star: this.countNumberOfFiveStar(),
                                             bosses: this.state.bossesBeingAdded.map(b => { return { $oid: b } }),
                                             rotation_guide: this.state.rotationGuideStepsBeingAdded,
                                             notes: this.state.notesBeingAdded
