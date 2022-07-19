@@ -1,3 +1,4 @@
+import axios from "axios";
 import react from "react";
 import React from "react";
 
@@ -18,9 +19,13 @@ export default class Create extends React.Component {
         rolesBeingAdded: [],
 
         bossesBeingAdded: [],
+
         rotationGuideStepsBeingAdded: [],
         characterBeingAddedForRotationGuide: null,
-        actionBeingAddedForRotationGuide: null
+        actionBeingAddedForRotationGuide: null,
+
+        notesBeingAdded: [],
+        noteBeingAdded: ""
     }
 
     updateTeamName = e => {
@@ -30,7 +35,7 @@ export default class Create extends React.Component {
     }
 
     checkIfTeamNameUsed() {
-        if (this.props.teams.map(t => t.team_name.toLowerCase()).includes(this.state.team_name)) {
+        if (this.props.teams.map(t => t.team_name.toLowerCase()).includes(this.state.teamName)) {
             return true
         } else {
             return false
@@ -613,6 +618,12 @@ export default class Create extends React.Component {
                                     rolesBeingAdded: []
                                 })
                             }}
+                            disabled={!(
+                                this.state.characterBeingAdded &&
+                                this.state.weaponBeingAdded &&
+                                this.state.artifactsBeingAdded.length &&
+                                this.state.rolesBeingAdded.length
+                            )}
                         >Add Team Member</button>
                     </div>
                 </div>
@@ -647,9 +658,9 @@ export default class Create extends React.Component {
                                 <label className="fs-5">Team Name:</label>
                                 <input
                                     type="text"
-                                    className={"form-control rounded-pill" + (this.checkIfTeamNameUsed() ? " is-invalid" : "")}
-                                    name="team_name"
-                                    value={this.state.team_name}
+                                    className={"form-control" + (this.checkIfTeamNameUsed() ? " is-invalid" : "")}
+                                    name="teamName"
+                                    value={this.state.teamName}
                                     onInput={this.updateTeamName}
                                 />
                                 {this.checkIfTeamNameUsed() ? <span className="text-danger fs-6">This team name is used</span> : null}
@@ -773,7 +784,7 @@ export default class Create extends React.Component {
                                                                     actionBeingAddedForRotationGuide: ""
                                                                 })
                                                         }}
-                                                    >Add</button>
+                                                    >Add Step</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -785,7 +796,79 @@ export default class Create extends React.Component {
                             <hr />
                             <div>
                                 <label className="fs-5">Notes:</label>
-                                <div></div>
+                                {this.state.notesBeingAdded.length ?
+                                    <div className="row">
+                                        {this.state.notesBeingAdded.map((n, index) =>
+                                            <React.Fragment key={index}>
+                                                <div className="col-1">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16"
+                                                        className="text-danger me-1"
+                                                        style={{ cursor: "pointer" }}
+                                                        onClick={() => {
+                                                            let clone = this.state.notesBeingAdded;
+                                                            this.setState({
+                                                                notesBeingAdded: [
+                                                                    ...clone.slice(0, index),
+                                                                    ...clone.slice(index + 1)
+                                                                ]
+                                                            })
+                                                        }}
+                                                    ><path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM4.5 7.5a.5.5 0 0 0 0 1h7a.5.5 0 0 0 0-1h-7z" /></svg>
+                                                </div>
+                                                <div className="col-11">
+                                                    <span style={{ wordWrap: "break-word" }}>{n}</span>
+                                                </div>
+                                            </React.Fragment>
+
+                                        )}
+                                    </div> : null
+                                }
+                                <div className="input-group input-group-sm">
+                                    <input type="text" className="form-control" value={this.state.noteBeingAdded} onInput={e => { this.setState({ noteBeingAdded: e.target.value }) }} />
+                                    <button
+                                        className="btn btn-success d-flex align-items-center"
+                                        style={{ zIndex: "0" }}
+                                        onClick={() => {
+                                            if (this.state.noteBeingAdded) {
+                                                let clone = this.state.notesBeingAdded;
+                                                this.setState({
+                                                    notesBeingAdded: [...clone, this.state.noteBeingAdded]
+                                                })
+                                            }
+                                        }}
+                                    >
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                            <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z" />
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                            <hr />
+                            <div>
+                                <button className="w-100 btn btn-success rounded-pill py-0 mb-3"
+                                    onClick={async () => {
+                                        let newTeam = {
+                                            team_name: this.state.teamName,
+                                            team_composition: this.state.teamMembersBeingAdded,
+                                            number_of_five_star: this.state.teamMembersBeingAdded.reduce(),
+                                            bosses: this.state.bossesBeingAdded,
+                                            rotation_guide: this.state.rotationGuideStepsBeingAdded,
+                                            notes: this.state.notesBeingAdded
+                                        };
+                                        await axios.post(this.props.BASE_URI + "teams", {
+                                            newTeam
+                                        });
+                                        this.props.refreshTeams();
+                                        this.props.changePage("explore")
+                                    }}
+                                    disabled={!(
+                                        this.state.teamName &&
+                                        this.state.teamMembersBeingAdded.length === 1 &&
+                                        this.state.bossesBeingAdded.length &&
+                                        this.state.rotationGuideStepsBeingAdded.length &&
+                                        this.state.notesBeingAdded.length
+                                    )}
+                                >Add Team</button>
                             </div>
                         </div>
                     </div>

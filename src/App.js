@@ -13,13 +13,15 @@ class App extends React.Component {
     navbarHidden: true
   }
 
+  BASE_URI = "https://giteams.herokuapp.com/";
+
   allCharacters = [];
   allWeapons = [];
   allArtifacts = [];
   allBosses = [];
 
   async componentDidMount() {
-    const BASE_URI = "https://giteams.herokuapp.com/";
+    const BASE_URI = this.BASE_URI;
 
     let reqCharacters = axios.get(BASE_URI + "characters");
     let reqWeapons = axios.get(BASE_URI + "weapons");
@@ -68,9 +70,25 @@ class App extends React.Component {
           getWeaponById={this.getWeaponById}
           getArtifactById={this.getArtifactById}
           getBossById={this.getBossById}
+          BASE_URI={this.BASE_URI}
+          refreshTeams={this.refreshTeams}
+          changePage={this.changePage}
         />
       )
     }
+  }
+
+  changePage = (page) => {
+    this.setState({
+      active: page
+    });
+  }
+
+  refreshTeams = async () => {
+    let r = await axios.get(this.BASE_URI + "teams");
+    this.setState({
+      teams: r.data.teams
+    });
   }
 
   render() {
