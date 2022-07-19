@@ -9,7 +9,7 @@ import Create from "./pages/Create";
 class App extends React.Component {
   state = {
     teams: [],
-    active: "create",
+    active: "explore",
     navbarHidden: true
   }
 

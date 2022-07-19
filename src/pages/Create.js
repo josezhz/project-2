@@ -651,9 +651,9 @@ export default class Create extends React.Component {
     render() {
         return (
             <React.Fragment>
-                <div className="content container-fluid p-0 py-5 bg-dark overflow-auto">
-                    <div className="container" style={{ maxWidth: "992px" }}>
-                        <div className="container-fluid pt-3" style={{ backgroundColor: "rgba(255, 255, 255, .8)", borderRadius: "1rem" }}>
+                <div className="content container-fluid p-0 py-3 bg-dark">
+                    <div className="container h-100" style={{ maxWidth: "992px" }}>
+                        <div className="container-fluid pt-3 rounded h-100 overflow-auto" style={{ backgroundColor: "rgba(255, 255, 255, .8)" }}>
                             <div>
                                 <label className="fs-5">Team Name:</label>
                                 <input
@@ -850,20 +850,20 @@ export default class Create extends React.Component {
                                         let newTeam = {
                                             team_name: this.state.teamName,
                                             team_composition: this.state.teamMembersBeingAdded,
-                                            number_of_five_star: this.state.teamMembersBeingAdded.reduce(),
-                                            bosses: this.state.bossesBeingAdded,
+                                            number_of_five_star: 4,
+                                            bosses: this.state.bossesBeingAdded.map(b => { return { $oid: b } }),
                                             rotation_guide: this.state.rotationGuideStepsBeingAdded,
                                             notes: this.state.notesBeingAdded
                                         };
                                         await axios.post(this.props.BASE_URI + "teams", {
                                             newTeam
                                         });
-                                        this.props.refreshTeams();
+                                        await this.props.refreshTeams();
                                         this.props.changePage("explore")
                                     }}
                                     disabled={!(
                                         this.state.teamName &&
-                                        this.state.teamMembersBeingAdded.length === 1 &&
+                                        this.state.teamMembersBeingAdded.length &&
                                         this.state.bossesBeingAdded.length &&
                                         this.state.rotationGuideStepsBeingAdded.length &&
                                         this.state.notesBeingAdded.length
