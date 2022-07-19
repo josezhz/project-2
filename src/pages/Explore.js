@@ -4,7 +4,8 @@ import DisplayTeam from "../components/DisplayTeam";
 export default class Explore extends React.Component {
     state = {
         teamName: "",
-        numberOfFiveStar: null,
+        numberOfFiveStar: 2,
+        anyNumberOfFiveStar: true,
         includedCharacters: [],
         targetBoss: null
     }
@@ -12,10 +13,36 @@ export default class Explore extends React.Component {
     filterForm() {
         return (
             <React.Fragment>
-                <div className="container w-100 h-100 rounded"
+                <div className="container w-100 h-100 rounded pt-2"
                     style={{ backgroundColor: "rgba(255, 255, 255, .8)" }}
                 >
-                    
+                    <div>
+                        <label className="fs-5">Team Name:</label>
+                        <input type="text" className="form-control rounded-pill bg-light" value={this.state.teamName}
+                            onInput={e => { this.setState({ teamName: e.target.value }) }}
+                        />
+                    </div>
+                    <div className="mt-2 fs-5">
+                        <label className="">Number of 5&#9733;:</label>
+                        <div className="form-check">
+                            <input className="form-check-input" type="checkbox" checked={this.state.anyNumberOfFiveStar}
+                                onChange={() => { this.setState({ anyNumberOfFiveStar: !this.state.anyNumberOfFiveStar }) }}
+                            />
+                            <label>Any</label>
+                        </div>
+                        {this.state.anyNumberOfFiveStar ?
+                            null :
+                            <div className="d-flex">
+                                <input type="range" className="form-range" min="0" max="4" step="1"
+                                    value={this.state.numberOfFiveStar}
+                                    onInput={e => { this.setState({ numberOfFiveStar: parseInt(e.target.value) }) }}
+                                />
+                                <span className="badge bg-primary ms-2" style={{ minWidth: "32px" }}>{this.state.numberOfFiveStar}</span>
+                            </div>
+                        }
+                    </div>
+                    <div className="mt-2 fs-5">Included Characters:</div>
+                    <div className="mt-2 fs-5">Target Boss:</div>
                 </div>
             </React.Fragment>
         )
@@ -42,8 +69,9 @@ export default class Explore extends React.Component {
                                     />
 
                                 </React.Fragment>
-                            )) : <h1 className="text-center">No Results Found</h1>
+                            )) : this.props.loading ? null : <h1 className="text-center">No Results Found</h1>
                         }
+
                     </div>
                 </div>
                 <button className="filter-btn d-lg-none" onClick={() => { this.props.toggleFilter() }}>

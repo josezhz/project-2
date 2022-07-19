@@ -65,6 +65,7 @@ class App extends React.Component {
           getBossById={this.getBossById}
           filterHidden={this.state.filterHidden}
           toggleFilter={this.toggleFilter}
+          loading={this.state.loading}
         />
       )
     } else if (this.state.active === "create") {
