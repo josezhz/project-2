@@ -12,7 +12,8 @@ class App extends React.Component {
     active: "explore",
     navbarHidden: true,
     filterHidden: true,
-    loading: false
+    loading: false,
+    criteria: {}
   }
 
   BASE_URI = "https://giteams.herokuapp.com/";
@@ -59,6 +60,8 @@ class App extends React.Component {
       return (
         <Explore
           teams={this.state.teams}
+          allCharacters={this.allCharacters}
+          allBosses={this.allBosses}
           getCharacterById={this.getCharacterById}
           getWeaponById={this.getWeaponById}
           getArtifactById={this.getArtifactById}
@@ -66,6 +69,7 @@ class App extends React.Component {
           filterHidden={this.state.filterHidden}
           toggleFilter={this.toggleFilter}
           loading={this.state.loading}
+          refreshTeams={this.refreshTeams}
         />
       )
     } else if (this.state.active === "create") {
@@ -94,11 +98,11 @@ class App extends React.Component {
     });
   }
 
-  refreshTeams = async () => {
+  refreshTeams = async (criteria) => {
     this.setState({
       loading: true
     })
-    let r = await axios.get(this.BASE_URI + "teams");
+    let r = await axios.get(this.BASE_URI + "teams", {params: criteria});
     this.setState({
       teams: r.data.teams,
       loading: false
