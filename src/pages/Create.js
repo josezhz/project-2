@@ -715,9 +715,8 @@ export default class Create extends React.Component {
                                                 <React.Fragment key={index}>
                                                     <li className="list-group-item border-0 d-flex align-items-center bg-none">
                                                         <span style={{ width: "24px" }}>{index + 1}.</span>
-                                                        <img
+                                                        <img alt="" className="border border-secondary rounded me-1"
                                                             src={require(`../images/characters/icons/${this.props.getCharacterById(s.character.$oid).value}_icon.webp`)}
-                                                            className="border border-secondary rounded me-1"
                                                             style={{
                                                                 backgroundColor: this.props.getCharacterById(s.character.$oid).rarity === 5 ? "#ffc107" : "#6f42c1",
                                                                 width: "40px"
