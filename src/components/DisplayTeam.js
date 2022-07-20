@@ -24,7 +24,7 @@ export default class DisplayTeam extends React.Component {
                                 marginTop: "2%",
                                 cursor: "pointer"
                             }}
-                            onClick={() => { this.setState({ characterExpanded: m }) }}
+                            onClick={() => { this.setState({ characterExpanded: this.state.characterExpanded === m ? null : m }) }}
                         />
                     </React.Fragment>
                 )}
@@ -72,7 +72,7 @@ export default class DisplayTeam extends React.Component {
                                     height: "24px"
                                 }}
                             />
-                            <span className="text-center mx-1" style={{fontSize: "24px"}}>{this.props.getCharacterById(m.character.$oid).display}</span>
+                            <span className="text-center mx-1" style={{ fontSize: "24px" }}>{this.props.getCharacterById(m.character.$oid).display}</span>
                             <img
                                 src={require(`../images/elements/${this.props.getCharacterById(m.character.$oid).element.toLowerCase()}.svg`)}
                                 alt=""
@@ -155,12 +155,8 @@ export default class DisplayTeam extends React.Component {
                             </div>
                         </div>
                     </div>
-                    <div
-                        className="text-center"
-                        style={{
-                            cursor: "pointer",
-                            // backgroundColor: "#dee2e6"
-                        }}
+                    <div className="text-center"
+                        style={{ cursor: "pointer" }}
                         onClick={() => { this.setState({ characterExpanded: null }) }}
                     >
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16">

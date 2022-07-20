@@ -52,35 +52,37 @@ export default class Explore extends React.Component {
                             {this.state.includedCharacters.length ?
                                 <React.Fragment>
                                     {this.state.includedCharacters.map((c, index) =>
-                                        <div className="position-relative"
-                                            style={{
-                                                width: "22%",
-                                                maxWidth: "80px",
-                                                marginLeft: index ? "10px" : "0"
-                                            }}
-                                        >
-                                            <img src={require(`../images/characters/icons/${this.props.getCharacterById(c).value}_icon.webp`)} alt=""
-                                                className="border border-2 rounded w-100"
+                                        <React.Fragment key={index}>
+                                            <div className="position-relative"
                                                 style={{
-                                                    backgroundColor: this.props.getCharacterById(c).rarity === 5 ? "#ffc107" : "#6f42c1"
-                                                }}
-                                            />
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16"
-                                                className="position-absolute top-0 start-100 translate-middle bg-danger text-light rounded-circle"
-                                                style={{ padding: "2px", cursor: "pointer" }}
-                                                onClick={() => {
-                                                    let clone = this.state.includedCharacters
-                                                    this.setState({
-                                                        includedCharacters: [
-                                                            ...clone.slice(0, index),
-                                                            ...clone.slice(index + 1)
-                                                        ]
-                                                    })
+                                                    width: "22%",
+                                                    maxWidth: "80px",
+                                                    marginLeft: index ? "10px" : "0"
                                                 }}
                                             >
-                                                <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z" />
-                                            </svg>
-                                        </div>
+                                                <img src={require(`../images/characters/icons/${this.props.getCharacterById(c).value}_icon.webp`)} alt=""
+                                                    className="border border-2 rounded w-100"
+                                                    style={{
+                                                        backgroundColor: this.props.getCharacterById(c).rarity === 5 ? "#ffc107" : "#6f42c1"
+                                                    }}
+                                                />
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16"
+                                                    className="position-absolute top-0 start-100 translate-middle bg-danger text-light rounded-circle"
+                                                    style={{ padding: "2px", cursor: "pointer" }}
+                                                    onClick={() => {
+                                                        let clone = this.state.includedCharacters
+                                                        this.setState({
+                                                            includedCharacters: [
+                                                                ...clone.slice(0, index),
+                                                                ...clone.slice(index + 1)
+                                                            ]
+                                                        })
+                                                    }}
+                                                >
+                                                    <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z" />
+                                                </svg>
+                                            </div>
+                                        </React.Fragment>
                                     )}
                                 </React.Fragment> : null
                             }
@@ -141,7 +143,7 @@ export default class Explore extends React.Component {
                     <hr />
                     <div>
                         <button className="btn btn-primary w-100 rounded-pill py-1"
-                            onClick={()=>{
+                            onClick={() => {
                                 let criteria = {
                                     teamName: this.state.teamName,
                                     numberOfFiveStar: this.state.anyNumberOfFiveStar || this.state.includedCharacters.length ? null : this.state.numberOfFiveStar,
