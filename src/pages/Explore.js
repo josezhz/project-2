@@ -41,7 +41,7 @@ export default class Explore extends React.Component {
                                     value={this.state.numberOfFiveStar}
                                     onInput={e => { this.setState({ numberOfFiveStar: parseInt(e.target.value) }) }}
                                 />
-                                <span className="badge bg-primary ms-2" style={{ minWidth: "32px" }}>{this.state.numberOfFiveStar}</span>
+                                <span className="badge bg-primary ms-2 fs-6" style={{ minWidth: "32px" }}>{this.state.numberOfFiveStar}</span>
                             </div>
                         }
                     </div>
@@ -102,7 +102,7 @@ export default class Explore extends React.Component {
                                         style={{ padding: "2px", cursor: "pointer" }}
                                         onClick={() => { this.setState({ selectingCharacters: true }) }}
                                     >
-                                        <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z" />
+                                        <path fillRule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z" />
                                     </svg>
                                 </div> : null
                             }

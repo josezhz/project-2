@@ -8,6 +8,7 @@ import Create from "./pages/Create";
 
 class App extends React.Component {
   state = {
+    allTeams: [],
     teams: [],
     active: "explore",
     navbarHidden: true,
@@ -45,6 +46,7 @@ class App extends React.Component {
 
     let resTeams = await axios.get(BASE_URI + "teams");
     this.setState({
+      allTeams: resTeams.data.teams,
       teams: resTeams.data.teams,
       loading: false
     });
@@ -75,6 +77,7 @@ class App extends React.Component {
     } else if (this.state.active === "create") {
       return (
         <Create
+          allTeams={this.state.allTeams}
           teams={this.state.teams}
           allCharacters={this.allCharacters}
           allWeapons={this.allWeapons}
@@ -102,9 +105,11 @@ class App extends React.Component {
     this.setState({
       loading: true
     })
-    let r = await axios.get(this.BASE_URI + "teams", {params: criteria});
+    let resAllTeams = await axios.get(this.BASE_URI + "teams");
+    let resTeams = await axios.get(this.BASE_URI + "teams", {params: criteria});
     this.setState({
-      teams: r.data.teams,
+      allTeams: resAllTeams.data.teams,
+      teams: resTeams.data.teams,
       loading: false
     });
   }
@@ -132,9 +137,9 @@ class App extends React.Component {
               <button className="d-sm-none border-0 bg-none" onClick={() => { this.setState({ navbarHidden: !this.state.navbarHidden }) }}>
                 <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" viewBox="0 0 16 16">
                   {this.state.navbarHidden ?
-                    <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z" />
+                    <path fillRule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z" />
                     :
-                    <path fill-rule="evenodd" d="M7.646 4.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 5.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z" />
+                    <path fillRule="evenodd" d="M7.646 4.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 5.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z" />
                   }
                 </svg>
               </button>

@@ -1,11 +1,9 @@
 import axios from "axios";
-import react from "react";
 import React from "react";
 
 export default class Create extends React.Component {
     state = {
         teamName: "",
-        teamNameUsed: false,
         teamMembersBeingAdded: [],
 
         selectingCharacter: false,
@@ -21,8 +19,8 @@ export default class Create extends React.Component {
         bossesBeingAdded: [],
 
         rotationGuideStepsBeingAdded: [],
-        characterBeingAddedForRotationGuide: null,
-        actionBeingAddedForRotationGuide: null,
+        characterBeingAddedForRotationGuide: "",
+        actionBeingAddedForRotationGuide: "",
 
         notesBeingAdded: [],
         noteBeingAdded: ""
@@ -35,7 +33,7 @@ export default class Create extends React.Component {
     }
 
     checkIfTeamNameUsed() {
-        if (this.props.teams.map(t => t.team_name.toLowerCase()).includes(this.state.teamName)) {
+        if (this.props.allTeams.map(t => t.team_name.toLowerCase()).includes(this.state.teamName.toLocaleLowerCase())) {
             return true
         } else {
             return false
@@ -651,9 +649,7 @@ export default class Create extends React.Component {
     countNumberOfFiveStar() {
         let x = 0;
         for (let m of this.state.teamMembersBeingAdded) {
-            if (this.props.getCharacterById(m.character.$oid).rarity === 5) {
-                x++;
-            }
+            if (this.props.getCharacterById(m.character.$oid).rarity === 5) { x++; }
         }
         return x;
     }
@@ -666,12 +662,8 @@ export default class Create extends React.Component {
                         <div className="container-fluid pt-3 rounded h-100 overflow-auto" style={{ backgroundColor: "rgba(255, 255, 255, .8)" }}>
                             <div>
                                 <label className="fs-5">Team Name:</label>
-                                <input
-                                    type="text"
+                                <input type="text" name="teamName" value={this.state.teamName} onInput={this.updateTeamName}
                                     className={"form-control form-control-sm" + (this.checkIfTeamNameUsed() ? " is-invalid" : "")}
-                                    name="teamName"
-                                    value={this.state.teamName}
-                                    onInput={this.updateTeamName}
                                 />
                                 {this.checkIfTeamNameUsed() ? <span className="text-danger fs-6">This team name is used</span> : null}
                             </div>
@@ -708,7 +700,7 @@ export default class Create extends React.Component {
                                             style={{ cursor: "pointer" }}
                                             onClick={() => { this.setState({ selectingBosses: true }) }}
                                         >
-                                            <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z" />
+                                            <path fillRule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z" />
                                         </svg> : null
                                     }
                                 </div>
@@ -734,7 +726,7 @@ export default class Create extends React.Component {
                                                         <span>
                                                             {this.props.getCharacterById(s.character.$oid).display}
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-arrow-right mx-1" viewBox="0 0 16 16">
-                                                                <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z" />
+                                                                <path fillRule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z" />
                                                             </svg>
                                                             <span className="badge bg-primary" style={{ width: "32px" }}>{s.action}</span>
                                                         </span>
@@ -849,7 +841,7 @@ export default class Create extends React.Component {
                                         }}
                                     >
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                                            <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z" />
+                                            <path fillRule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z" />
                                         </svg>
                                     </button>
                                 </div>
@@ -873,11 +865,12 @@ export default class Create extends React.Component {
                                         this.props.changePage("explore")
                                     }}
                                     disabled={!(
-                                        this.state.teamName &&
-                                        this.state.teamMembersBeingAdded.length &&
-                                        this.state.bossesBeingAdded.length &&
-                                        this.state.rotationGuideStepsBeingAdded.length &&
-                                        this.state.notesBeingAdded.length
+                                        this.state.teamName
+                                        && !this.checkIfTeamNameUsed()
+                                        && this.state.teamMembersBeingAdded.length
+                                        && this.state.bossesBeingAdded.length
+                                        && this.state.rotationGuideStepsBeingAdded.length
+                                        && this.state.notesBeingAdded.length
                                     )}
                                 >Add Team</button>
                             </div>
