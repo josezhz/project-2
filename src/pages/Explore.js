@@ -11,9 +11,7 @@ export default class Explore extends React.Component {
         targetBoss: "",
 
         selectingCharacters: false,
-        selectingBoss: false,
-
-        editing: false
+        selectingBoss: false
     }
 
     filterForm() {
@@ -306,12 +304,14 @@ export default class Explore extends React.Component {
                                 <React.Fragment key={t._id}>
                                     <DisplayTeam
                                         t={t}
-                                        editing={this.state.editing}
+                                        editing={this.props.editing}
                                         getCharacterById={this.props.getCharacterById}
                                         getWeaponById={this.props.getWeaponById}
                                         getArtifactById={this.props.getArtifactById}
                                         getBossById={this.props.getBossById}
                                         updateTeamBeingUpdated={this.props.updateTeamBeingUpdated}
+                                        updateTeamBeingDeleted={this.props.updateTeamBeingDeleted}
+                                        toggleEditing={this.props.toggleEditing}
                                     />
                                 </React.Fragment>
                             )) : this.props.loading ? null : <h1 className="text-center">No Results Found</h1>
@@ -319,9 +319,9 @@ export default class Explore extends React.Component {
 
                     </div>
                 </div>
-                <button className="edit-btn d-lg-none" onClick={() => { this.setState({ editing: !this.state.editing }) }}>
+                <button className="edit-btn d-lg-none" onClick={this.props.toggleEditing}>
                     <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" viewBox="0 0 16 16">
-                        {this.state.editing ?
+                        {this.props.editing ?
                             <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z" />
                             :
                             <React.Fragment>
@@ -331,7 +331,14 @@ export default class Explore extends React.Component {
                         }
                     </svg>
                 </button>
-                <button className="filter-btn d-lg-none" onClick={() => { this.props.toggleFilter() }}>
+                <button className="filter-btn d-lg-none"
+                    onClick={() => {
+                        this.props.toggleFilter();
+                        if (this.props.editing) {
+                            this.props.toggleEditing();
+                        };
+                    }}
+                >
                     <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" viewBox="0 0 16 16">
                         {this.props.filterHidden ?
                             <path d="M1.5 1.5A.5.5 0 0 1 2 1h12a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.128.334L10 8.692V13.5a.5.5 0 0 1-.342.474l-3 1A.5.5 0 0 1 6 14.5V8.692L1.628 3.834A.5.5 0 0 1 1.5 3.5v-2zm1 .5v1.308l4.372 4.858A.5.5 0 0 1 7 8.5v5.306l2-.666V8.5a.5.5 0 0 1 .128-.334L13.5 3.308V2h-11z" />

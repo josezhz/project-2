@@ -131,3 +131,30 @@ main {
     background-color: rgba(150, 150, 150, .7);
     color: rgba(0, 0, 0, .7);
 }
+
+.confirm-delete-page {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    z-index: 10;
+    background-color: rgba(255, 255, 255, .8);
+    width: 100%;
+    height: calc(100% - 64px);
+}
+
+.confirm-delete-alert {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    background-color: #dc354533;
+    width: 90vw;
+    max-width: 384px;
+    height: fit-content;
+    text-align: center;
+    padding: 24px 0;
+}
+
+.confirm-delete-alert>div>button {
+    width: 40%;
+}

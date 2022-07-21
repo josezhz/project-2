@@ -784,12 +784,13 @@ export default class Create extends React.Component {
                                                                 action: this.state.actionBeingAddedForRotationGuide
                                                             };
                                                             let clone = this.state.rotationGuideStepsBeingAdded;
-                                                            if (this.state.characterBeingAddedForRotationGuide && this.state.actionBeingAddedForRotationGuide)
+                                                            if (this.state.characterBeingAddedForRotationGuide && this.state.actionBeingAddedForRotationGuide) {
                                                                 this.setState({
                                                                     rotationGuideStepsBeingAdded: [...clone, newRotationGuideStep],
                                                                     characterBeingAddedForRotationGuide: "",
                                                                     actionBeingAddedForRotationGuide: ""
                                                                 })
+                                                            }
                                                         }}
                                                     >Add Step</button>
                                                 </div>
@@ -867,7 +868,7 @@ export default class Create extends React.Component {
                                         await axios.post(this.props.BASE_URI + "teams", {
                                             newTeam
                                         });
-                                        await this.props.refreshTeams();
+                                        this.props.refreshTeams();
                                         this.props.changePage("explore")
                                     }}
                                     disabled={!(

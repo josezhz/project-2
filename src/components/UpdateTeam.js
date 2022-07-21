@@ -46,7 +46,7 @@ export default class UpdateTeam extends React.Component {
     }
 
     checkIfTeamNameUsed() {
-        if (this.props.t.team_name !== this.state.teamName && this.props.allTeams.map(t => t.team_name.toLowerCase()).includes(this.state.teamName.toLocaleLowerCase())) {
+        if (this.props.t.team_name.toLowerCase() !== this.state.teamName.toLowerCase() && this.props.allTeams.map(t => t.team_name.toLowerCase()).includes(this.state.teamName.toLowerCase())) {
             return true
         } else {
             return false
@@ -786,12 +786,13 @@ export default class UpdateTeam extends React.Component {
                                                                 action: this.state.actionBeingAddedForRotationGuide
                                                             };
                                                             let clone = this.state.rotationGuideStepsBeingAdded;
-                                                            if (this.state.characterBeingAddedForRotationGuide && this.state.actionBeingAddedForRotationGuide)
+                                                            if (this.state.characterBeingAddedForRotationGuide && this.state.actionBeingAddedForRotationGuide) {
                                                                 this.setState({
                                                                     rotationGuideStepsBeingAdded: [...clone, newRotationGuideStep],
                                                                     characterBeingAddedForRotationGuide: "",
                                                                     actionBeingAddedForRotationGuide: ""
                                                                 })
+                                                            }
                                                         }}
                                                     >Add Step</button>
                                                 </div>

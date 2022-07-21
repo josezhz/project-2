@@ -14,8 +14,9 @@ class App extends React.Component {
     navbarHidden: true,
     filterHidden: true,
     loading: false,
-    criteria: {},
-    teamBeingUpdated: null
+    editing: false,
+    teamBeingUpdated: null,
+    teamBeingDeleted: null
   }
 
   BASE_URI = "https://giteams.herokuapp.com/";
@@ -87,6 +88,7 @@ class App extends React.Component {
           teams={this.state.teams}
           filterHidden={this.state.filterHidden}
           loading={this.state.loading}
+          editing={this.state.editing}
 
           allCharacters={this.allCharacters}
           allBosses={this.allBosses}
@@ -100,6 +102,8 @@ class App extends React.Component {
           refreshTeams={this.refreshTeams}
           changePage={this.changePage}
           updateTeamBeingUpdated={this.updateTeamBeingUpdated}
+          updateTeamBeingDeleted={this.updateTeamBeingDeleted}
+          toggleEditing={this.toggleEditing}
         />
       )
     } else if (this.state.active === "create") {
@@ -150,9 +154,21 @@ class App extends React.Component {
     })
   }
 
+  toggleEditing = () => {
+    this.setState({
+      editing: !this.state.editing
+    })
+  }
+
   updateTeamBeingUpdated = t => {
     this.setState({
       teamBeingUpdated: t
+    })
+  }
+
+  updateTeamBeingDeleted = t => {
+    this.setState({
+      teamBeingDeleted: t
     })
   }
 
@@ -169,7 +185,8 @@ class App extends React.Component {
                     active: "explore",
                     navbarHidden: true,
                     filterHidden: true,
-                    teamBeingUpdated: null
+                    teamBeingUpdated: null,
+                    editing: false
                   });
                 }}
               >
@@ -195,7 +212,8 @@ class App extends React.Component {
                           active: "explore",
                           navbarHidden: true,
                           filterHidden: true,
-                          teamBeingUpdated: null
+                          teamBeingUpdated: null,
+                          editing: false
                         });
                       }}
                     >
@@ -220,7 +238,8 @@ class App extends React.Component {
                           active: "create",
                           navbarHidden: true,
                           filterHidden: true,
-                          teamBeingUpdated: null
+                          teamBeingUpdated: null,
+                          editing: false
                         })
                       }}
                     >
@@ -256,6 +275,34 @@ class App extends React.Component {
                 <span>I</span>
                 <span>N</span>
                 <span>G</span>
+              </div>
+            </div> : null
+          }
+          {this.state.teamBeingDeleted ?
+            <div className="confirm-delete-page">
+              <div className="confirm-delete-alert rounded">
+                <h5>Confirm delete team</h5>
+                <div>{"Raiden National Team"}?</div>
+                <div className="d-flex px-4 mt-4">
+                  <button className="btn btn-outline-secondary btn-sm rounded-pill"
+                    onClick={() => { this.updateTeamBeingDeleted(null) }}
+                  >Cancel</button>
+                  <button className="btn btn-danger btn-sm rounded-pill ms-auto"
+                    onClick={async () => {
+                      await axios.delete(this.BASE_URI + "teams/" + this.state.teamBeingDeleted._id);
+                      this.refreshTeams();
+                      this.updateTeamBeingDeleted(null);
+                      this.setState({ editing: false });
+                    }}
+                  >Delete</button>
+                </div>
+                <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" viewBox="0 0 16 16"
+                  className="position-absolute top-0 start-100 translate-middle bg-light text-secondary rounded-circle"
+                  style={{ cursor: "pointer" }}
+                  onClick={() => { this.updateTeamBeingDeleted(null) }}
+                >
+                  <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z" />
+                </svg>
               </div>
             </div> : null
           }
