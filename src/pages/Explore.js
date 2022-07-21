@@ -1,6 +1,5 @@
 import React from "react";
 import DisplayTeam from "../components/DisplayTeam";
-import UpdateTeam from "../components/UpdateTeam";
 
 export default class Explore extends React.Component {
     state = {
@@ -17,7 +16,7 @@ export default class Explore extends React.Component {
     filterForm() {
         return (
             <React.Fragment>
-                <div className="container w-100 h-100 rounded py-2 overflow-auto"
+                <div className="container-fluid w-100 h-100 rounded py-2 overflow-auto"
                     style={{ backgroundColor: "rgba(255, 255, 255, .8)" }}
                 >
                     <div>
@@ -319,7 +318,50 @@ export default class Explore extends React.Component {
 
                     </div>
                 </div>
-                <button className="create-btn d-lg-none"
+                <div className="btns">
+                    <button onClick={() => {
+                        this.props.changePage("create");
+                        if (this.props.editing) {
+                            this.props.toggleEditing();
+                        };
+                    }}
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H1s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C9.516 10.68 8.289 10 6 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z" />
+                            <path fillRule="evenodd" d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z" />
+                        </svg>
+                    </button>
+                    <button onClick={this.props.toggleEditing}>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" viewBox="0 0 16 16">
+                            {this.props.editing ?
+                                <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z" />
+                                :
+                                <React.Fragment>
+                                    <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                    <path fillRule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+                                </React.Fragment>
+                            }
+                        </svg>
+                    </button>
+                    <button className="d-lg-none"
+                        style={{ zIndex: "5" }}
+                        onClick={() => {
+                            this.props.toggleFilter();
+                            if (this.props.editing) {
+                                this.props.toggleEditing();
+                            };
+                        }}
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" viewBox="0 0 16 16">
+                            {this.props.filterHidden ?
+                                <path d="M1.5 1.5A.5.5 0 0 1 2 1h12a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.128.334L10 8.692V13.5a.5.5 0 0 1-.342.474l-3 1A.5.5 0 0 1 6 14.5V8.692L1.628 3.834A.5.5 0 0 1 1.5 3.5v-2zm1 .5v1.308l4.372 4.858A.5.5 0 0 1 7 8.5v5.306l2-.666V8.5a.5.5 0 0 1 .128-.334L13.5 3.308V2h-11z" />
+                                :
+                                <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z" />
+                            }
+                        </svg>
+                    </button>
+                </div>
+                {/* <button className="create-btn"
                     onClick={() => {
                         this.props.changePage("create");
                         if (this.props.editing) {
@@ -332,7 +374,7 @@ export default class Explore extends React.Component {
                         <path fillRule="evenodd" d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z" />
                     </svg>
                 </button>
-                <button className="edit-btn d-lg-none" onClick={this.props.toggleEditing}>
+                <button className="edit-btn" onClick={this.props.toggleEditing}>
                     <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" viewBox="0 0 16 16">
                         {this.props.editing ?
                             <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z" />
@@ -359,7 +401,7 @@ export default class Explore extends React.Component {
                             <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8 2.146 2.854Z" />
                         }
                     </svg>
-                </button>
+                </button> */}
                 {this.state.selectingCharacters ? this.selectCharacters() : null}
                 {this.state.selectingBoss ? this.selectBoss() : null}
             </React.Fragment>

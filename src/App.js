@@ -285,6 +285,7 @@ class App extends React.Component {
                 <div>{"Raiden National Team"}?</div>
                 <div className="d-flex px-4 mt-4">
                   <button className="btn btn-outline-secondary btn-sm rounded-pill"
+                  sty
                     onClick={() => { this.updateTeamBeingDeleted(null) }}
                   >Cancel</button>
                   <button className="btn btn-danger btn-sm rounded-pill ms-auto"
