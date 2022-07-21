@@ -49,19 +49,21 @@ export default class DisplayTeam extends React.Component {
                                     backgroundColor: "#dee2e6"
                                 }}
                             />
-                            {m.roles.map(r =>
-                                <span
-                                    className="badge rounded-pill ms-1 d-flex align-items-center"
-                                    style={{
-                                        backgroundColor: (() => {
-                                            if (r === "Main DPS") { return "#dc3545" }
-                                            else if (r === "Sub DPS") { return "#fd7e14" }
-                                            else if (r === "Support") { return "#0d6efd" }
-                                            else if (r === "Heal") { return "#198754" }
-                                        })(),
-                                        fontSize: "12px"
-                                    }}
-                                >{r}</span>
+                            {m.roles.map((r, index) =>
+                                <React.Fragment key={index}>
+                                    <span
+                                        className="badge rounded-pill ms-1 d-flex align-items-center"
+                                        style={{
+                                            backgroundColor: (() => {
+                                                if (r === "Main DPS") { return "#dc3545" }
+                                                else if (r === "Sub DPS") { return "#fd7e14" }
+                                                else if (r === "Support") { return "#0d6efd" }
+                                                else if (r === "Heal") { return "#198754" }
+                                            })(),
+                                            fontSize: "12px"
+                                        }}
+                                    >{r}</span>
+                                </React.Fragment>
                             )}
                         </div>
                         <div className="h-100 d-flex justify-content-center align-items-center">
@@ -208,23 +210,25 @@ export default class DisplayTeam extends React.Component {
                                         <h5>Steps:</h5>
                                         <ul className="list-group list-group-flush">
                                             {this.props.t.rotation_guide.map((s, index) =>
-                                                <li className="list-group-item border-0 d-flex align-items-center bg-none" key={index}>
-                                                    <span style={{ width: "24px" }}>{index + 1}.</span>
-                                                    <img alt="" className="border border-secondary rounded me-1"
-                                                        src={require(`../images/characters/icons/${this.props.getCharacterById(s.character.$oid).value}_icon.webp`)}
-                                                        style={{
-                                                            backgroundColor: this.props.getCharacterById(s.character.$oid).rarity === 5 ? "#ffc107" : "#6f42c1",
-                                                            width: "48px"
-                                                        }}
-                                                    />
-                                                    <span>
-                                                        {this.props.getCharacterById(s.character.$oid).display}
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-arrow-right mx-1" viewBox="0 0 16 16">
-                                                            <path fillRule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z" />
-                                                        </svg>
-                                                        <span className="badge bg-primary" style={{ width: "32px" }}>{s.action}</span>
-                                                    </span>
-                                                </li>
+                                                <React.Fragment key={index}>
+                                                    <li className="list-group-item border-0 d-flex align-items-center bg-none">
+                                                        <span style={{ width: "24px" }}>{index + 1}.</span>
+                                                        <img alt="" className="border border-secondary rounded me-1"
+                                                            src={require(`../images/characters/icons/${this.props.getCharacterById(s.character.$oid).value}_icon.webp`)}
+                                                            style={{
+                                                                backgroundColor: this.props.getCharacterById(s.character.$oid).rarity === 5 ? "#ffc107" : "#6f42c1",
+                                                                width: "48px"
+                                                            }}
+                                                        />
+                                                        <span>
+                                                            {this.props.getCharacterById(s.character.$oid).display}
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-arrow-right mx-1" viewBox="0 0 16 16">
+                                                                <path fillRule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z" />
+                                                            </svg>
+                                                            <span className="badge bg-primary" style={{ width: "32px" }}>{s.action}</span>
+                                                        </span>
+                                                    </li>
+                                                </React.Fragment>
                                             )}
                                         </ul>
                                     </div>
@@ -246,14 +250,16 @@ export default class DisplayTeam extends React.Component {
                                     <div className="accordion-body">
                                         <ul className="list-group list-group-flush">
                                             {this.props.t.notes.map((n, index) =>
-                                                <li key={index} className="list-group-item border-0 d-flex bg-none">
-                                                    <div style={{ minWidth: "16px" }}>
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                                                            <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z" />
-                                                        </svg>
-                                                    </div>
-                                                    <div>{n}</div>
-                                                </li>
+                                                <React.Fragment key={index}>
+                                                    <li className="list-group-item border-0 d-flex bg-none">
+                                                        <div style={{ minWidth: "16px" }}>
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                                                <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z" />
+                                                            </svg>
+                                                        </div>
+                                                        <div>{n}</div>
+                                                    </li>
+                                                </React.Fragment>
                                             )}
                                         </ul>
                                     </div>

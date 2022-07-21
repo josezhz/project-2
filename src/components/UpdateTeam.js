@@ -324,92 +324,92 @@ export default class UpdateTeam extends React.Component {
         return (
             <React.Fragment>
                 {this.state.teamMembersBeingAdded.map((m, index) =>
-                    <li>
-                        <div className="position-relative mt-2" style={{ width: "fit-content" }}>
-                            <div className="d-flex align-items-center">
-                                <div>
-                                    <img
-                                        src={require(`../images/characters/icons/${this.props.getCharacterById(m.character.$oid).value}_icon.webp`)}
-                                        alt=""
-                                        className="border border-2 rounded"
-                                        style={{
-                                            height: "80px",
-                                            backgroundColor: this.props.getCharacterById(m.character.$oid).rarity === 5 ? "#ffc107" : "#6f42c1"
-                                        }}
-                                    />
+                    <React.Fragment key={index}>
+                        <li>
+                            <div className="position-relative mt-2" style={{ width: "fit-content" }}>
+                                <div className="d-flex align-items-center">
+                                    <div>
+                                        <img
+                                            src={require(`../images/characters/icons/${this.props.getCharacterById(m.character.$oid).value}_icon.webp`)}
+                                            alt=""
+                                            className="border border-2 rounded"
+                                            style={{
+                                                height: "80px",
+                                                backgroundColor: this.props.getCharacterById(m.character.$oid).rarity === 5 ? "#ffc107" : "#6f42c1"
+                                            }}
+                                        />
+                                    </div>
+                                    <div className="align-self-end ms-2 ms-sm-3">
+                                        <img
+                                            src={require(`../images/weapons/${this.props.getWeaponById(m.weapon.$oid).value}.webp`)}
+                                            alt=""
+                                            className="border border-2 rounded"
+                                            style={{
+                                                height: "64px",
+                                                backgroundColor: (() => {
+                                                    if (this.props.getWeaponById(m.weapon.$oid).rarity === 5) { return "#ffc107" }
+                                                    else if (this.props.getWeaponById(m.weapon.$oid).rarity === 4) { return "#6f42c1" }
+                                                    else if (this.props.getWeaponById(m.weapon.$oid).rarity === 3) { return "#0d6efd" }
+                                                })()
+                                            }}
+                                        />
+                                    </div>
+                                    <div className="align-self-end ms-2 ms-sm-3">
+                                        {m.artifacts.map(a =>
+                                            <React.Fragment key={a.$oid}>
+                                                <img alt="" className="border border-2 rounded"
+                                                    src={require(`../images/artifacts/${this.props.getArtifactById(a.$oid).value}.webp`)}
+                                                    style={{
+                                                        height: "48px",
+                                                        backgroundColor: this.props.getArtifactById(a.$oid).rarity === 5 ? "#ffc107" : "#6f42c1"
+                                                    }}
+                                                />
+                                            </React.Fragment>
+                                        )}
+                                    </div>
                                 </div>
-                                <div className="align-self-end ms-2 ms-sm-3">
-                                    <img
-                                        src={require(`../images/weapons/${this.props.getWeaponById(m.weapon.$oid).value}.webp`)}
-                                        alt=""
-                                        className="border border-2 rounded"
-                                        style={{
-                                            height: "64px",
-                                            backgroundColor: (() => {
-                                                if (this.props.getWeaponById(m.weapon.$oid).rarity === 5) { return "#ffc107" }
-                                                else if (this.props.getWeaponById(m.weapon.$oid).rarity === 4) { return "#6f42c1" }
-                                                else if (this.props.getWeaponById(m.weapon.$oid).rarity === 3) { return "#0d6efd" }
-                                            })()
-                                        }}
-                                    />
-                                </div>
-                                <div className="align-self-end ms-2 ms-sm-3">
-                                    {m.artifacts.map(a =>
-                                        <React.Fragment key={a.$oid}>
-                                            <img
-                                                src={require(`../images/artifacts/${this.props.getArtifactById(a.$oid).value}.webp`)}
-                                                alt=""
-                                                className="border border-2 rounded"
-                                                style={{
-                                                    height: "48px",
-                                                    backgroundColor: this.props.getArtifactById(a.$oid).rarity === 5 ? "#ffc107" : "#6f42c1"
-                                                }}
-                                            />
+                                <div className="mt-1">
+                                    {m.roles.map((r, index) =>
+                                        <React.Fragment key={index}>
+                                            {(() => {
+                                                let color;
+                                                if (r === "Main DPS") { color = "#dc3545" }
+                                                else if (r === "Sub DPS") { color = "#fd7e14" }
+                                                else if (r === "Support") { color = "#0d6efd" }
+                                                else if (r === "Heal") (color = "#198754")
+                                                return (
+                                                    <label
+                                                        className="badge rounded-pill ms-1 text-light"
+                                                        style={{
+                                                            fontSize: "10px",
+                                                            border: ("1px solid " + color),
+                                                            backgroundColor: color
+                                                        }}
+                                                    >{r}</label>
+                                                )
+                                            })()}
                                         </React.Fragment>
                                     )}
                                 </div>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16"
+                                    className="position-absolute top-0 start-100 translate-middle bg-danger text-light rounded-circle"
+                                    style={{ cursor: "pointer" }}
+                                    onClick={() => {
+                                        let clone = this.state.teamMembersBeingAdded;
+                                        this.setState({
+                                            teamMembersBeingAdded: [
+                                                ...clone.slice(0, index),
+                                                ...clone.slice(index + 1)
+                                            ],
+                                            rotationGuideStepsBeingAdded: []
+                                        })
+                                    }}
+                                >
+                                    <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                                </svg>
                             </div>
-                            <div className="mt-1">
-                                {m.roles.map((r, index) =>
-                                    <React.Fragment key={index}>
-                                        {(() => {
-                                            let color;
-                                            if (r === "Main DPS") { color = "#dc3545" }
-                                            else if (r === "Sub DPS") { color = "#fd7e14" }
-                                            else if (r === "Support") { color = "#0d6efd" }
-                                            else if (r === "Heal") (color = "#198754")
-                                            return (
-                                                <label
-                                                    className="badge rounded-pill ms-1 text-light"
-                                                    style={{
-                                                        fontSize: "10px",
-                                                        border: ("1px solid " + color),
-                                                        backgroundColor: color
-                                                    }}
-                                                >{r}</label>
-                                            )
-                                        })()}
-                                    </React.Fragment>
-                                )}
-                            </div>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16"
-                                className="position-absolute top-0 start-100 translate-middle bg-danger text-light rounded-circle"
-                                style={{ cursor: "pointer" }}
-                                onClick={() => {
-                                    let clone = this.state.teamMembersBeingAdded;
-                                    this.setState({
-                                        teamMembersBeingAdded: [
-                                            ...clone.slice(0, index),
-                                            ...clone.slice(index + 1)
-                                        ],
-                                        rotationGuideStepsBeingAdded: []
-                                    })
-                                }}
-                            >
-                                <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
-                            </svg>
-                        </div>
-                    </li>
+                        </li>
+                    </React.Fragment>
                 )}
             </React.Fragment>
         )
@@ -512,10 +512,8 @@ export default class UpdateTeam extends React.Component {
                                 }
                                 {!this.state.artifactsBeingAdded.length ?
                                     <div className="position-relative align-self-end ms-2 ms-sm-3">
-                                        <img
+                                        <img alt="" className="border border-2 border-dark rounded"
                                             src={require("../images/icons/artifact.webp")}
-                                            alt=""
-                                            className="border border-2 border-dark rounded"
                                             style={{
                                                 height: "48px",
                                                 cursor: "pointer"
@@ -533,11 +531,9 @@ export default class UpdateTeam extends React.Component {
                                     :
                                     <div className="position-relative align-self-end ms-2 ms-sm-3">
                                         {this.state.artifactsBeingAdded.map(a =>
-                                            <React.Fragment>
-                                                <img
+                                            <React.Fragment key={a}>
+                                                <img alt="" className="border border-2 rounded"
                                                     src={require(`../images/artifacts/${this.props.getArtifactById(a).value}.webp`)}
-                                                    alt=""
-                                                    className="border border-2 rounded"
                                                     style={{
                                                         height: "48px",
                                                         backgroundColor: this.props.getArtifactById(a).rarity === 5 ? "#ffc107" : "#6f42c1",
@@ -563,8 +559,7 @@ export default class UpdateTeam extends React.Component {
                     <div className="mt-1 d-flex align-items-center">
                         <span>Roles:</span>
                         <input type="checkbox" className="btn-check" checked={this.state.rolesBeingAdded.includes("Main DPS")} readOnly />
-                        <label
-                            className="badge rounded-pill ms-1"
+                        <label className="badge rounded-pill ms-1"
                             style={{
                                 fontSize: "10px",
                                 cursor: "pointer",
@@ -575,8 +570,7 @@ export default class UpdateTeam extends React.Component {
                             onClick={() => { this.updateRolesBeingAdded("Main DPS") }}
                         >Main DPS</label>
                         <input type="checkbox" className="btn-check" checked={this.state.rolesBeingAdded.includes("Sub DPS")} readOnly />
-                        <label
-                            className="badge rounded-pill ms-1"
+                        <label className="badge rounded-pill ms-1"
                             style={{
                                 fontSize: "10px",
                                 cursor: "pointer",
@@ -587,8 +581,7 @@ export default class UpdateTeam extends React.Component {
                             onClick={() => { this.updateRolesBeingAdded("Sub DPS") }}
                         >Sub DPS</label>
                         <input type="checkbox" className="btn-check" checked={this.state.rolesBeingAdded.includes("Support")} readOnly />
-                        <label
-                            className="badge rounded-pill ms-1"
+                        <label className="badge rounded-pill ms-1"
                             style={{
                                 fontSize: "10px",
                                 cursor: "pointer",
@@ -599,8 +592,7 @@ export default class UpdateTeam extends React.Component {
                             onClick={() => { this.updateRolesBeingAdded("Support") }}
                         >Support</label>
                         <input type="checkbox" className="btn-check" checked={this.state.rolesBeingAdded.includes("Heal")} readOnly />
-                        <label
-                            className="badge rounded-pill ms-1"
+                        <label className="badge rounded-pill ms-1"
                             style={{
                                 fontSize: "10px",
                                 cursor: "pointer",
@@ -612,8 +604,7 @@ export default class UpdateTeam extends React.Component {
                         >Heal</label>
                     </div>
                     <div className="mt-1">
-                        <button
-                            className="w-100 btn btn-outline-success bg-none rounded-pill py-0"
+                        <button className="w-100 btn btn-outline-success bg-none rounded-pill py-0"
                             onClick={() => {
                                 let teamMember = {
                                     character: { $oid: this.state.characterBeingAdded },
@@ -697,14 +688,16 @@ export default class UpdateTeam extends React.Component {
                                 <div>
                                     {this.state.bossesBeingAdded.length ?
                                         this.state.bossesBeingAdded.map(b =>
-                                            <img alt="" className="bg-danger border border-secondary rounded-circle me-1"
-                                                src={require(`../images/bosses/${this.props.getBossById(b).value}.webp`)}
-                                                style={{
-                                                    height: "48px",
-                                                    cursor: "pointer"
-                                                }}
-                                                onClick={() => { this.setState({ selectingBosses: true }) }}
-                                            />
+                                            <React.Fragment key={b}>
+                                                <img alt="" className="bg-danger border border-secondary rounded-circle me-1"
+                                                    src={require(`../images/bosses/${this.props.getBossById(b).value}.webp`)}
+                                                    style={{
+                                                        height: "48px",
+                                                        cursor: "pointer"
+                                                    }}
+                                                    onClick={() => { this.setState({ selectingBosses: true }) }}
+                                                />
+                                            </React.Fragment>
                                         ) : null
                                     }
                                     {this.state.bossesBeingAdded.length < 6 ?
@@ -768,7 +761,9 @@ export default class UpdateTeam extends React.Component {
                                                     <select className="form-select" value={this.state.characterBeingAddedForRotationGuide} onChange={e => { this.setState({ characterBeingAddedForRotationGuide: e.target.value }) }}>
                                                         <option value="">--select--</option>
                                                         {this.state.teamMembersBeingAdded.map(m => this.props.getCharacterById(m.character.$oid)).map(c =>
-                                                            <option value={c._id}>{c.display}</option>
+                                                            <React.Fragment key={c._id}>
+                                                                <option value={c._id}>{c.display}</option>
+                                                            </React.Fragment>
                                                         )}
                                                     </select>
                                                 </div>
@@ -861,7 +856,7 @@ export default class UpdateTeam extends React.Component {
                             </div>
                             <hr />
                             <div>
-                                <button className="w-100 btn btn-success rounded-pill py-0 mb-3"
+                                <button className="w-100 btn btn-primary rounded-pill py-0 mb-2"
                                     onClick={async () => {
                                         let modifiedTeam = {
                                             team_name: this.state.teamName,
@@ -885,7 +880,10 @@ export default class UpdateTeam extends React.Component {
                                         && this.state.rotationGuideStepsBeingAdded.length
                                         && this.state.notesBeingAdded.length
                                     )}
-                                >Add Team</button>
+                                >Update Team</button>
+                                <button className="w-100 btn btn-outline-danger rounded-pill py-0 mb-3"
+                                    onClick={() => { this.props.updateTeamBeingUpdated(null) }}
+                                >Cancel</button>
                             </div>
                         </div>
                     </div>
