@@ -4,6 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import Explore from "./pages/Explore";
 import Create from "./pages/Create";
+import UpdateTeam from "./components/UpdateTeam";
 
 class App extends React.Component {
   state = {
@@ -13,7 +14,8 @@ class App extends React.Component {
     navbarHidden: true,
     filterHidden: true,
     loading: false,
-    criteria: {}
+    criteria: {},
+    teamBeingUpdated: null
   }
 
   BASE_URI = "https://giteams.herokuapp.com/";
@@ -57,20 +59,45 @@ class App extends React.Component {
   getBossById = _id => this.allBosses.filter(b => b._id === _id)[0];
 
   renderPage() {
-    if (this.state.active === "explore") {
+    if (this.state.teamBeingUpdated) {
       return (
-        <Explore
-          teams={this.state.teams}
+        <UpdateTeam
+          t={this.state.teamBeingUpdated}
+          allTeams={this.state.allTeams}
+
           allCharacters={this.allCharacters}
+          allWeapons={this.allWeapons}
+          allArtifacts={this.allArtifacts}
           allBosses={this.allBosses}
+          BASE_URI={this.BASE_URI}
+
           getCharacterById={this.getCharacterById}
           getWeaponById={this.getWeaponById}
           getArtifactById={this.getArtifactById}
           getBossById={this.getBossById}
-          filterHidden={this.state.filterHidden}
-          toggleFilter={this.toggleFilter}
-          loading={this.state.loading}
           refreshTeams={this.refreshTeams}
+          changePage={this.changePage}
+          updateTeamBeingUpdated={this.updateTeamBeingUpdated}
+        />
+      )
+    } else if (this.state.active === "explore") {
+      return (
+        <Explore
+          allTeams={this.state.allTeams}
+          teams={this.state.teams}
+          filterHidden={this.state.filterHidden}
+          loading={this.state.loading}
+
+          allCharacters={this.allCharacters}
+          allBosses={this.allBosses}
+          BASE_URI={this.BASE_URI}
+
+          getCharacterById={this.getCharacterById}
+          getBossById={this.getBossById}
+          toggleFilter={this.toggleFilter}
+          refreshTeams={this.refreshTeams}
+          changePage={this.changePage}
+          updateTeamBeingUpdated={this.updateTeamBeingUpdated}
         />
       )
     } else if (this.state.active === "create") {
@@ -78,15 +105,17 @@ class App extends React.Component {
         <Create
           allTeams={this.state.allTeams}
           teams={this.state.teams}
+
           allCharacters={this.allCharacters}
           allWeapons={this.allWeapons}
           allArtifacts={this.allArtifacts}
           allBosses={this.allBosses}
+          BASE_URI={this.BASE_URI}
+
           getCharacterById={this.getCharacterById}
           getWeaponById={this.getWeaponById}
           getArtifactById={this.getArtifactById}
           getBossById={this.getBossById}
-          BASE_URI={this.BASE_URI}
           refreshTeams={this.refreshTeams}
           changePage={this.changePage}
         />
@@ -105,7 +134,7 @@ class App extends React.Component {
       loading: true
     })
     let resAllTeams = await axios.get(this.BASE_URI + "teams");
-    let resTeams = await axios.get(this.BASE_URI + "teams", {params: criteria});
+    let resTeams = await axios.get(this.BASE_URI + "teams", { params: criteria });
     this.setState({
       allTeams: resAllTeams.data.teams,
       teams: resTeams.data.teams,
@@ -119,6 +148,12 @@ class App extends React.Component {
     })
   }
 
+  updateTeamBeingUpdated = t => {
+    this.setState({
+      teamBeingUpdated: t
+    })
+  }
+
   render() {
     return (
       <React.Fragment>
@@ -128,7 +163,12 @@ class App extends React.Component {
               <button className="navbar-brand border-0 bg-none ms-md-3"
                 onClick={() => {
                   this.refreshTeams();
-                  this.setState({ active: "explore", navbarHidden: true, filterHidden: true });
+                  this.setState({
+                    active: "explore",
+                    navbarHidden: true,
+                    filterHidden: true,
+                    teamBeingUpdated: null
+                  });
                 }}
               >
                 <img src={require("./images/logos/logo.png")} alt="" className="" height="48px" />
@@ -149,7 +189,12 @@ class App extends React.Component {
                       className={"nav-link border-0 bg-none pb-sm-0" + (this.state.active === "explore" ? " active" : "")}
                       onClick={() => {
                         this.refreshTeams();
-                        this.setState({ active: "explore", navbarHidden: true, filterHidden: true });
+                        this.setState({
+                          active: "explore",
+                          navbarHidden: true,
+                          filterHidden: true,
+                          teamBeingUpdated: null
+                        });
                       }}
                     >
                       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" className="me-1" viewBox="0 0 16 16">
@@ -169,7 +214,12 @@ class App extends React.Component {
                     <button
                       className={"nav-link border-0 bg-none pb-sm-0" + (this.state.active === "create" ? " active" : "")}
                       onClick={() => {
-                        this.setState({ active: "create", navbarHidden: true, filterHidden: true })
+                        this.setState({
+                          active: "create",
+                          navbarHidden: true,
+                          filterHidden: true,
+                          teamBeingUpdated: null
+                        })
                       }}
                     >
                       <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" className="me-1" viewBox="0 0 16 16">

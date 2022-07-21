@@ -1,5 +1,6 @@
 import React from "react";
 import DisplayTeam from "../components/DisplayTeam";
+import UpdateTeam from "../components/UpdateTeam";
 
 export default class Explore extends React.Component {
     state = {
@@ -306,11 +307,12 @@ export default class Explore extends React.Component {
                                 <React.Fragment key={t._id}>
                                     <DisplayTeam
                                         t={t}
+                                        editing={this.state.editing}
                                         getCharacterById={this.props.getCharacterById}
                                         getWeaponById={this.props.getWeaponById}
                                         getArtifactById={this.props.getArtifactById}
                                         getBossById={this.props.getBossById}
-                                        editing={this.state.editing}
+                                        updateTeamBeingUpdated={this.props.updateTeamBeingUpdated}
                                     />
                                 </React.Fragment>
                             )) : this.props.loading ? null : <h1 className="text-center">No Results Found</h1>
