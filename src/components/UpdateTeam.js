@@ -847,7 +847,8 @@ export default class UpdateTeam extends React.Component {
                                             if (this.state.noteBeingAdded) {
                                                 let clone = this.state.notesBeingAdded;
                                                 this.setState({
-                                                    notesBeingAdded: [...clone, this.state.noteBeingAdded]
+                                                    notesBeingAdded: [...clone, this.state.noteBeingAdded],
+                                                    noteBeingAdded: ""
                                                 })
                                             }
                                         }}

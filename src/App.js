@@ -93,6 +93,8 @@ class App extends React.Component {
           BASE_URI={this.BASE_URI}
 
           getCharacterById={this.getCharacterById}
+          getWeaponById={this.getWeaponById}
+          getArtifactById={this.getArtifactById}
           getBossById={this.getBossById}
           toggleFilter={this.toggleFilter}
           refreshTeams={this.refreshTeams}

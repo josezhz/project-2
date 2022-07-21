@@ -153,7 +153,6 @@ export default class Explore extends React.Component {
                                     includedCharacters: this.state.includedCharacters,
                                     targetBoss: this.state.targetBoss
                                 };
-                                console.log(criteria);
                                 this.props.toggleFilter();
                                 this.props.refreshTeams(criteria);
                             }}
