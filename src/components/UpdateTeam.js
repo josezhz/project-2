@@ -777,7 +777,7 @@ export default class UpdateTeam extends React.Component {
                                                         <option value="E">Skill</option>
                                                         <option value="Q">Burst</option>
                                                     </select>
-                                                    <button
+                                                    <button disabled={!this.state.characterBeingAddedForRotationGuide || !this.state.actionBeingAddedForRotationGuide}
                                                         className="btn btn-success"
                                                         style={{ zIndex: "0" }}
                                                         onClick={() => {
