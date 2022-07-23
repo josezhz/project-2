@@ -129,7 +129,7 @@ main {
     justify-content: center;
     position: absolute;
     z-index: 10;
-    background-color: rgba(255, 255, 255, .9);
+    background-color: rgba(255, 255, 255, .8);
     width: 100%;
     height: calc(100% - 64px);
 }
@@ -138,7 +138,7 @@ main {
     display: flex;
     flex-direction: column;
     position: relative;
-    background-color: #dc35451a;
+    background-color: #f8f9facc;
     width: 90vw;
     max-width: 384px;
     height: fit-content;

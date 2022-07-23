@@ -19,7 +19,8 @@ class App extends React.Component {
     teamBeingDeleted: null
   }
 
-  BASE_URI = "https://giteams.herokuapp.com/";
+  // BASE_URI = "https://giteams.herokuapp.com/";
+  BASE_URI = "https://3000-josezhz-project2api-rly1361e77s.ws-us54.gitpod.io/";
 
   allCharacters = [];
   allWeapons = [];
@@ -281,8 +282,8 @@ class App extends React.Component {
           {this.state.teamBeingDeleted ?
             <div className="confirm-delete-page">
               <div className="confirm-delete-alert rounded border border-danger">
-                <h5>Confirm delete team</h5>
-                <div>{"Raiden National Team"}?</div>
+                <h5>Confirm delete team:</h5>
+                <div className="text-center">{"Raiden National Team"}?</div>
                 <div className="d-flex px-4 mt-4">
                   <button className="btn btn-outline-secondary btn-sm rounded-pill"
                   sty
