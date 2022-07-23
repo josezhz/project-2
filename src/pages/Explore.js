@@ -9,8 +9,8 @@ export default class Explore extends React.Component {
         includedCharacters: [],
         targetBoss: "",
 
-        selectingCharacters: false,
-        selectingBoss: false
+        // selectingCharacters: false,
+        // selectingBoss: false
     }
 
     filterForm() {
@@ -97,12 +97,12 @@ export default class Explore extends React.Component {
                                     <img src={require("../images/icons/character.webp")} alt=""
                                         className="border border-2 border-dark rounded w-100"
                                         style={{ cursor: "pointer" }}
-                                        onClick={() => { this.setState({ selectingCharacters: true }) }}
+                                        onClick={() => { this.props.updateSelectingCharacters(true) }}
                                     />
                                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16"
                                         className="position-absolute top-0 start-100 translate-middle bg-primary text-light rounded-circle"
                                         style={{ padding: "2px", cursor: "pointer" }}
-                                        onClick={() => { this.setState({ selectingCharacters: true }) }}
+                                        onClick={() => { this.props.updateSelectingCharacters(true) }}
                                     >
                                         <path fillRule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z" />
                                     </svg>
@@ -119,7 +119,7 @@ export default class Explore extends React.Component {
                                     <img src={require(`../images/bosses/${this.props.getBossById(this.state.targetBoss).value}.webp`)} alt=""
                                         className="border border-secondary rounded bg-danger"
                                         style={{ height: "100px", cursor: "pointer" }}
-                                        onClick={() => { this.setState({ selectingBoss: true }) }}
+                                        onClick={() => { this.props.updateSelectingBoss(true) }}
                                     />
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16"
                                         className="position-absolute top-0 start-100 translate-middle border border-danger bg-light text-danger rounded-circle"
@@ -133,7 +133,7 @@ export default class Explore extends React.Component {
                                 <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" fill="currentColor" viewBox="0 0 16 16"
                                     className="border border-dark rounded"
                                     style={{ cursor: "pointer" }}
-                                    onClick={() => { this.setState({ selectingBoss: true }) }}
+                                    onClick={() => { this.props.updateSelectingBoss(true) }}
                                 >
                                     <path fillRule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z" />
                                 </svg>
@@ -231,7 +231,7 @@ export default class Explore extends React.Component {
                             backgroundColor: "rgba(200, 200, 200, .7)",
                             color: "rgba(0, 0, 0, .5)",
                         }}
-                        onClick={() => { this.setState({ selectingCharacters: false }) }}
+                        onClick={() => { this.props.updateSelectingCharacters(false) }}
                     >
                         <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" viewBox="0 0 16 16">
                             <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z" />
@@ -270,7 +270,7 @@ export default class Explore extends React.Component {
                                 <img
                                     src={require(`../images/bosses/${b.value}.webp`)}
                                     alt=""
-                                    className={this.state.targetBoss === b._id ? "border border-5 border-primary" : ""}
+                                    className={this.state.targetBoss === b._id ? "border border-5 border-warning" : ""}
                                     style={{
                                         backgroundColor: "#dc3545",
                                         width: "100%",
@@ -278,7 +278,10 @@ export default class Explore extends React.Component {
                                         marginTop: "2%",
                                         cursor: "pointer"
                                     }}
-                                    onClick={() => { this.setState({ targetBoss: b._id, selectingBoss: false }) }}
+                                    onClick={() => {
+                                        this.setState({ targetBoss: b._id })
+                                        this.props.updateSelectingBoss(false)
+                                    }}
                                 />
                                 <div className="text-center">{b.display}</div>
                             </div>
@@ -361,8 +364,8 @@ export default class Explore extends React.Component {
                         </svg>
                     </button>
                 </div>
-                {this.state.selectingCharacters ? this.selectCharacters() : null}
-                {this.state.selectingBoss ? this.selectBoss() : null}
+                {this.props.selectingCharacters ? this.selectCharacters() : null}
+                {this.props.selectingBoss ? this.selectBoss() : null}
             </React.Fragment>
         )
     }

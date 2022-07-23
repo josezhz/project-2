@@ -264,9 +264,9 @@ export default class UpdateTeam extends React.Component {
                                 <img
                                     src={require(`../images/bosses/${b.value}.webp`)}
                                     alt=""
-                                    className={this.state.bossesBeingAdded.includes(b._id) ? "border border-5 border-danger" : ""}
+                                    className={this.state.bossesBeingAdded.includes(b._id) ? "border border-5 border-warning" : ""}
                                     style={{
-                                        backgroundColor: "#ffc107",
+                                        backgroundColor: "#dc3545",
                                         width: "100%",
                                         borderRadius: "8%",
                                         marginTop: "2%",

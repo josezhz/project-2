@@ -16,7 +16,9 @@ class App extends React.Component {
     loading: false,
     editing: false,
     teamBeingUpdated: null,
-    teamBeingDeleted: null
+    teamBeingDeleted: null,
+    selectingCharacters: false,
+    selectingBoss: false
   }
 
   // BASE_URI = "https://giteams.herokuapp.com/";
@@ -90,6 +92,8 @@ class App extends React.Component {
           filterHidden={this.state.filterHidden}
           loading={this.state.loading}
           editing={this.state.editing}
+          selectingCharacters={this.state.selectingCharacters}
+          selectingBoss={this.state.selectingBoss}
 
           allCharacters={this.allCharacters}
           allBosses={this.allBosses}
@@ -105,6 +109,8 @@ class App extends React.Component {
           updateTeamBeingUpdated={this.updateTeamBeingUpdated}
           updateTeamBeingDeleted={this.updateTeamBeingDeleted}
           toggleEditing={this.toggleEditing}
+          updateSelectingCharacters={this.updateSelectingCharacters}
+          updateSelectingBoss={this.updateSelectingBoss}
         />
       )
     } else if (this.state.active === "create") {
@@ -161,6 +167,18 @@ class App extends React.Component {
     })
   }
 
+  updateSelectingCharacters = boolean => {
+    this.setState({
+      selectingCharacters: boolean
+    })
+  }
+
+  updateSelectingBoss = boolean => {
+    this.setState({
+      selectingBoss: boolean
+    })
+  }
+
   updateTeamBeingUpdated = t => {
     this.setState({
       teamBeingUpdated: t
@@ -187,7 +205,9 @@ class App extends React.Component {
                     navbarHidden: true,
                     filterHidden: true,
                     teamBeingUpdated: null,
-                    editing: false
+                    editing: false,
+                    selectingCharacters: false,
+                    selectingBoss: false
                   });
                 }}
               >
@@ -214,7 +234,9 @@ class App extends React.Component {
                           navbarHidden: true,
                           filterHidden: true,
                           teamBeingUpdated: null,
-                          editing: false
+                          editing: false,
+                          selectingCharacters: false,
+                          selectingBoss: false
                         });
                       }}
                     >
@@ -240,7 +262,9 @@ class App extends React.Component {
                           navbarHidden: true,
                           filterHidden: true,
                           teamBeingUpdated: null,
-                          editing: false
+                          editing: false,
+                          selectingCharacters: false,
+                          selectingBoss: false
                         })
                       }}
                     >
@@ -286,7 +310,7 @@ class App extends React.Component {
                 <div className="text-center">{"Raiden National Team"}?</div>
                 <div className="d-flex px-4 mt-4">
                   <button className="btn btn-outline-secondary btn-sm rounded-pill"
-                  sty
+                    sty
                     onClick={() => { this.updateTeamBeingDeleted(null) }}
                   >Cancel</button>
                   <button className="btn btn-danger btn-sm rounded-pill ms-auto"
