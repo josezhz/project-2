@@ -95,7 +95,7 @@ export default class UpdateTeam extends React.Component {
                                         this.setState({ characterBeingAdded: c._id, selectingCharacter: false })
                                     }}
                                 />
-                                <div className="text-center">{c.display}{c.display === "Traveler" ? ` (${c.element})` : null}</div>
+                                <div className="text-center">{c.display}</div>
                             </div>
                         </React.Fragment>
                     )}
