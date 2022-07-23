@@ -63,7 +63,8 @@ export default class Explore extends React.Component {
                                                 <img src={require(`../images/characters/icons/${this.props.getCharacterById(c).value}_icon.webp`)} alt=""
                                                     className="border border-2 rounded w-100"
                                                     style={{
-                                                        backgroundColor: this.props.getCharacterById(c).rarity === 5 ? "#ffc107" : "#6f42c1"
+                                                        backgroundColor: this.props.getCharacterById(c).value === "aloy" ?
+                                                            "#dc3545" : this.props.getCharacterById(c).rarity === 5 ? "#ffc107" : "#6f42c1",
                                                     }}
                                                 />
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16"
@@ -187,9 +188,10 @@ export default class Explore extends React.Component {
                                 <img
                                     src={require(`../images/characters/icons/${c.value}_icon.webp`)}
                                     alt=""
-                                    className={this.state.includedCharacters.includes(c._id) ? "border border-5 border-danger" : ""}
+                                    className={this.state.includedCharacters.includes(c._id) ? "border border-5 border-primary" : ""}
                                     style={{
-                                        backgroundColor: c.rarity === 5 ? "#ffc107" : "#6f42c1",
+                                        backgroundColor: c.value === "aloy" ?
+                                            "#dc3545" : c.rarity === 5 ? "#ffc107" : "#6f42c1",
                                         width: "100%",
                                         borderRadius: "8%",
                                         marginTop: "2%",
@@ -270,7 +272,7 @@ export default class Explore extends React.Component {
                                 <img
                                     src={require(`../images/bosses/${b.value}.webp`)}
                                     alt=""
-                                    className={this.state.targetBoss === b._id ? "border border-5 border-warning" : ""}
+                                    className={this.state.targetBoss === b._id ? "border border-5 border-primary" : ""}
                                     style={{
                                         backgroundColor: "#dc3545",
                                         width: "100%",

@@ -68,7 +68,8 @@ export default class Create extends React.Component {
                                     alt=""
                                     className={this.state.characterBeingAdded === c._id ? "border border-5 border-danger" : ""}
                                     style={{
-                                        backgroundColor: c.rarity === 5 ? "#ffc107" : "#6f42c1",
+                                        backgroundColor: c.value === "aloy" ?
+                                            "#dc3545" : c.rarity === 5 ? "#ffc107" : "#6f42c1",
                                         width: "100%",
                                         borderRadius: "8%",
                                         marginTop: "2%",
@@ -168,7 +169,7 @@ export default class Create extends React.Component {
                                 <img
                                     src={require(`../images/artifacts/${a.value}.webp`)}
                                     alt=""
-                                    className={this.state.artifactsBeingAdded.includes(a._id) ? "border border-5 border-danger" : ""}
+                                    className={this.state.artifactsBeingAdded.includes(a._id) ? "border border-5 border-primary" : ""}
                                     style={{
                                         backgroundColor: a.rarity === 5 ? "#ffc107" : "#6f42c1",
                                         width: "100%",
@@ -251,7 +252,7 @@ export default class Create extends React.Component {
                                 <img
                                     src={require(`../images/bosses/${b.value}.webp`)}
                                     alt=""
-                                    className={this.state.bossesBeingAdded.includes(b._id) ? "border border-5 border-warning" : ""}
+                                    className={this.state.bossesBeingAdded.includes(b._id) ? "border border-5 border-primary" : ""}
                                     style={{
                                         backgroundColor: "#dc3545",
                                         width: "100%",
@@ -322,7 +323,8 @@ export default class Create extends React.Component {
                                             className="border border-2 rounded"
                                             style={{
                                                 height: "80px",
-                                                backgroundColor: this.props.getCharacterById(m.character.$oid).rarity === 5 ? "#ffc107" : "#6f42c1"
+                                                backgroundColor: this.props.getCharacterById(m.character.$oid).value === "aloy" ?
+                                                    "#dc3545" : this.props.getCharacterById(m.character.$oid).rarity === 5 ? "#ffc107" : "#6f42c1",
                                             }}
                                         />
                                     </div>
@@ -438,7 +440,8 @@ export default class Create extends React.Component {
                                         className="border border-2 rounded"
                                         style={{
                                             height: "80px",
-                                            backgroundColor: this.props.getCharacterById(this.state.characterBeingAdded).rarity === 5 ? "#ffc107" : "#6f42c1",
+                                            backgroundColor: this.props.getCharacterById(this.state.characterBeingAdded).value === "aloy" ?
+                                                "#dc3545" : this.props.getCharacterById(this.state.characterBeingAdded).rarity === 5 ? "#ffc107" : "#6f42c1",
                                             cursor: "pointer"
                                         }}
                                         onClick={() => { this.setState({ selectingCharacter: true }) }}
@@ -722,7 +725,8 @@ export default class Create extends React.Component {
                                                         <img alt="" className="border border-secondary rounded me-1"
                                                             src={require(`../images/characters/icons/${this.props.getCharacterById(s.character.$oid).value}_icon.webp`)}
                                                             style={{
-                                                                backgroundColor: this.props.getCharacterById(s.character.$oid).rarity === 5 ? "#ffc107" : "#6f42c1",
+                                                                backgroundColor: this.props.getCharacterById(s.character.$oid).value === "aloy" ?
+                                                                    "#dc3545" : this.props.getCharacterById(s.character.$oid).rarity === 5 ? "#ffc107" : "#6f42c1",
                                                                 width: "40px"
                                                             }}
                                                         />

@@ -10,7 +10,7 @@ export default class DisplayTeam extends React.Component {
 
     displayTeamComposition = t => (
         <React.Fragment>
-            <div className={"card-body p-0 px-1 px-md-3 d-flex justify-content-between" + (this.state.characterExpanded ? "" : " pb-1 pb-md-3")}>
+            <div className={"card-body p-0 px-1 px-md-3 d-flex" + (this.state.characterExpanded ? "" : " pb-1 pb-md-3")}>
                 {t.team_composition.map(m =>
                     <React.Fragment key={m.character.$oid}>
                         <img
@@ -18,10 +18,12 @@ export default class DisplayTeam extends React.Component {
                             alt=""
                             className={"border" + (this.state.characterExpanded === m ? " border-secondary" : " border-5")}
                             style={{
-                                backgroundColor: this.props.getCharacterById(m.character.$oid).rarity === 5 ? "#ffc107" : "#6f42c1",
+                                backgroundColor: this.props.getCharacterById(m.character.$oid).value === "aloy" ?
+                                    "#dc3545" : this.props.getCharacterById(m.character.$oid).rarity === 5 ? "#ffc107" : "#6f42c1",
                                 width: "23.5%",
                                 borderRadius: "8%",
                                 marginTop: "2%",
+                                marginRight: "2%",
                                 cursor: "pointer"
                             }}
                             onClick={() => { this.setState({ characterExpanded: this.state.characterExpanded === m ? null : m }) }}
@@ -216,7 +218,8 @@ export default class DisplayTeam extends React.Component {
                                                         <img alt="" className="border border-secondary rounded me-1"
                                                             src={require(`../images/characters/icons/${this.props.getCharacterById(s.character.$oid).value}_icon.webp`)}
                                                             style={{
-                                                                backgroundColor: this.props.getCharacterById(s.character.$oid).rarity === 5 ? "#ffc107" : "#6f42c1",
+                                                                backgroundColor: this.props.getCharacterById(s.character.$oid).value === "aloy" ?
+                                                                    "#dc3545" : this.props.getCharacterById(s.character.$oid).rarity === 5 ? "#ffc107" : "#6f42c1",
                                                                 width: "48px"
                                                             }}
                                                         />
