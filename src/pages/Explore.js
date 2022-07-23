@@ -299,7 +299,7 @@ export default class Explore extends React.Component {
                 <div className="content container-fluid p-0 pt-3 bg-light overflow-auto">
                     <div className="container" style={{ maxWidth: "768px" }}>
                         {this.props.teams.length ?
-                            this.props.teams.map(t => (
+                            this.props.teams.reverse().map(t => (
                                 <React.Fragment key={t._id}>
                                     <DisplayTeam
                                         t={t}

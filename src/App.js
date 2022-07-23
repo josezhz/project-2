@@ -280,7 +280,7 @@ class App extends React.Component {
           }
           {this.state.teamBeingDeleted ?
             <div className="confirm-delete-page">
-              <div className="confirm-delete-alert rounded">
+              <div className="confirm-delete-alert rounded border border-danger">
                 <h5>Confirm delete team</h5>
                 <div>{"Raiden National Team"}?</div>
                 <div className="d-flex px-4 mt-4">

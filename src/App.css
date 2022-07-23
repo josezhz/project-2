@@ -100,7 +100,6 @@ main {
     width: 70%;
     position: relative;
     bottom: 5vw;
-    /* top: -5vw; */
 }
 
 .loading-text>span {
@@ -130,7 +129,7 @@ main {
     justify-content: center;
     position: absolute;
     z-index: 10;
-    background-color: rgba(255, 255, 255, .8);
+    background-color: rgba(255, 255, 255, .9);
     width: 100%;
     height: calc(100% - 64px);
 }
@@ -139,7 +138,7 @@ main {
     display: flex;
     flex-direction: column;
     position: relative;
-    background-color: #dc354533;
+    background-color: #dc35451a;
     width: 90vw;
     max-width: 384px;
     height: fit-content;
