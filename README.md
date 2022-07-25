@@ -25,5 +25,9 @@ To be able to contribute to the Genshin Impact community by providing a communic
 
 | User Stories | Acceptance Criteria |
 | ------------ | ------------------- |
-| As a beginner of Genshin, I struggle with deciding which characters to invest my limited resources on to composite a robust team. I want to have a detailed team building guide containing information such as team composition, and the weapon and artifact sets good for each team member. | A website where people post team building guides in great detail. |
-| As a pro Genshin player, I have unique insights on the game mechanism and team building that may be
+| As a beginner of Genshin, I struggle with deciding which characters to invest my limited resources on to composite a robust team. I want to have a detailed team building guide containing information such as team composition, and the weapon and artifact sets good for each team member. | A website where users can find team building guides posted by other people in great detail. |
+| As a casual Genshin player, I have issue defeating the boss Azhdaha by myself. My characters are relatively well built but I have no idea how to composite my team. | A website that enables users to search for good teams for a specific boss. |
+| As a pro Genshin player, I have plenty of insights on the game mechanism and team building that may be helpful to beginners. I want to help more people in the community by sharing my knowledge. | A website that enables users to post their team builds in great detail. |
+
+### Color
+
