@@ -31,3 +31,8 @@ To be able to contribute to the Genshin Impact community by providing a communic
 
 ### Color
 
+![Theme colors](./src/images/readme/palette.png)
+
+This website uses Bootstrap color scheme because it is diverse enough and visually appealing.
+
+### Font
