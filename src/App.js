@@ -51,7 +51,7 @@ class App extends React.Component {
     let resTeams = await axios.get(BASE_URI + "teams");
     this.setState({
       allTeams: resTeams.data.teams,
-      teams: resTeams.data.teams,
+      teams: resTeams.data.teams.reverse(),
       loading: false
     });
   }
@@ -149,7 +149,7 @@ class App extends React.Component {
     let resTeams = await axios.get(this.BASE_URI + "teams", { params: criteria });
     this.setState({
       allTeams: resAllTeams.data.teams,
-      teams: resTeams.data.teams,
+      teams: resTeams.data.teams.reverse(),
       loading: false
     });
   }
