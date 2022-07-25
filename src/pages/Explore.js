@@ -7,10 +7,7 @@ export default class Explore extends React.Component {
         numberOfFiveStar: 2,
         anyNumberOfFiveStar: true,
         includedCharacters: [],
-        targetBoss: "",
-
-        // selectingCharacters: false,
-        // selectingBoss: false
+        targetBoss: ""
     }
 
     filterForm() {
@@ -304,7 +301,7 @@ export default class Explore extends React.Component {
                 <div className="content container-fluid p-0 pt-3 bg-light overflow-auto">
                     <div className="container" style={{ maxWidth: "768px" }}>
                         {this.props.teams.length ?
-                            this.props.teams.reverse().map(t => (
+                            this.props.teams.map(t => (
                                 <React.Fragment key={t._id}>
                                     <DisplayTeam
                                         t={t}
