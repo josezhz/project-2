@@ -33,6 +33,46 @@ To be able to contribute to the Genshin Impact community by providing a communic
 
 ![Theme colors](./src/images/readme/palette.png)
 
-This website uses Bootstrap color scheme because it is diverse enough and visually appealing.
+Bootstrap color scheme is used because it is diverse enough and visually appealing.
 
 ### Font
+
+_HYWenHei-85W_ is used because it is the primary typeface of Genshin Impact, seen as the font which is used to display virtually everything in-game.
+
+---
+
+## Features
+
+### Create
+
+Create and post personalized team builds containing detailed information such as team name, team composition, recommended bosses, rotation guide, and customized notes.
+
+### Read
+
+Search for teams by team name, number of five-star characters, included characters, or target boss.
+
+### Update
+
+Update every piece of information of a team.
+
+### Delete
+
+Delete a team.
+
+---
+
+## Technologies Used
+
+1. HTML
+2. CSS
+3. JavaScript
+4. [MongoDB](https://www.mongodb.com/)
+    - database
+5. [Express](http://expressjs.com/)
+    - API
+6. [Heroku](https://www.heroku.com/)
+    - API deployment
+7. React
+    - for single-page application
+8. [Bootstrap 5.1](https://getbootstrap.com/docs/5.1/getting-started/introduction/)
+    - for styling and responsiveness
