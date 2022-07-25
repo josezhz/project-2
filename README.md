@@ -76,3 +76,12 @@ Delete a team.
     - for single-page application
 8. [Bootstrap 5.1](https://getbootstrap.com/docs/5.1/getting-started/introduction/)
     - for styling and responsiveness
+9. [Axios](https://www.axios.com/)
+    - for fetching data from API
+
+---
+
+## Test Cases
+
+| Test No. | Test Description | Test Steps | Expected Result |
+|:--------:| ---------------- | ---------- | --------------- |
