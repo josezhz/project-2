@@ -320,3 +320,8 @@ Delete a team.
 | 7 | Delete an existing team | 1. Repeat steps 1-2 of test 6.<br>2. Under the team you want to delete, press the red button.<br>3. Press [Delete]. | The team is no longer displayed in the Explore page. |
 
 ---
+
+## Credits
+
+- Images from [Genshin Impact Wiki](https://genshin-impact.fandom.com/wiki/Genshin_Impact).
+- Font by [miHoYo](https://www.mihoyo.com/).
