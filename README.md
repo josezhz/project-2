@@ -33,7 +33,7 @@ To be able to contribute to the Genshin Impact community by providing a communic
 
 ![Theme colors](./src/images/readme/palette.png)
 
-Bootstrap color scheme is used because it is diverse enough and visually appealing.
+Bootstrap color scheme is used because of its diversity and visual appeal.
 
 ### Font
 
