@@ -78,6 +78,8 @@ Delete a team.
     - for styling and responsiveness
 9. [Axios](https://www.axios.com/)
     - for fetching data from API
+10. [Netlify](https://app.netlify.com/)
+    - App deployment
 
 ---
 
