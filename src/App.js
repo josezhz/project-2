@@ -21,7 +21,8 @@ class App extends React.Component {
     selectingBoss: false
   }
 
-  BASE_URI = "https://giteams.herokuapp.com/";
+  // BASE_URI = "https://giteams.herokuapp.com/";
+  BASE_URI = "https://giteams.up.railway.app/";
 
   allCharacters = [];
   allWeapons = [];
