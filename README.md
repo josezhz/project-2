@@ -70,7 +70,7 @@ Delete a team.
     - database
 5. [Express](http://expressjs.com/)
     - API
-6. [Heroku](https://www.heroku.com/)
+6. [Railway](https://railway.app/)
     - API deployment
 7. [React](https://reactjs.org/)
     - for single-page application
